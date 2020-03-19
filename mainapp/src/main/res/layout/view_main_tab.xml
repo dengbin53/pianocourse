@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/tab_height_main"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tab_tv"
+        style="@style/text_smallest_gray_black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tab_count_tv"
+        style="@style/text_smallest_gray_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/space_normal"
+        android:gravity="center"
+        android:minWidth="8dp"
+        android:minHeight="8dp" />
+
+</RelativeLayout>

@@ -1,0 +1,132 @@
+apply plugin: 'com.android.application'
+apply from: "package.gradle" // 多渠道包配置
+
+android {
+    compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION
+    buildToolsVersion rootProject.ext.BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        applicationId "com.zconly.pianocourse"
+        minSdkVersion rootProject.ext.MIN_SDK_VERSION
+        targetSdkVersion rootProject.ext.TARGET_SDK_VERSION
+        multiDexEnabled true
+        versionCode rootProject.ext.BUILD_VERSION_CODE
+        versionName rootProject.ext.BUILD_VERSION_NAME
+
+        ndk { abiFilters "armeabi", "armeabi-v7a" }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        flavorDimensions "versionCode"
+    }
+
+    // 各种版权文件等打包的时候冲突
+    packagingOptions {
+        exclude 'META-INF/rxjava.xml'
+        exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file(rootProject.ext.release_keystore)
+            storePassword 'pianocourse2020'
+            keyAlias 'pianocourse'
+            keyPassword 'pianocourse2020'
+        }
+
+        release {
+            storeFile file(rootProject.ext.release_keystore)
+            storePassword 'pianocourse2020'
+            keyAlias 'pianocourse'
+            keyPassword 'pianocourse2020'
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [UMENG_APPKEY: "5e27c683cb23d2f0b700007e"]
+
+            buildConfigField("boolean", "MSB_DEBUG", "true")
+
+            buildConfigField('String', 'HOST_API', '"https://a.meishubao.com/"')
+            buildConfigField('String', 'HOST_H5', '"https://a.meishubao.com/"')
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [UMENG_APPKEY: "5e27c683cb23d2f0b700007e"]
+
+            buildConfigField("boolean", "MSB_DEBUG", "false")
+
+            buildConfigField('String', 'HOST_API', '"https://a.meishubao.com/"')
+            buildConfigField('String', 'HOST_H5', '"https://a.meishubao.com/"')
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    useLibrary 'org.apache.http.legacy'
+}
+
+dependencies {
+    implementation project(':mvplib')
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject.ext.compilelibs['androidx_appcompat']
+    implementation rootProject.ext.compilelibs['androidx_constraint']
+    implementation rootProject.ext.compilelibs['androidx_multidex']
+    implementation rootProject.ext.compilelibs['androidx_material']
+
+    implementation rootProject.ext.compilelibs['gson']
+    implementation rootProject.ext.compilelibs['eventbus']
+    implementation rootProject.ext.compilelibs['butterknife']
+    annotationProcessor rootProject.ext.compilelibs['butterknife_compiler']
+    implementation rootProject.ext.compilelibs['glide']
+    annotationProcessor rootProject.ext.compilelibs['glide_compiler']
+    implementation rootProject.ext.compilelibs['glide-transformations']
+    implementation rootProject.ext.compilelibs['okhttp']
+    implementation rootProject.ext.compilelibs['rxjava2']
+    implementation rootProject.ext.compilelibs['rxandroid2']
+    implementation rootProject.ext.compilelibs['rxlifecycle']
+    implementation rootProject.ext.compilelibs['rxlifecycle-components']
+    implementation rootProject.ext.compilelibs['retrofit2']
+    implementation rootProject.ext.compilelibs['retfofit2converter']
+    implementation rootProject.ext.compilelibs['retrofit2adapter']
+    implementation rootProject.ext.compilelibs['logging-interceptor']
+
+    implementation rootProject.ext.compilelibs['umeng-analytics']
+    implementation rootProject.ext.compilelibs['umeng-common']
+
+    implementation rootProject.ext.compilelibs['smartrefresh']
+    implementation rootProject.ext.compilelibs['brvah']
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

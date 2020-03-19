@@ -1,0 +1,42 @@
+android {
+    productFlavors {
+        pc_official { // 官方
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "101"]
+        }
+        pc_yingyongbao { // 应用宝
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "102"]
+        }
+        pc_baidu { // 百度
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "103"]
+        }
+        pc_xiaomi { // 小米
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "104"]
+        }
+        pc_meizu { // 魅族
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "105"]
+        }
+        pc_huawei { // 华为
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "106"]
+        }
+        pc_oppo { // oppo应用
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "107"]
+        }
+        pc_vivo { // vivo
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "108"]
+        }
+        pc_samsung { // 三星
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "109"]
+        }
+    }
+
+    // apk文件名
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def buildName = variant.productFlavors[0].name
+            def channel = variant.productFlavors[0].properties.values()[0]["UMENG_CHANNEL_VALUE"]
+            def type = variant.buildType.name
+            def releaseApkName = buildName + '_' + channel + '_' + type + "_" + versionName + '.apk'
+            outputFileName = releaseApkName
+        }
+    }
+}

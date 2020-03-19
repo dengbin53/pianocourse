@@ -1,0 +1,3 @@
+rootProject.name='pianocourse'
+include ':mainapp'
+include ':mvplib'

@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    useLibrary 'org.apache.http.legacy'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject.ext.compilelibs['rxjava2']
+    implementation rootProject.ext.compilelibs['rxandroid2']
+    implementation rootProject.ext.compilelibs['retrofit2']
+    implementation rootProject.ext.compilelibs['retfofit2converter']
+    implementation rootProject.ext.compilelibs['retrofit2adapter']
+    implementation rootProject.ext.compilelibs['logging-interceptor']
+    implementation rootProject.ext.compilelibs['rxlifecycle']
+    implementation rootProject.ext.compilelibs['rxlifecycle-components']
+    implementation rootProject.ext.compilelibs['androidx_appcompat']
+    implementation rootProject.ext.compilelibs['eventbus']
+    implementation rootProject.ext.compilelibs['butterknife']
+    annotationProcessor rootProject.ext.compilelibs['butterknife_compiler']
+
+}
