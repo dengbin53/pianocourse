@@ -12,6 +12,7 @@
     <color name="color_bg_gray_light">#E9E9E9</color>
     <color name="color_bg_gray_dark">#C9C9C9</color>
     <color name="color_bg_black_70">#B2333333</color>
+    <color name="color_bg_black">#333333</color>
 
     <color name="color_divider">#D0D0D0</color>
 
@@ -21,5 +22,7 @@
     <!-- 浅灰色字体 -->
     <color name="color_text_gray_light">#CCCCCC</color>
     <color name="color_text_gray_dark">#666666</color>
+    <color name="color_green">#00A49D</color>
+    <color name="gray_text_light">#BBBBBB</color>
 
 </resources>

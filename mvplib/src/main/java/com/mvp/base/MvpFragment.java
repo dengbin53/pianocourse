@@ -108,6 +108,7 @@ public abstract class MvpFragment<P extends MvpPresenter> extends RxFragment imp
     public void onDestroy() {
         super.onDestroy();
         isViewCreated = false;
+        isLoadDataCompleted = false;
         if (unBinder != null)
             unBinder.unbind();
         EventBus.getDefault().unregister(this);

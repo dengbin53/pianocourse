@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:background="@mipmap/img_cs_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_large"
+            android:background="@mipmap/ic_contact_phone" />
+
+        <TextView
+            style="@style/text_normal_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_normal"
+            android:text="@string/value_consult_call" />
+
+        <TextView
+            android:id="@+id/call"
+            style="@style/text_small_black"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_large"
+            android:background="@drawable/selector_corner_yellow_gray"
+            android:gravity="center"
+            android:text="@string/btn_call_consult" />
+
+        <TextView
+            style="@style/text_normal_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_normal"
+            android:layout_marginBottom="@dimen/space_large"
+
+            android:text="@string/value_call_consult_time" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@mipmap/img_cs_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_large"
+            android:background="@mipmap/ic_contact_chat" />
+
+        <TextView
+            style="@style/text_normal_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_normal"
+            android:text="@string/value_cs_online" />
+
+        <TextView
+            android:id="@+id/chat"
+            style="@style/text_small_black"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_large"
+            android:background="@drawable/selector_corner_yellow_gray"
+            android:gravity="center"
+            android:text="@string/btn_cs_online" />
+
+        <TextView
+            style="@style/text_normal_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_normal"
+            android:layout_marginBottom="@dimen/space_large"
+            android:text="@string/value_cs_online_time" />
+    </LinearLayout>
+
+</LinearLayout>

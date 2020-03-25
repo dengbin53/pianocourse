@@ -16,7 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height_main"
         android:layout_gravity="bottom"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp" />
+        android:background="@drawable/shape_white_border_top"
+        app:tabGravity="fill"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@color/color_bg_gray_light"
+        app:tabUnboundedRipple="true" />
 
 </merge>

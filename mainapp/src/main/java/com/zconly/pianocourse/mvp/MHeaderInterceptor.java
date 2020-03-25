@@ -23,11 +23,10 @@ public class MHeaderInterceptor extends ParamsInterceptor {
         headerMap.put("platform", "1");
         headerMap.put("User-Agent", "msb-apk");
         headerMap.put("cversion", Constants.CLIENT_VERSION + "");
-        headerMap.put("opertaion", Constants.SYSTEM_VERSION);
         headerMap.put("Timestamp", System.currentTimeMillis() + "");
         headerMap.put("network", Constants.NETWORK + "");
-        headerMap.put("userid", Constants.USER_ID);
-        headerMap.put("token", Constants.TOKEN);
+        headerMap.put("Authorization", Constants.TOKEN);
+        headerMap.put("imei", Constants.IMEI);
         headerMap.put("screenwidth", DeviceUtils.getScreenWidth() + "");
         headerMap.put("screenheight", DeviceUtils.getScreenHeight() + "");
         headerMap.put("channel", Constants.UMENG_CHANNEL);

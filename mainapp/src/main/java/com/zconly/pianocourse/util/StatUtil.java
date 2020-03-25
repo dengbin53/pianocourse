@@ -26,10 +26,9 @@ public class StatUtil {
     }
 
     private static HashMap<String, String> genMap(String... keyval) {
-
         HashMap<String, String> status = new HashMap<>();
-        if (Constants.USER_ID != null)
-            status.put("user_id", Constants.USER_ID);
+        if (Constants.USER_BEAN != null)
+            status.put("user_id", Constants.USER_BEAN.getId() + "");
         else
             status.put("user_id", "");
         if (keyval != null && keyval.length > 0) {

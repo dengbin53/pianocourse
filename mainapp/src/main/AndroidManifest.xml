@@ -79,9 +79,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SetInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FindPassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActContactCS"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActWebView"
             android:screenOrientation="portrait" />
 
         <service android:name=".service.InitService" />

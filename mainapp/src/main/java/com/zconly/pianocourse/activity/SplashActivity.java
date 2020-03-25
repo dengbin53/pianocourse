@@ -27,6 +27,7 @@ public class SplashActivity extends BaseMvpActivity {
             @Override
             public void run() {
                 MainActivity.start(mContext);
+                finish();
             }
         }, 1000);
     }

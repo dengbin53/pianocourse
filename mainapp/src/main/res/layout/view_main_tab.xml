@@ -3,11 +3,12 @@
     android:layout_width="@dimen/tab_height_main"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
         android:id="@+id/tab_tv"
         style="@style/text_smallest_gray_black"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:drawablePadding="@dimen/drawable_padding"
         android:gravity="center" />
 
     <TextView

@@ -7,10 +7,4 @@
         <item>我的</item>
     </string-array>
 
-    <integer-array name="tab_img_array">
-        <item>@drawable/selector_tab_home</item>
-        <item>@drawable/selector_tab_msg</item>
-        <item>@drawable/selector_tab_mine</item>
-    </integer-array>
-
 </resources>

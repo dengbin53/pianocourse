@@ -13,8 +13,8 @@ import com.mvp.base.MvpPresenter;
 import com.mvp.exception.ApiException;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.util.DataUtil;
-import com.zconly.pianocourse.util.ToastUtil;
 import com.zconly.pianocourse.util.StatUtil;
+import com.zconly.pianocourse.util.ToastUtil;
 import com.zconly.pianocourse.widget.LoadingDialog;
 import com.zconly.pianocourse.widget.TitleView;
 
@@ -95,31 +95,31 @@ public abstract class BaseMvpActivity<P extends MvpPresenter> extends MvpActivit
     }
 
     // 无动画效果启动Activity
-    protected void startActivityNoAnim(Intent intent) {
+    public void startActivityNoAnim(Intent intent) {
         super.startActivity(intent);
         overridePendingTransition(R.anim.activity_default, R.anim.activity_default);
     }
 
     // 向上推进
-    protected void startActivityUp(Intent intent) {
+    public void startActivityUp(Intent intent) {
         super.startActivity(intent);
         overridePendingTransition(R.anim.activity_in_slide_up, R.anim.activity_default);
     }
 
     // 无动画效果 finish Activity
-    protected void finishNoAnim() {
+    public void finishNoAnim() {
         super.finish();
         overridePendingTransition(R.anim.activity_default, R.anim.activity_default);
     }
 
     // 淡出
-    protected void finishFade() {
+    public void finishFade() {
         super.finish();
         overridePendingTransition(R.anim.activity_in_fade, R.anim.activity_out_fade);
     }
 
     // 下滑退出
-    protected void finishDown() {
+    public void finishDown() {
         super.finish();
         overridePendingTransition(R.anim.activity_default, R.anim.activity_out_slide_down);
     }

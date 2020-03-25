@@ -85,4 +85,24 @@
         <item name="android:textSize">@dimen/text_smallest</item>
     </style>
 
+    <!--常规输入框-->
+    <style name="edit_text_common">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/item_height</item>
+        <item name="android:background">@drawable/shape_white_border_bottom</item>
+        <item name="android:textColor">@color/color_text_black</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:paddingStart">@dimen/space_normal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+
+    <!--常规黑色字体textview-->
+    <style name="text_black_common" parent="text_normal_black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/item_height_small</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
 </resources>

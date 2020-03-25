@@ -2,6 +2,7 @@ package com.zconly.pianocourse.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -13,6 +14,9 @@ import com.mvp.base.MvpPresenter;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.fragment.HomeFragment;
+import com.zconly.pianocourse.fragment.MineFragment;
+import com.zconly.pianocourse.fragment.MsgFragment;
+import com.zconly.pianocourse.util.ToastUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -34,10 +38,9 @@ public class MainActivity extends BaseMvpActivity {
     @BindView(R.id.main_content_fl)
     FrameLayout contentFl;
 
-    private HomeFragment homeFragment;
-    private HomeFragment msgFragment;
-    private HomeFragment mineFragment;
+    private Fragment[] fragments = new Fragment[3];
     private Fragment mContent;
+    private long backPressTime;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -60,6 +63,10 @@ public class MainActivity extends BaseMvpActivity {
         mContent = to;
     }
 
+    private void refresh(int tag) {
+
+    }
+
     @Override
     protected boolean hasTitleView() {
         return false;
@@ -67,18 +74,41 @@ public class MainActivity extends BaseMvpActivity {
 
     @Override
     protected void initView() {
-        homeFragment = new HomeFragment();
-        switchContent(homeFragment);
+
+        fragments[0] = new HomeFragment();
+        fragments[1] = new MsgFragment();
+        fragments[2] = new MineFragment();
+        switchContent(fragments[0]);
+
         String[] tabs = getResources().getStringArray(R.array.tab_name_array);
-        int[] tabImg = getResources().getIntArray(R.array.tab_img_array);
+        int[] icon = new int[]{R.drawable.selector_tab_home, R.drawable.selector_tab_msg, R.drawable.selector_tab_mine};
         for (int i = 0; i < tabs.length; i++) {
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setCustomView(R.layout.view_main_tab);
             TextView tv = tab.getCustomView().findViewById(R.id.tab_tv);
             tv.setText(tabs[i]);
-            tv.setCompoundDrawablesWithIntrinsicBounds(0, tabImg[i], 0, 0);
+            tv.setCompoundDrawablesWithIntrinsicBounds(0, icon[i], 0, 0);
+            tab.setTag(i);
             tabLayout.addTab(tab);
         }
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = (int) tab.getTag();
+                switchContent(fragments[pos]);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                refresh((int) tab.getTag());
+            }
+        });
     }
 
     @Override
@@ -99,6 +129,20 @@ public class MainActivity extends BaseMvpActivity {
     @Override
     protected boolean isBindEventBus() {
         return true;
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - backPressTime > 2000) {
+                ToastUtil.toast("再按一次退出程序");
+                backPressTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -65,8 +65,8 @@ android {
 
             buildConfigField("boolean", "MSB_DEBUG", "true")
 
-            buildConfigField('String', 'HOST_API', '"https://a.meishubao.com/"')
-            buildConfigField('String', 'HOST_H5', '"https://a.meishubao.com/"')
+            buildConfigField('String', 'HOST_API', '"https://musicdata.tech/yuebo/"')
+            buildConfigField('String', 'HOST_H5', '"https://musicdata.tech/yuebo/"')
         }
 
         release {
@@ -80,8 +80,8 @@ android {
 
             buildConfigField("boolean", "MSB_DEBUG", "false")
 
-            buildConfigField('String', 'HOST_API', '"https://a.meishubao.com/"')
-            buildConfigField('String', 'HOST_H5', '"https://a.meishubao.com/"')
+            buildConfigField('String', 'HOST_API', '"https://musicdata.tech/yuebo/"')
+            buildConfigField('String', 'HOST_H5', '"https://musicdata.tech/yuebo/"')
         }
     }
 
