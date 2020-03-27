@@ -23,6 +23,7 @@ import com.zconly.pianocourse.util.FileUtils;
 import com.zconly.pianocourse.util.ToastUtil;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -82,8 +83,10 @@ class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
 
             @Override
             protected void onSuccess(FileBean response) {
-                if (mView instanceof UploadView)
+                if (mView instanceof UploadView) {
+                    mView.dismissLoading();
                     ((UploadView) mView).uploadSuccess(response);
+                }
             }
         };
 
@@ -104,7 +107,7 @@ class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
             @Override
             protected void onStart(Disposable d) {
                 if (mView != null)
-                    mView.loading("上传中");
+                    mView.loading("");
             }
 
             @Override
@@ -115,8 +118,47 @@ class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
 
             @Override
             protected void onSuccess(UserResult response) {
-                if (mView instanceof UserView)
+                if (mView instanceof UserView) {
+                    mView.dismissLoading();
                     ((UserView) mView).updateUserSuccess(response);
+                }
+            }
+        };
+
+        if (mView instanceof BaseMvpActivity) {
+            HttpRxObservable.getObservable(ob, (BaseMvpActivity) mView).subscribe(observer);
+        } else if (mView instanceof BaseMvpFragment) {
+            HttpRxObservable.getObservableFragment(ob, (BaseMvpFragment) mView).subscribe(observer);
+        } else {
+            HttpRxObservable.getObservable(ob).subscribe(observer);
+        }
+    }
+
+    public void getUserInfo(long id) {
+        if (!isNetConnect()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", id <= 0 ? "" : "" + id);
+        Observable<UserResult> ob = RetrofitUtils.create(ApiService.class).userInfo(params);
+        Observer<UserResult> observer = new HttpRxObserver<UserResult>() {
+
+            @Override
+            protected void onStart(Disposable d) {
+                if (mView != null)
+                    mView.loading("");
+            }
+
+            @Override
+            protected void onError(ApiException e) {
+                if (mView != null)
+                    mView.onError(e);
+            }
+
+            @Override
+            protected void onSuccess(UserResult response) {
+                if (mView instanceof UserView) {
+                    mView.dismissLoading();
+                    ((UserView) mView).getUserInfoSuccess(response);
+                }
             }
         };
 

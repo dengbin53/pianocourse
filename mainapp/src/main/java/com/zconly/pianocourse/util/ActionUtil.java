@@ -13,7 +13,7 @@ import android.net.Uri;
  * @UpdateDate: 2020/3/23 21:54
  * @UpdateRemark: 更新说明
  */
-public class ActionTool {
+public class ActionUtil {
     public static void startActForRet(Activity context, Intent intent, int requestCode) {
         if (context == null)
             return;

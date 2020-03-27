@@ -16,7 +16,7 @@ import java.io.FileOutputStream;
 public class Logger {
 
     public static boolean debugFlag = BuildConfig.MSB_DEBUG;
-    private static final String LOG_TAG = "msb_log";
+    private static final String LOG_TAG = "logger";
     // 根据需要将Log存放到SD卡中
     private static String path;
     private static FileOutputStream outputStream;

@@ -14,7 +14,7 @@ import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.result.UserResult;
 import com.zconly.pianocourse.mvp.presenter.SignUpPresenter;
 import com.zconly.pianocourse.mvp.view.SignUpView;
-import com.zconly.pianocourse.util.ActionTool;
+import com.zconly.pianocourse.util.ActionUtil;
 import com.zconly.pianocourse.util.CountDownTimerTool;
 import com.zconly.pianocourse.util.StringTool;
 import com.zconly.pianocourse.util.ToastUtil;
@@ -124,7 +124,7 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
                 doFindPass();
                 break;
             case R.id.help:
-                ActionTool.startAct(mContext, ActContactCS.class);
+                ActionUtil.startAct(mContext, ActContactCS.class);
                 break;
         }
     }

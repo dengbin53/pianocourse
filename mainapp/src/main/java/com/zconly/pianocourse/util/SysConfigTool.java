@@ -104,6 +104,7 @@ public class SysConfigTool {
     }
 
     public static void logout() {
+        saveToken("");
         setUser(null);
     }
 

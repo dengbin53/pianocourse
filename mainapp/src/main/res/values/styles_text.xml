@@ -1,8 +1,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="text_larger_black">
+    <style name="text_large_black">
         <item name="android:textColor">@color/color_text_black_gray</item>
-        <item name="android:textSize">@dimen/text_larger</item>
+        <item name="android:textSize">@dimen/text_large</item>
     </style>
 
     <style name="text_large_gray">

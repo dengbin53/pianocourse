@@ -7,7 +7,7 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.RequestCode;
-import com.zconly.pianocourse.util.ActionTool;
+import com.zconly.pianocourse.util.ActionUtil;
 import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.widget.TitleView;
 
@@ -19,18 +19,18 @@ public class ActContactCS extends BaseMvpActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.call:
-                ActionTool.call(mContext, Constants.CS_CALL);
+                ActionUtil.call(mContext, Constants.CS_CALL);
                 break;
             case R.id.chat:
                 if (SysConfigTool.isLogin()) {
-                    ActionTool.startChat(mContext, Constants.CS_ACCOUNT + "");
+                    ActionUtil.startChat(mContext, Constants.CS_ACCOUNT + "");
                 } else {
                     // DialogLogin dl = new DialogLogin(this);
                     // dl.show(getFragmentManager(), null);
                 }
                 break;
             case R.id.login:
-                ActionTool.startActForRet(mContext, LoginActivity.class, RequestCode.LOGIN);
+                ActionUtil.startActForRet(mContext, LoginActivity.class, RequestCode.LOGIN);
                 break;
             default:
                 break;

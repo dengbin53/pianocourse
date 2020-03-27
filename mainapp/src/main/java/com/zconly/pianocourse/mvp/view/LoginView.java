@@ -1,6 +1,5 @@
 package com.zconly.pianocourse.mvp.view;
 
-import com.mvp.base.MvpView;
 import com.zconly.pianocourse.bean.result.TokenResult;
 
 /**
@@ -11,7 +10,7 @@ import com.zconly.pianocourse.bean.result.TokenResult;
  * @UpdateDate: 2020/3/23 21:58
  * @UpdateRemark: 更新说明
  */
-public interface LoginView extends MvpView {
+public interface LoginView extends UserView {
 
     void loginSuccess(TokenResult response);
 

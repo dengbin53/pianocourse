@@ -11,16 +11,19 @@ import android.widget.TextView;
 
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
-import com.zconly.pianocourse.base.RequestCode;
 import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.SignUpPresenter;
 import com.zconly.pianocourse.mvp.service.H5Service;
 import com.zconly.pianocourse.mvp.view.SignUpView;
-import com.zconly.pianocourse.util.ActionTool;
+import com.zconly.pianocourse.util.ActionUtil;
 import com.zconly.pianocourse.util.CountDownTimerTool;
 import com.zconly.pianocourse.util.StringTool;
 import com.zconly.pianocourse.util.ToastUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,7 +37,7 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
     private static final int GET_CODE_SUCCESS = 0;
 
     @BindView(R.id.email)
-    EditText emailEt;
+    EditText mobileEt;
     @BindView(R.id.pass)
     EditText passEt;
     @BindView(R.id.verification_code)
@@ -45,7 +48,7 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
     TextView sendTv;
 
     private CountDownTimerTool timer;
-    private String emailOrPhone;
+    private String mobile;
     private String code;
     private String pass;
 
@@ -78,18 +81,17 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
     }
 
     private void sendCode() {
-        emailOrPhone = emailEt.getText().toString();
-        if (!StringTool.isEmailOrPhone(mContext, emailOrPhone)) {
+        mobile = mobileEt.getText().toString();
+        if (!StringTool.isEmailOrPhone(mContext, mobile)) {
             return;
         }
 
-        mPresenter.retrieve(emailOrPhone);
+        mPresenter.signUpCode(mobile);
     }
 
     private void doSignUp() {
-
-        emailOrPhone = emailEt.getText().toString();
-        if (!StringTool.isEmailOrPhone(mContext, emailOrPhone))
+        mobile = mobileEt.getText().toString();
+        if (!StringTool.isEmailOrPhone(mContext, mobile))
             return;
 
         code = codeEt.getText().toString();
@@ -104,22 +106,20 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
             return;
         }
 
-        mPresenter.verify(emailOrPhone, pass);
+        mPresenter.verify(mobile, code, "0");
     }
 
     @OnClick({R.id.login, R.id.sign_in, R.id.help, R.id.re_send, R.id.cancel, R.id.terms_of_service})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivityUp(intent);
+                LoginActivity.start(mContext);
                 break;
             case R.id.sign_in:
                 doSignUp();
                 break;
             case R.id.help:
-                ActionTool.startAct(mContext, ActContactCS.class);
+                ActionUtil.startAct(mContext, ActContactCS.class);
                 break;
             case R.id.re_send:
                 sendCode();
@@ -128,24 +128,11 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
                 finish();
                 break;
             case R.id.terms_of_service:
-                intent = new Intent(mContext, ActWebView.class);
-                intent.putExtra("title", getString(R.string.key_terms_of_service));
-                intent.putExtra("url", H5Service.TERMS_OF_SERVICE);
-                ActionTool.startAct(mContext, intent);
+                WebViewActivity.start(mContext, getString(R.string.key_terms_of_service),
+                        H5Service.TERMS_OF_SERVICE);
                 break;
             default:
                 break;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK)
-            return;
-        if (requestCode == RequestCode.SIGN_IN) {
-            setResult(RESULT_OK);
-            finish();
         }
     }
 
@@ -166,18 +153,14 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
 
     @Override
     protected boolean isBindEventBus() {
-        return false;
+        return true;
     }
 
     @Override
     protected void initView() {
         String str = getString(R.string.btn_terms_of_service_confirm);
         str = String.format(str, "<u>", "</u>");
-
         termsOfServiceTv.setText(Html.fromHtml(str));
-
-        codeEt.setHint(getString(R.string.hint_verification_code_phone));
-        emailEt.setHint(getString(R.string.hint_phone));
     }
 
     @Override
@@ -194,7 +177,7 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
     @Override
     public void verifySuccess(BaseBean response) {
         Intent intent = new Intent(mContext, SetInfoActivity.class);
-        intent.putExtra("emailOrPhone", emailOrPhone);
+        intent.putExtra("emailOrPhone", mobile);
         intent.putExtra("code", code);
         intent.putExtra("pass", pass);
         startActivity(intent);
@@ -203,5 +186,10 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
     @Override
     public void resetSuccess(UserResult response) {
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onThreadMainEvent(SignInEvent event) {
+        finish();
     }
 }

@@ -13,7 +13,9 @@ android {
         versionCode rootProject.ext.BUILD_VERSION_CODE
         versionName rootProject.ext.BUILD_VERSION_NAME
 
-        ndk { abiFilters "armeabi", "armeabi-v7a" }
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a"
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -119,6 +121,7 @@ dependencies {
     implementation rootProject.ext.compilelibs['retfofit2converter']
     implementation rootProject.ext.compilelibs['retrofit2adapter']
     implementation rootProject.ext.compilelibs['logging-interceptor']
+    implementation rootProject.ext.compilelibs['rxpermissions']
 
     implementation rootProject.ext.compilelibs['umeng-analytics']
     implementation rootProject.ext.compilelibs['umeng-common']

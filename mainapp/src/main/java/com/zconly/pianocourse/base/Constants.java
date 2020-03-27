@@ -13,12 +13,9 @@ import com.zconly.pianocourse.bean.UserBean;
 public class Constants {
     public static final int PAGE_COUNT = 12;
     public static UserBean USER_BEAN;
-    public static String NETWORK;
     public static String CLIENT_VERSION;
     public static String IMEI;
     public static String UMENG_CHANNEL;
-    public static String TOKEN;
-
 
     public static final int VIEW_TYPE_NORMAL = 0;
     public static final int VIEW_TYPE_FOOTER = 1;

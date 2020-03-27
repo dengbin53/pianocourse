@@ -9,8 +9,16 @@ package com.zconly.pianocourse.bean;
  * @UpdateRemark: 更新说明
  */
 public class TokenBean extends BaseBean {
+    private long expire;
     private String token;
-    private String imtoken;
+
+    public long getExpire() {
+        return expire;
+    }
+
+    public void setExpire(long expire) {
+        this.expire = expire;
+    }
 
     public String getToken() {
         return token;
@@ -18,13 +26,5 @@ public class TokenBean extends BaseBean {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getImtoken() {
-        return imtoken;
-    }
-
-    public void setImtoken(String imtoken) {
-        this.imtoken = imtoken;
     }
 }

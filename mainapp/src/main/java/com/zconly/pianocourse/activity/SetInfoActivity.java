@@ -1,5 +1,6 @@
 package com.zconly.pianocourse.activity;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.RequestCode;
@@ -18,12 +20,13 @@ import com.zconly.pianocourse.bean.result.UserResult;
 import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.SetInfoPresenter;
 import com.zconly.pianocourse.mvp.view.SetInfoView;
-import com.zconly.pianocourse.util.ActionTool;
+import com.zconly.pianocourse.util.ActionUtil;
 import com.zconly.pianocourse.util.CropType;
 import com.zconly.pianocourse.util.DateTool;
 import com.zconly.pianocourse.util.FileUtils;
 import com.zconly.pianocourse.util.ImageUtil;
 import com.zconly.pianocourse.util.ImgLoader;
+import com.zconly.pianocourse.util.Logger;
 import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.util.ToastUtil;
 import com.zconly.pianocourse.widget.MKeyValueEditView;
@@ -67,10 +70,9 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     private int mDay;
 
     private File mCurrentPhotoFile;
-    private File avatarFile;
     private Uri cropedImageUri;
 
-    private String email;
+    private String mobile;
     private String code;
     private String pass;
     private int sex;
@@ -119,8 +121,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         }
 
         Map<String, String> map = new HashMap<>();
-        map.put("username", email);
-        map.put("captcha", code);
+        map.put("mobile", mobile);
         map.put("password", pass);
         map.put("examlevel", examLevel + "");
         map.put("duration", pianoTime + "");
@@ -128,17 +129,23 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         map.put("birthday", pianoTime + "");
         map.put("sex", sex + "");
         map.put("signature", signatureView.getValue());
-        // map.put("role_id", signatureView.getValue());
-        // map.put("wx_avatar", "");
+        map.put("code", code + "");
+        map.put("role_id", "1"); // 0未知 1管理员 2学生 3老师
 
         mPresenter.completion(map);
     }
 
     private void uploadAvatar() {
-        mPresenter.uploadImage(cropedImageUri);
+        if (cropedImageUri != null) {
+            Logger.i("uploadImage");
+            mPresenter.uploadImage(cropedImageUri);
+        } else {
+            finishWork();
+        }
     }
 
     private void finishWork() {
+        Logger.i("finishWork");
         EventBus.getDefault().post(new SignInEvent());
         finish();
     }
@@ -184,30 +191,31 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     }
 
     private void getImageToView() {
-        if (null == cropedImageUri || null == avatarFile)
+        if (null == cropedImageUri)
             return;
         ImgLoader.showAvatar(FileUtils.getPath(mContext, cropedImageUri), avatarView);
     }
 
     // 去截图
     private void toCropAvatar(Uri uri) {
-        avatarFile = FileUtils.createImageFile();
-        cropedImageUri = Uri.fromFile(avatarFile);
+        cropedImageUri = Uri.fromFile(FileUtils.createImageFile());
         ImageUtil.crop(mContext, uri, cropedImageUri, CropType.ICON);
     }
 
-    @OnClick({R.id.finish, R.id.help})
+    @OnClick({R.id.finish, R.id.help, R.id.avatar})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.avatar:
-                mCurrentPhotoFile = FileUtils.createImageFile();
-                ImageUtil.doPickPhotoAction(mContext, mCurrentPhotoFile);
+                new RxPermissions(mContext).request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(aBoolean -> {
+                    mCurrentPhotoFile = FileUtils.createImageFile();
+                    ImageUtil.doPickPhotoAction(mContext, mCurrentPhotoFile);
+                });
                 break;
             case R.id.finish:
                 signUp();
                 break;
             case R.id.help:
-                ActionTool.startAct(mContext, ActContactCS.class);
+                ActionUtil.startAct(mContext, ActContactCS.class);
                 break;
         }
     }
@@ -218,26 +226,26 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         if (resultCode != RESULT_OK)
             return;
         switch (requestCode) {
-            case RequestCode.LOCAL:
+            case RequestCode.RC_LOCAL_GALLERY:
                 if (data == null)
                     break;
                 String str = FileUtils.getPath(mContext, data.getData());
                 File file = new File(str);
-                toCropAvatar(Uri.fromFile(file));
+                toCropAvatar(FileUtils.getFileUri(mContext, file));
                 break;
-            case RequestCode.CAMERA_WITH_DATA:
-                // 照相机程序返回的,再次调用图片剪辑程序去修剪图片
+            case RequestCode.RC_CAMERA_WITH_DATA: // 照相机程序返回的,再次调用图片剪辑程序去修剪图片
                 if (mCurrentPhotoFile == null) {
                     ToastUtil.toast("拍照获取图片失败");
                     break;
                 }
-                FileUtils.save(Uri.fromFile(mCurrentPhotoFile), mContext);
-                toCropAvatar(Uri.fromFile(mCurrentPhotoFile));
+                Uri uri = FileUtils.getFileUri(mContext, mCurrentPhotoFile);
+                FileUtils.save(uri, mContext);
+                toCropAvatar(uri);
                 break;
             case RequestCode.RC_CROP_IMG:
                 getImageToView();
                 break;
-            case RequestCode.SIGN_IN:
+            case RequestCode.RC_SIGN_IN:
                 setResult(resultCode);
                 finish();
                 break;
@@ -246,7 +254,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
 
     @Override
     protected void initData() {
-        email = getIntent().getStringExtra("emailOrPhone");
+        mobile = getIntent().getStringExtra("emailOrPhone");
         code = getIntent().getStringExtra("code");
         pass = getIntent().getStringExtra("pass");
     }
@@ -283,13 +291,15 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
 
     @Override
     public void completionSuccess(UserResult response) {
-        SysConfigTool.setUser(response.getData());
+        SysConfigTool.setUser(response.getData().getUser());
+        SysConfigTool.saveToken(response.getData().getToken().getToken());
+        Logger.i("completionSuccess");
         uploadAvatar();
     }
 
     @Override
     public void onProgress(int progress) {
-
+        loading("" + progress);
     }
 
     @Override
@@ -301,8 +311,13 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
 
     @Override
     public void updateUserSuccess(UserResult response) {
-        SysConfigTool.setUser(response.getData());
+        SysConfigTool.setUser(response.getData().getUser());
         finishWork();
+    }
+
+    @Override
+    public void getUserInfoSuccess(UserResult response) {
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

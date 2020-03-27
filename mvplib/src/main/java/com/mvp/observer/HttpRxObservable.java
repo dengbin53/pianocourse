@@ -1,7 +1,7 @@
 package com.mvp.observer;
 
 import com.mvp.base.MvpModel;
-import com.mvp.function.HttpResultFunction;
+import com.mvp.function.HttpErrorResultFunction;
 import com.mvp.function.ServerResultFunction;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
@@ -26,7 +26,7 @@ public class HttpRxObservable {
     public static <T extends MvpModel> Observable<T> getObservable(Observable<T> apiObservable) {
         return apiObservable
                 .map(new ServerResultFunction<T>())
-                .onErrorResumeNext(new HttpResultFunction<T>())
+                .onErrorResumeNext(new HttpErrorResultFunction<T>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -48,7 +48,7 @@ public class HttpRxObservable {
         LifecycleTransformer<T> lt2 = lifecycle.bindUntilEvent(ActivityEvent.DESTROY);
         return apiObservable
                 .map(new ServerResultFunction<T>())
-                .onErrorResumeNext(new HttpResultFunction<T>())
+                .onErrorResumeNext(new HttpErrorResultFunction<T>())
                 .subscribeOn(Schedulers.io())
                 .compose(lt)
                 .compose(lt2) // 需要在这个位置添加
@@ -63,7 +63,7 @@ public class HttpRxObservable {
         LifecycleTransformer<T> lt = lifecycle.bindToLifecycle();
         LifecycleTransformer<T> lt2 = lifecycle.bindUntilEvent(FragmentEvent.DESTROY);
         return apiObservable
-                .onErrorResumeNext(new HttpResultFunction<T>())
+                .onErrorResumeNext(new HttpErrorResultFunction<T>())
                 .subscribeOn(Schedulers.io())
                 .compose(lt)
                 .compose(lt2)//需要在这个位置添加

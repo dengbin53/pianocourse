@@ -18,7 +18,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,7 +92,6 @@ public class FileUtils {
     }
 
     public static String getPath(final Context context, final Uri uri) {
-        // DocumentProvider
         if (DocumentsContract.isDocumentUri(context, uri)) {
             if (isExternalStorageDocument(uri)) { // ExternalStorageProvider
                 final String docId = DocumentsContract.getDocumentId(uri);
@@ -161,8 +159,7 @@ public class FileUtils {
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
     public static boolean isExternalStorageDocument(Uri uri) {
-        return "com.android.externalstorage.documents".equals(uri
-                .getAuthority());
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
     /**
@@ -170,8 +167,7 @@ public class FileUtils {
      * @return Whether the Uri authority is DownloadsProvider.
      */
     public static boolean isDownloadsDocument(Uri uri) {
-        return "com.android.providers.downloads.documents".equals(uri
-                .getAuthority());
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
     /**
@@ -179,8 +175,7 @@ public class FileUtils {
      * @return Whether the Uri authority is MediaProvider.
      */
     public static boolean isMediaDocument(Uri uri) {
-        return "com.android.providers.media.documents".equals(uri
-                .getAuthority());
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
     /**
@@ -188,46 +183,16 @@ public class FileUtils {
      * @return Whether the Uri authority is Google Photos.
      */
     public static boolean isGooglePhotosUri(Uri uri) {
-        return "com.google.android.apps.photos.content".equals(uri
-                .getAuthority());
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
-    /**
-     * 删除文件夹下的所有文件
-     *
-     * @param file
-     */
-    public static void delete(File file) {
-        if (file.isFile()) {
-            file.delete();
-            return;
-
-        }
-        if (file.isDirectory()) {
-            File[] listFiles = file.listFiles();
-            if (listFiles == null || listFiles.length == 0) {
-                file.delete();
-                return;
-            }
-            for (int i = 0; i < listFiles.length; i++) {
-                delete(listFiles[i]);
-            }
-            file.delete();
-        }
-    }
-
-    /**
-     * 删除文件或整个文件夹
-     *
-     * @param dir
-     * @return
-     */
+    // 删除文件或整个文件夹
     public static boolean deleteFileOrDir(File dir) {
         if (dir.isDirectory()) {
             String[] children = dir.list();//递归删除目录中的子目录下
             if (children != null) {
-                for (int i = 0; i < children.length; i++) {
-                    boolean success = deleteFileOrDir(new File(dir, children[i]));
+                for (String child : children) {
+                    boolean success = deleteFileOrDir(new File(dir, child));
                     if (!success) {
                         return false;
                     }
@@ -244,17 +209,14 @@ public class FileUtils {
      * @param bytes
      * @param fileName 文件地址及文件名。例："/sdcard/a.txt”
      */
-
     public static void saveFileByBytes(byte[] bytes, String fileName) {
         try {
             File saveFile = new File(fileName);
             FileOutputStream outStream = new FileOutputStream(saveFile);
             outStream.write(bytes);
             outStream.close();
-        } catch (FileNotFoundException e) {
-            return;
         } catch (IOException e) {
-            return;
+            Logger.w(e);
         }
     }
 
@@ -262,7 +224,6 @@ public class FileUtils {
      * 以字节流方式读取文件
      *
      * @param fileName 文件地址及文件名。例："/sdcard/a.txt”
-     * @return
      */
     public static byte[] loadFile2Bytes(String fileName) {
         FileInputStream inStream = null;
@@ -279,33 +240,12 @@ public class FileUtils {
                 stream.write(buffer, 0, length);
             }
             return buffer;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         } finally {
             close(inStream);
             close(stream);
-        }
-    }
-
-    /**
-     * 是否有可插拔的SD卡
-     * Warning:有些机型即使插入SD卡也取不到路径,第三方厂商把地址修改过了,这里就不考虑这些情况了
-     * Warning:有SD卡插孔的手机,即使没插内存卡System.getenv("SECONDARY_STORAGE")也返回路径,并且路径存在,
-     * 用判断路径可用空间的大小来判断SD卡是否插入了
-     *
-     * @return
-     */
-    public static boolean haveRemoveableSDCard() {
-        try {
-            return !TextUtils.isEmpty(System.getenv("SECONDARY_STORAGE"))
-                    && new File(System.getenv("SECONDARY_STORAGE")).exists()
-                    && new File(System.getenv("SECONDARY_STORAGE")).getFreeSpace() > 0;
-        } catch (Exception e) {
-            return false;
         }
     }
 
@@ -365,25 +305,6 @@ public class FileUtils {
         return uri;
     }
 
-    // 删除files里面的所有文件
-    public static void deleteAllFiles(File files) {
-        if (files == null || !files.exists()) {
-            return;
-        }
-        if (files.isFile()) {
-            //文件直接删除
-            files.delete();
-        } else if (files.isDirectory()) {
-            //文件夹
-            File[] innerFiles = files.listFiles();
-            if (innerFiles != null) {
-                for (File newFile : innerFiles) {
-                    deleteAllFiles(newFile);
-                }
-            }
-        }
-    }
-
     public static void close(Closeable closeable) {
         if (closeable != null) {
             try {
@@ -394,52 +315,13 @@ public class FileUtils {
         }
     }
 
-
-    public static void delAllFile(String path) {
-        File file = new File(path);
-        if (!file.exists()) {
-            return;
-        }
-        if (!file.isDirectory()) {
-            return;
-        }
-        String[] tempList = file.list();
-        File temp = null;
-        for (int i = 0; i < tempList.length; i++) {
-            if (path.endsWith(File.separator)) {
-                temp = new File(path + tempList[i]);
-            } else {
-                temp = new File(path + File.separator + tempList[i]);
-            }
-            if (temp.isFile()) {
-                temp.delete();
-            }
-            if (temp.isDirectory()) {
-                delAllFile(path + "/" + tempList[i]);
-                delFolder(path + "/" + tempList[i]);
-            }
-        }
-    }
-
-    /**
-     * @param folderPath 文件夹路径
-     */
-    public static void delFolder(String folderPath) {
-        delAllFile(folderPath);
-        String filePath = folderPath;
-        File myFilePath = new File(filePath);
-        myFilePath.delete();
-    }
-
     public static File createImageFile() {
-        File cropedDir = Environment
-                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File cropedImageFile = new File(cropedDir, "IMG_" + System.currentTimeMillis() + ".jpg");
+        File cropDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File cropImageFile = new File(cropDir, "IMG_" + System.currentTimeMillis() + ".jpg");
         // 如果父目录没有存在，则创建父目录
-        if (!cropedImageFile.getParentFile().exists())
-            cropedImageFile.getParentFile().mkdirs();
-
-        return cropedImageFile;
+        if (!cropImageFile.getParentFile().exists())
+            cropImageFile.getParentFile().mkdirs();
+        return cropImageFile;
     }
 
     public static void save(Uri uri, Context context) {
@@ -465,18 +347,10 @@ public class FileUtils {
         return output;
     }
 
-    /**
-     * 打开相册intent
-     */
-    public static Intent getPhotoPickIntent() {
-        Intent intent;
-        intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        return intent;
-    }
-
     public static boolean isImagePath(String path) {
         if (TextUtils.isEmpty(path))
             return false;
         return path.endsWith(".jpg") || path.endsWith(".png") || path.endsWith(".jpeg");
     }
+
 }

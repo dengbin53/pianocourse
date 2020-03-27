@@ -18,8 +18,8 @@ public class RequestCode {
     public static final int USER_PROFILE = 0x113;
 
     // 头像截取
-    public static final int CAMERA_WITH_DATA = 0x115;
-    public static final int LOCAL = 0x116;
+    public static final int RC_CAMERA_WITH_DATA = 0x115;
+    public static final int RC_LOCAL_GALLERY = 0x116;
     public static final int LOCAL_PIC = 0x117;
     public static final int PIC_GUIDE = 0x118;
 
@@ -37,7 +37,7 @@ public class RequestCode {
 
     public static final int PASS = 0x20D;
     public static final int LOGIN = 0x20E;
-    public static final int SIGN_IN = 0x20F;
+    public static final int RC_SIGN_IN = 0x20F;
     public static final int SETTING = 0x211;
 
     public static final int GUIDE_AREA = 0x212;

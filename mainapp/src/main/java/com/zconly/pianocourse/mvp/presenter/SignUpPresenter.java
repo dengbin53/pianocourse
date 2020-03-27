@@ -31,9 +31,11 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
         super(mView);
     }
 
-    public void retrieve(String phone) {
+    public void retrieve(String mobile) {
         if (!isNetConnect()) return;
-        Observable<BaseBean> observer = RetrofitUtils.create(ApiService.class).retrieve(phone);
+        Map<String, String> params = new HashMap<>();
+        params.put("mobile", mobile);
+        Observable<BaseBean> observer = RetrofitUtils.create(ApiService.class).retrieve(params);
         HttpRxObservable.getObservable(observer, (BaseMvpActivity) mView).subscribe(new HttpRxObserver<BaseBean>() {
             @Override
             protected void onStart(Disposable d) {
@@ -55,11 +57,39 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
         });
     }
 
-    public void verify(String phone, String code) {
+    public void signUpCode(String mobile) {
+        if (!isNetConnect()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("mobile", mobile);
+        Observable<BaseBean> observer = RetrofitUtils.create(ApiService.class).signUpCode(params);
+        HttpRxObservable.getObservable(observer, (BaseMvpActivity) mView).subscribe(new HttpRxObserver<BaseBean>() {
+            @Override
+            protected void onStart(Disposable d) {
+                if (mView != null)
+                    mView.loading("");
+            }
+
+            @Override
+            protected void onError(ApiException e) {
+                if (mView != null)
+                    mView.onError(e);
+            }
+
+            @Override
+            protected void onSuccess(BaseBean response) {
+                if (mView != null)
+                    mView.retrieveSuccess(response);
+            }
+        });
+    }
+
+    // behavior，0-注册，1-登录，2-修改米啊吗
+    public void verify(String phone, String code, String behavior) {
         if (!isNetConnect()) return;
         Map<String, String> params = new HashMap<>();
         params.put("mobile", phone);
         params.put("code", code);
+        params.put("behavior", behavior);
         Observable<BaseBean> observer = RetrofitUtils.create(ApiService.class).verify(params);
         HttpRxObservable.getObservable(observer, (BaseMvpActivity) mView).subscribe(new HttpRxObserver<BaseBean>() {
             @Override

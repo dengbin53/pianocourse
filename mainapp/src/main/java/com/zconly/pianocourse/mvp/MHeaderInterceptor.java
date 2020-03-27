@@ -3,6 +3,7 @@ package com.zconly.pianocourse.mvp;
 import com.mvp.interceptor.ParamsInterceptor;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.util.DeviceUtils;
+import com.zconly.pianocourse.util.SysConfigTool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,12 +21,11 @@ public class MHeaderInterceptor extends ParamsInterceptor {
     @Override
     protected Map<String, String> getHeader() {
         Map<String, String> headerMap = new HashMap<>();
+        headerMap.put("Authorization", SysConfigTool.getToken());
         headerMap.put("platform", "1");
-        headerMap.put("User-Agent", "msb-apk");
+        headerMap.put("User-Agent", "piano-course-android");
         headerMap.put("cversion", Constants.CLIENT_VERSION + "");
         headerMap.put("Timestamp", System.currentTimeMillis() + "");
-        headerMap.put("network", Constants.NETWORK + "");
-        headerMap.put("Authorization", Constants.TOKEN);
         headerMap.put("imei", Constants.IMEI);
         headerMap.put("screenwidth", DeviceUtils.getScreenWidth() + "");
         headerMap.put("screenheight", DeviceUtils.getScreenHeight() + "");

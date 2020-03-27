@@ -1,6 +1,7 @@
 package com.zconly.pianocourse.bean.result;
 
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.TokenBean;
 import com.zconly.pianocourse.bean.UserBean;
 
 /**
@@ -13,13 +14,34 @@ import com.zconly.pianocourse.bean.UserBean;
  */
 public class UserResult extends BaseBean {
 
-    private UserBean data;
+    private UserData data;
 
-    public UserBean getData() {
+    public UserData getData() {
         return data;
     }
 
-    public void setData(UserBean data) {
+    public void setData(UserData data) {
         this.data = data;
+    }
+
+    public static class UserData extends BaseBean {
+        private TokenBean token;
+        private UserBean user;
+
+        public TokenBean getToken() {
+            return token;
+        }
+
+        public void setToken(TokenBean token) {
+            this.token = token;
+        }
+
+        public UserBean getUser() {
+            return user;
+        }
+
+        public void setUser(UserBean user) {
+            this.user = user;
+        }
     }
 }

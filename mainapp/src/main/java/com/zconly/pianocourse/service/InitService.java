@@ -13,7 +13,6 @@ import com.zconly.pianocourse.BuildConfig;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.Logger;
-import com.zconly.pianocourse.util.SysConfigTool;
 
 /**
  * @Description: 初始化组件等
@@ -76,7 +75,6 @@ public class InitService extends IntentService {
 
     // 初始化一些全局参数
     private void initConstants() {
-        Constants.TOKEN = SysConfigTool.getToken();
         Constants.CLIENT_VERSION = String.valueOf(DeviceUtils.getAppVersionCode());
         // 取 Umeng 渠道号
         try {

@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:hint="@string/hint_phone"
-            android:inputType="textEmailAddress" />
+            android:inputType="phone" />
     </LinearLayout>
 
     <EditText
@@ -51,8 +51,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:padding="@dimen/space_normal">
+        android:layout_height="32dp">
 
         <TextView
             android:id="@+id/sign_up"

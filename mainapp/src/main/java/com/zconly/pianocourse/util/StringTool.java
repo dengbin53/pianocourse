@@ -406,7 +406,7 @@ public class StringTool {
 
     public static boolean isCodeLength(String str) {
         int l = TextUtils.getTrimmedLength(str);
-        return l == 4;
+        return l == 6;
     }
 
 

@@ -32,8 +32,8 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     public void signIn(String phone, String pwd) {
         if (!isNetConnect()) return;
         Map<String, String> params = new HashMap<>();
-        params.put("phoen", phone);
-        params.put("pwd", pwd);
+        params.put("username", phone);
+        params.put("password", pwd);
         Observable<TokenResult> observer = RetrofitUtils.create(ApiService.class).signIn(params);
         HttpRxObservable.getObservable(observer, (LoginActivity) mView).subscribe(new HttpRxObserver<TokenResult>() {
             @Override
@@ -50,8 +50,10 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
             @Override
             protected void onSuccess(TokenResult response) {
-                if (mView != null)
+                if (mView != null) {
+                    mView.dismissLoading();
                     mView.loginSuccess(response);
+                }
             }
         });
     }

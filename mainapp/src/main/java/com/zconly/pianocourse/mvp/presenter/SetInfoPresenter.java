@@ -46,8 +46,10 @@ public class SetInfoPresenter extends BasePresenter<SetInfoView> {
 
             @Override
             protected void onSuccess(UserResult response) {
-                if (mView != null)
+                if (mView != null) {
+                    mView.dismissLoading();
                     mView.completionSuccess(response);
+                }
             }
         });
     }

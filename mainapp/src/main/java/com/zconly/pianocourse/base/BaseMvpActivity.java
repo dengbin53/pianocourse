@@ -7,7 +7,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.mvp.BuildConfig;
 import com.mvp.base.MvpActivity;
 import com.mvp.base.MvpPresenter;
 import com.mvp.exception.ApiException;
@@ -36,11 +35,10 @@ public abstract class BaseMvpActivity<P extends MvpPresenter> extends MvpActivit
 
         dismissLoading();
 
-        if (BuildConfig.DEBUG) {
-            ToastUtil.toast("BaseMvpActivity--onError--" + errorBean.getCode() + "--" + errorBean.getMsg());
-        }
+        ToastUtil.toast(errorBean.getCode() + " " + errorBean.getMsg());
 
-        if (errorBean != null && errorBean.getCode() == -100) {
+        // TODO: 2020/3/27
+        if (errorBean.getCode() == -100) {
             new AlertDialog.Builder(mContext)
                     .setMessage(errorBean.getMsg())
                     .setNegativeButton("确定", (dialog, which) -> DataUtil.logout(getApplicationContext()))

@@ -23,7 +23,7 @@ import butterknife.BindView;
 /**
  * webView
  */
-public class ActWebView extends BaseMvpActivity {
+public class WebViewActivity extends BaseMvpActivity {
     public static final String TAG_DATA = "url";
 
     @BindView(R.id.web_view)
@@ -36,6 +36,13 @@ public class ActWebView extends BaseMvpActivity {
 
     private final String mimeType = "text/html";
     private final String encoding = "utf-8";
+
+    public static void start(Context mContext, String title, String url) {
+        Intent intent = new Intent(mContext, WebViewActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("url", url);
+        mContext.startActivity(intent);
+    }
 
     @Override
     public void initData() {
@@ -118,11 +125,12 @@ public class ActWebView extends BaseMvpActivity {
 
     @Override
     protected void onDestroy() {
+        webView.destroy();
         super.onDestroy();
     }
 
     public static Intent getIntent(Context context, String title, String url) {
-        Intent intent = new Intent(context, ActWebView.class);
+        Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("url", url);
         return intent;
@@ -130,6 +138,6 @@ public class ActWebView extends BaseMvpActivity {
 
     @Override
     protected boolean hasTitleView() {
-        return false;
+        return true;
     }
 }

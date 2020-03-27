@@ -1,31 +1,30 @@
 package com.zconly.pianocourse.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.ContextThemeWrapper;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
-import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zconly.pianocourse.base.RequestCode;
 
 import java.io.File;
 
 public class ImageUtil {
-    /**
-     * 打开选图对话框
-     */
-    public static void doPickPhotoAction(final Activity act, final File mCurrentPhotoFile) {
+
+    // 打开选图对话框
+    public static void doPickPhotoAction(final FragmentActivity act, final File mCurrentPhotoFile) {
         final Context dialogContext = new ContextThemeWrapper(act, android.R.style.Theme_Holo_Light);
         String cancel = "取消";
         String[] choices;
@@ -38,21 +37,18 @@ public class ImageUtil {
         builder.setTitle("选择头像");
         builder.setSingleChoiceItems(adapter, -1, (dialog, which) -> {
             dialog.dismiss();
+            // 判断是否有SD卡
+            String status = Environment.getExternalStorageState();
+            if (!status.equals(Environment.MEDIA_MOUNTED)) {
+                ToastUtil.toast("SD卡");
+                return;
+            }
             switch (which) {
-                case 0: {
-                    String status = Environment.getExternalStorageState();
-                    if (status.equals(Environment.MEDIA_MOUNTED)) // 判断是否有SD卡
-                        gotoCamera(act, mCurrentPhotoFile);// 用户点击了从照相机获取
-                    else
-                        ToastUtil.toast("SD卡");
+                case 0:
+                    gotoCamera(act, mCurrentPhotoFile); // 用户点击了从照相机获取
                     break;
-                }
                 case 1:
-                    String status = Environment.getExternalStorageState();
-                    if (status.equals(Environment.MEDIA_MOUNTED)) // 判断是否有SD卡
-                        doPickPhotoFromGallery(act);// 从相册中去获取
-                    else
-                        ToastUtil.toast("SD卡");
+                    doPickPhotoFromGallery(act); // 从相册中去获取
                     break;
             }
         });
@@ -60,31 +56,37 @@ public class ImageUtil {
         builder.create().show();
     }
 
-    // 跳转相机
-    public static void gotoCamera(Activity activity, File file) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int granted = ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
-            if (granted != PackageManager.PERMISSION_GRANTED) {
-                ToastUtil.toast("请给应用拍照权限");
-                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA},
-                        10101);
+    // 跳转相机 file:拍照照片路径
+    @SuppressLint("CheckResult")
+    public static void gotoCamera(FragmentActivity act, File file) {
+        new RxPermissions(act).request(Manifest.permission.CAMERA).subscribe(aBoolean -> {
+            if (!aBoolean)
                 return;
-            }
-        }
-
-        Uri uri = FileUtils.getFileUri(activity, file);
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        activity.startActivityForResult(intent, RequestCode.CAMERA_WITH_DATA);
+            Uri uri = FileUtils.getFileUri(act, file);
+            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            act.startActivityForResult(intent, RequestCode.RC_CAMERA_WITH_DATA);
+        });
     }
 
     // 请求Gallery程序
-    public static void doPickPhotoFromGallery(Activity act) {
-        Intent pictureView = new Intent(Intent.ACTION_GET_CONTENT);
-        pictureView.setType("image/*");
-        act.startActivityForResult(pictureView, RequestCode.LOCAL);
+    @SuppressLint("CheckResult")
+    public static void doPickPhotoFromGallery(FragmentActivity act) {
+        new RxPermissions(act).request(Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(aBoolean -> {
+            if (aBoolean) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setType("image/*");
+                act.startActivityForResult(intent, RequestCode.RC_LOCAL_GALLERY);
+            }
+        });
+
+        // 打开相册intent
+        // new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
     }
 
     // 裁剪图片

@@ -47,7 +47,7 @@ public class MainActivity extends BaseMvpActivity {
         context.startActivity(intent);
     }
 
-    public void switchContent(Fragment to) {
+    private void switchContent(Fragment to) {
         if (mContent == to)
             return;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,7 +29,7 @@ import butterknife.OnClick;
  * @UpdateDate: 2020-01-06 11:10
  * @UpdateRemark: 更新说明
  */
-public class TitleView extends RelativeLayout {
+public class TitleView extends LinearLayout {
 
     public static final int LEFT_IV = 0x0;
     public static final int LEFT_TV = 0x1;
@@ -51,6 +53,8 @@ public class TitleView extends RelativeLayout {
 
     @BindView(R.id.title_center_ll)
     LinearLayout centerLl;
+    @BindView(R.id.title_right_rl)
+    RelativeLayout rightRl;
 
     @BindView(R.id.title_message_point_view)
     View msgPointView;
@@ -83,10 +87,12 @@ public class TitleView extends RelativeLayout {
     }
 
     private void initView(Context context) {
+        setOrientation(LinearLayout.HORIZONTAL);
+        setGravity(Gravity.CENTER_VERTICAL);
         View.inflate(context, R.layout.view_title, this);
         ButterKnife.bind(this, this);
 
-        MarginLayoutParams lp = new MarginLayoutParams(MarginLayoutParams.MATCH_PARENT,
+        ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(MarginLayoutParams.MATCH_PARENT,
                 MarginLayoutParams.WRAP_CONTENT);
         setLayoutParams(lp);
         setMinimumHeight(getResources().getDimensionPixelSize(R.dimen.title_height));
@@ -103,7 +109,7 @@ public class TitleView extends RelativeLayout {
         switch (view.getId()) {
             case R.id.title_left_iv:
                 if (mContext instanceof Activity)
-                    ((Activity) mContext).finish();
+                    ((Activity) mContext).onBackPressed();
                 if (mCallback != null)
                     mCallback.callback(LEFT_IV);
                 break;
@@ -148,6 +154,12 @@ public class TitleView extends RelativeLayout {
         return this;
     }
 
+    public TitleView setLeftTvImg(int res) {
+        leftTv.setCompoundDrawablesWithIntrinsicBounds(res, 0, 0, 0);
+        leftTv.setVisibility(res > 0 ? VISIBLE : GONE);
+        return this;
+    }
+
     public TitleView setLeftTv(String text) {
         leftTv.setVisibility(TextUtils.isEmpty(text) ? GONE : VISIBLE);
         leftTv.setText(text);
@@ -161,7 +173,7 @@ public class TitleView extends RelativeLayout {
     }
 
     public TitleView setRightIv0(int res) {
-        rightIv0.setVisibility(res <= 0 ? GONE : VISIBLE);
+        rightRl.setVisibility(res <= 0 ? GONE : VISIBLE);
         ImgLoader.showImgSmall(null, rightIv0, res);
         return this;
     }
@@ -208,7 +220,7 @@ public class TitleView extends RelativeLayout {
 
     public TitleView setMsgPoint(boolean show) {
         if (show) {
-            rightIv0.setVisibility(VISIBLE);
+            rightRl.setVisibility(VISIBLE);
             msgPointView.setVisibility(VISIBLE);
             msgTv.setVisibility(GONE);
         } else {
@@ -221,11 +233,20 @@ public class TitleView extends RelativeLayout {
         if (TextUtils.isEmpty(text)) {
             msgTv.setVisibility(GONE);
         } else {
-            rightIv0.setVisibility(VISIBLE);
+            rightRl.setVisibility(VISIBLE);
             msgPointView.setVisibility(GONE);
             msgTv.setText(text);
             msgTv.setVisibility(VISIBLE);
         }
         return this;
     }
+
+    public ImageView getRightIv0() {
+        return rightIv0;
+    }
+
+    public ImageView getRightIv1() {
+        return rightIv1;
+    }
+
 }

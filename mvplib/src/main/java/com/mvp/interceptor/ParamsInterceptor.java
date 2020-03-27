@@ -6,8 +6,12 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import okhttp3.FormBody;
@@ -25,7 +29,7 @@ import okio.Buffer;
  */
 public abstract class ParamsInterceptor implements Interceptor {
 
-    private static final MediaType TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+    private static final MediaType TYPE_JSON = MediaType.parse("application/json;charset=utf-8");
 
     @NonNull
     @Override
@@ -65,26 +69,28 @@ public abstract class ParamsInterceptor implements Interceptor {
         JsonObject jsonObject;
         RequestBody requestBody = request.body();
 
-        if (!(requestBody instanceof FormBody) && !(requestBody instanceof MultipartBody)) {
+        if (requestBody != null && !(requestBody instanceof FormBody) && !(requestBody instanceof MultipartBody)) {
             Buffer buffer = new Buffer();
             try {
                 requestBody.writeTo(buffer);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            Charset charset = Charset.forName("UTF-8");
+            Charset charset = StandardCharsets.UTF_8;
             MediaType contentType = requestBody.contentType();
-            if (contentType != null) {
+            if (contentType != null)
                 charset = contentType.charset(charset);
-            }
             String paramsStr = buffer.readString(charset);
-            jsonObject = new JsonObject();
-            jsonObject.getAsJsonObject(paramsStr);
-            requestBody = RequestBody.create(TYPE_JSON, jsonObject.toString());
-
+            JSONObject jo;
+            try {
+                jo = new JSONObject(paramsStr);
+            } catch (JSONException e) {
+                jo = null;
+                e.printStackTrace();
+            }
+            requestBody = jo == null ? requestBody : RequestBody.create(TYPE_JSON, jo.toString());
         }
         return requestBody;
-
     }
 
     private Request methodPost(Request request, Request.Builder builder) {

@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:hint="@string/hint_phone"
-            android:inputType="textEmailAddress" />
+            android:inputType="phone" />
     </LinearLayout>
 
     <RelativeLayout
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/re_send"
-            style="@style/text_normal_black"
+            style="@style/text_small_black"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"

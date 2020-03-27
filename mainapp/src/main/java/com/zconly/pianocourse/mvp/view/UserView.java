@@ -13,4 +13,6 @@ import com.zconly.pianocourse.bean.result.UserResult;
  */
 public interface UserView extends MvpView {
     void updateUserSuccess(UserResult response);
+
+    void getUserInfoSuccess(UserResult response);
 }

@@ -1,6 +1,7 @@
 package com.zconly.pianocourse.bean;
 
 import com.mvp.base.MvpModel;
+import com.zconly.pianocourse.base.ErrorCode;
 
 /**
  * @Description: java类作用描述
@@ -25,12 +26,12 @@ public class BaseBean extends MvpModel {
 
     @Override
     public boolean isSuccess() {
-        return code == 0;
+        return getCode() == ErrorCode.SUCCESS;
     }
 
     @Override
     public String getMsg() {
-        return getMsg();
+        return msg;
     }
 
     @Override

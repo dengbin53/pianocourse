@@ -8,78 +8,67 @@ public class UserBean extends BaseBean {
 
     private static final long serialVersionUID = 1L;
 
+    private long birthday;
+    private long duration;
+    private int examlevel;
     private long id;                                // 主键
-    private String phone;                           // 手机号
+    private String mobile;                          // 手机号
+    private String nickname;
+    private int role_id;
+    private int sex;
+    private String signature;                       // 签名
+    private int status;                         // 是否认证
+    private String avatar;
+    private String wx_avatar;
+
     private String mail;                            // 邮箱
     private int type;                               // 用户类型
     private String name;
-    private String avatar;
-    private int sex;
-    private long birthDay;
-    private String interests;                       // 兴趣数组
-    private int nationality;                        // 国籍
-    private String signature;                       // 签名
     private int relstat;                            // 关系状态
     private String remark;
-    private String languages;
-    private boolean status;                         // 是否认证
-    private String area;                            // 区域，逗号分隔
     private long ctime;                             // 创建时间
     private long mtime;                             // 修改时间
     private String token;
     private int inContacts;                         // 是否在通讯录
 
-    private String imtoken;                         // 云信token
-
     // 本地显示使用
     private int viewType;
 
-    public String getImtoken() {
-        return imtoken;
+
+    public String getWx_avatar() {
+        return wx_avatar;
     }
 
-    public void setImtoken(String imtoken) {
-        this.imtoken = imtoken;
+    public void setWx_avatar(String wx_avatar) {
+        this.wx_avatar = wx_avatar;
     }
 
-    public int getInContacts() {
-        return inContacts;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void setInContacts(int inContacts) {
-        this.inContacts = inContacts;
+    public long getBirthday() {
+        return birthday;
     }
 
-    public String getToken() {
-        return token;
+    public void setBirthday(long birthday) {
+        this.birthday = birthday;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public long getDuration() {
+        return duration;
     }
 
-    public boolean isStatus() {
-        return status;
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public int getExamlevel() {
+        return examlevel;
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(String languages) {
-        this.languages = languages;
+    public void setExamlevel(int examlevel) {
+        this.examlevel = examlevel;
     }
 
     public long getId() {
@@ -90,12 +79,52 @@ public class UserBean extends BaseBean {
         this.id = id;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public int getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getMail() {
@@ -130,46 +159,6 @@ public class UserBean extends BaseBean {
         this.avatar = avatar;
     }
 
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    public long getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(long birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public String getInterests() {
-        return interests;
-    }
-
-    public void setInterests(String interests) {
-        this.interests = interests;
-    }
-
-    public int getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(int nationality) {
-        this.nationality = nationality;
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
-
     public int getRelstat() {
         return relstat;
     }
@@ -202,12 +191,20 @@ public class UserBean extends BaseBean {
         this.mtime = mtime;
     }
 
-    public int getViewType() {
-        return viewType;
+    public String getToken() {
+        return token;
     }
 
-    public void setViewType(int viewType) {
-        this.viewType = viewType;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public int getInContacts() {
+        return inContacts;
+    }
+
+    public void setInContacts(int inContacts) {
+        this.inContacts = inContacts;
     }
 
     @Override
@@ -217,8 +214,4 @@ public class UserBean extends BaseBean {
         return getId() == ((UserBean) o).getId();
     }
 
-    // 聊天ID
-    public String getAccount() {
-        return String.valueOf(getId());
-    }
 }

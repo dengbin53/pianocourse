@@ -35,6 +35,7 @@ ext {
             "logging-interceptor"   : 'com.squareup.okhttp3:logging-interceptor:3.12.0',
             "rxlifecycle"           : 'com.trello.rxlifecycle2:rxlifecycle:2.2.2',
             "rxlifecycle-components": 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2',
+            "rxpermissions"         : 'com.github.tbruyelle:rxpermissions:0.10.2',
 
             "umeng-analytics"       : 'com.umeng.umsdk:analytics:8.0.0',
             "umeng-common"          : 'com.umeng.umsdk:common:2.0.0',

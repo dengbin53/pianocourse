@@ -23,7 +23,7 @@ public class LoadingDialog extends MvpDialog {
     @SuppressLint("StaticFieldLeak")
     private static LoadingDialog mLoadingDialog;
     private TextView tv;
-    private String msg = "正在上传...";
+    private String msg = "";
 
     public LoadingDialog() {
 
@@ -72,11 +72,19 @@ public class LoadingDialog extends MvpDialog {
 
     public void setShowMsg(String msg) {
         this.msg = msg;
+        if (tv != null)
+            tv.setText(msg);
     }
 
     public static void loading(FragmentActivity context, String msg) {
         if (context == null)
             return;
+        if (mLoadingDialog != null && mLoadingDialog.isAdded()
+                && mLoadingDialog.getContext() != null && mLoadingDialog.getContext().equals(context)
+                && mLoadingDialog.getDialog() != null && mLoadingDialog.getDialog().isShowing()) {
+            mLoadingDialog.setShowMsg(msg);
+            return;
+        }
         dismissLoadingDialog();
         mLoadingDialog = new LoadingDialog(context);
         mLoadingDialog.setShowMsg(msg);

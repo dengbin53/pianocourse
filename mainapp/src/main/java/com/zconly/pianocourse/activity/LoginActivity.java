@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
-import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.RequestCode;
 import com.zconly.pianocourse.bean.result.TokenResult;
+import com.zconly.pianocourse.bean.result.UserResult;
 import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.LoginPresenter;
 import com.zconly.pianocourse.mvp.view.LoginView;
-import com.zconly.pianocourse.util.ActionTool;
+import com.zconly.pianocourse.util.ActionUtil;
 import com.zconly.pianocourse.util.StringTool;
 import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.util.ToastUtil;
@@ -82,7 +82,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                 doSignIn();
                 break;
             case R.id.sign_up:
-                ActionTool.startAct(mContext, SignUpActivity.class);
+                ActionUtil.startAct(mContext, SignUpActivity.class);
                 break;
             case R.id.find_pass:
                 Intent intent = new Intent(mContext, FindPassActivity.class);
@@ -108,7 +108,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     protected void initData() {
-
+        SysConfigTool.logout();
     }
 
     @Override
@@ -140,7 +140,17 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void loginSuccess(TokenResult response) {
         String token = response.getData().getToken();
         SysConfigTool.saveToken(token);
-        Constants.TOKEN = token;
+        mPresenter.getUserInfo(0);
+    }
+
+    @Override
+    public void updateUserSuccess(UserResult response) {
+
+    }
+
+    @Override
+    public void getUserInfoSuccess(UserResult response) {
+        SysConfigTool.setUser(response.getData().getUser());
         EventBus.getDefault().post(new SignInEvent());
     }
 
