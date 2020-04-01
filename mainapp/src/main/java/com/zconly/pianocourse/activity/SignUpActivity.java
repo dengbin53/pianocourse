@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
+import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.result.UserResult;
 import com.zconly.pianocourse.event.SignInEvent;
@@ -40,6 +42,8 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
     EditText mobileEt;
     @BindView(R.id.pass)
     EditText passEt;
+    @BindView(R.id.pass_confirm)
+    EditText passConfirmEt;
     @BindView(R.id.verification_code)
     EditText codeEt;
     @BindView(R.id.terms_of_service)
@@ -51,28 +55,6 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
     private String mobile;
     private String code;
     private String pass;
-
-    @SuppressLint("HandlerLeak")
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case CountDownTimerTool.TIMER_TICK:
-                    sendTv.setEnabled(false);
-                    sendTv.setText(String.valueOf(msg.arg1));
-                    break;
-                case CountDownTimerTool.TIMER_FINISH:
-                    sendTv.setEnabled(true);
-                    sendTv.setText(getString(R.string.btn_re_send));
-                    break;
-                case GET_CODE_SUCCESS:
-                    dismissLoading();
-                    startTimer(60);
-                    break;
-            }
-        }
-    };
 
     // 倒计时
     private void startTimer(int time) {
@@ -101,6 +83,12 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
         }
 
         pass = passEt.getText().toString();
+        String passConfirm = passConfirmEt.getText().toString();
+        if (!TextUtils.equals(pass, passConfirm)) {
+            ToastUtil.toast(getString(R.string.toast_pass_not_equal));
+            return;
+        }
+
         if (!StringTool.isPassLength(pass)) {
             ToastUtil.toast(getString(R.string.toast_not_pass_length));
             return;
@@ -109,11 +97,12 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
         mPresenter.verify(mobile, code, "0");
     }
 
+    @SingleClick
     @OnClick({R.id.login, R.id.sign_in, R.id.help, R.id.re_send, R.id.cancel, R.id.terms_of_service})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-                LoginActivity.start(mContext);
+                SignInActivity.start(mContext);
                 break;
             case R.id.sign_in:
                 doSignUp();
@@ -156,11 +145,33 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
         return true;
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void initView() {
         String str = getString(R.string.btn_terms_of_service_confirm);
         str = String.format(str, "<u>", "</u>");
         termsOfServiceTv.setText(Html.fromHtml(str));
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case CountDownTimerTool.TIMER_TICK:
+                        sendTv.setEnabled(false);
+                        sendTv.setText(String.valueOf(msg.arg1));
+                        break;
+                    case CountDownTimerTool.TIMER_FINISH:
+                        sendTv.setEnabled(true);
+                        sendTv.setText(getString(R.string.btn_re_send));
+                        break;
+                    case GET_CODE_SUCCESS:
+                        dismissLoading();
+                        startTimer(60);
+                        break;
+                }
+            }
+        };
     }
 
     @Override
@@ -169,7 +180,7 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
     }
 
     @Override
-    public void retrieveSuccess(BaseBean response) {
+    public void sendCodeSuccess(BaseBean response) {
         ToastUtil.toast(R.string.toast_code_send_success);
         mHandler.sendEmptyMessage(GET_CODE_SUCCESS);
     }

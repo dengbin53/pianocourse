@@ -69,4 +69,6 @@ public class Constants {
     public static final int CATEGORY_CLASS_EXPERIENCE = 1; // 活动 1
     public static final int CATEGORY_CLASS_DISCOVER = 2; // 发现 2
     public static final int CATEGORY_CLASS_GUIDE = 3; // 引导(pdf) 3
+
+    public static final String BAI_DU_AK = "958ec87f47f8455281435033c76eacfe"; // 邓斌
 }

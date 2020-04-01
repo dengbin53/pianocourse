@@ -1,14 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:name_value="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/mine_tv"
-        style="@style/text_large_black"
+        android:id="@+id/view_title_title"
+        style="@style/text_larger_black"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@drawable/shape_white_border_bottom"
         android:gravity="center"
-        android:text="mine" />
+        android:text="@string/title_mine" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/view_empty_login" />
+
+    <RelativeLayout
+        android:id="@+id/mine_user_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_normal"
+        android:background="@drawable/selector_white_gray_light"
+        android:padding="@dimen/space_large">
+
+        <ImageView
+            android:id="@+id/view_fra_mine_avatar"
+            android:layout_width="@dimen/avatar_large"
+            android:layout_height="@dimen/avatar_large" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/space_large"
+            android:layout_toRightOf="@+id/view_fra_mine_avatar"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/view_fra_mine_name"
+                style="@style/text_normal_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/view_fra_mine_signature"
+                style="@style/text_normal_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/space_normal"
+                android:drawableRight="@mipmap/ic_arrow_right" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.zconly.pianocourse.widget.MKeyValueView
+        android:id="@+id/order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginTop="@dimen/space_normal"
+        android:background="@drawable/selector_white_gray_light"
+        android:visibility="gone"
+        name_value:arrow="true"
+        name_value:hint=""
+        name_value:name="@string/key_my_order"
+        name_value:value="" />
+
+    <!--    <include layout="@layout/view_line_h" />-->
+
+    <com.zconly.pianocourse.widget.MKeyValueView
+        android:id="@+id/favorite"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@drawable/selector_white_gray_light"
+        android:visibility="gone"
+        name_value:arrow="true"
+        name_value:hint=""
+        name_value:name="@string/key_my_favorite"
+        name_value:value="" />
+
+    <!--    <include layout="@layout/view_line_h" />-->
+
+    <com.zconly.pianocourse.widget.MKeyValueView
+        android:id="@+id/followed_guide"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@drawable/selector_white_gray_light"
+        android:visibility="gone"
+        name_value:arrow="true"
+        name_value:hint=""
+        name_value:name="@string/key_my_followed_guide" />
+
+    <com.zconly.pianocourse.widget.MKeyValueView
+        android:id="@+id/feedback"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginTop="@dimen/space_normal"
+        android:layout_marginBottom="@dimen/space_normal"
+        android:background="@drawable/selector_white_gray_light"
+        name_value:arrow="true"
+        name_value:hint=""
+        name_value:name="@string/key_feedback"
+        name_value:value="" />
+
+    <com.zconly.pianocourse.widget.MKeyValueView
+        android:id="@+id/setting"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@drawable/selector_white_gray_light"
+        name_value:arrow="true"
+        name_value:hint=""
+        name_value:name="@string/key_setting"
+        name_value:value="" />
+
+</LinearLayout>

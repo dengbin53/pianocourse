@@ -60,7 +60,7 @@ class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
         String fileStr = FileUtils.getPath(MainApplication.getInstance(), fileUri);
         File file = new File(fileStr);
         RequestBody fileRQ = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("avatar", file.getName(), fileRQ);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileRQ);
         Observable<FileBean> ob = RetrofitUtils.create(ApiService.class).uploadFile(part);
         Observer<FileBean> observer = new UploadObserver<FileBean>() {
             @Override

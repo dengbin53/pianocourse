@@ -53,7 +53,7 @@ public class WebViewActivity extends BaseMvpActivity {
 
     @Override
     protected int getContentView() {
-        return R.layout.act_web_view;
+        return R.layout.activity_web_view;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class WebViewActivity extends BaseMvpActivity {
 
         ((TitleView) mTitleView).setTitle(title);
 
-        progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.color_green),
+        progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.color_yellow),
                 PorterDuff.Mode.MULTIPLY);
 
         WebSettings ws = webView.getSettings();

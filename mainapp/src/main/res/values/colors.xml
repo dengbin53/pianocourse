@@ -7,14 +7,14 @@
     <color name="color_red_60">#99FF3300</color>
     <color name="color_red_30">#4DFF3300</color>
 
-    <color name="color_bg_default">#F2F2F2</color>
+    <color name="color_bg_default">#F8F8F8</color>
     <color name="color_bg_gray">#D9D9D9</color>
     <color name="color_bg_gray_light">#E9E9E9</color>
     <color name="color_bg_gray_dark">#C9C9C9</color>
-    <color name="color_bg_black_70">#B2333333</color>
+    <color name="color_bg_black_50">#88333333</color>
     <color name="color_bg_black">#333333</color>
 
-    <color name="color_divider">#D0D0D0</color>
+    <color name="color_divider">#E0E0E0</color>
 
     <color name="color_text_black">#333333</color>
     <!-- 灰色字体 -->
@@ -22,7 +22,7 @@
     <!-- 浅灰色字体 -->
     <color name="color_text_gray_light">#CCCCCC</color>
     <color name="color_text_gray_dark">#666666</color>
-    <color name="color_green">#00A49D</color>
+    <color name="color_yellow">#EACF8C</color>
     <color name="gray_text_light">#BBBBBB</color>
 
 </resources>

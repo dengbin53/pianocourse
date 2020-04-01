@@ -20,11 +20,7 @@ public class RequestCode {
     // 头像截取
     public static final int RC_CAMERA_WITH_DATA = 0x115;
     public static final int RC_LOCAL_GALLERY = 0x116;
-    public static final int LOCAL_PIC = 0x117;
-    public static final int PIC_GUIDE = 0x118;
 
-    public static final int EDIT_NATION = 0x205;
-    public static final int EDIT_INTEREST = 0x210;
     public static final int CONTENT = 0x206;
 
     public static final int GUIDE = 0x207;

@@ -3,6 +3,8 @@ package com.zconly.pianocourse.mvp.service;
 import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.UserBean;
+import com.zconly.pianocourse.bean.result.CourseListResult;
+import com.zconly.pianocourse.bean.result.SetInfoResult;
 import com.zconly.pianocourse.bean.result.TokenResult;
 import com.zconly.pianocourse.bean.result.UserResult;
 
@@ -46,10 +48,13 @@ public interface ApiService {
     Observable<BaseBean> verify(@Body Map<String, String> params);
 
     @POST("app/user/completion")
-    Observable<UserResult> completion(@Body Map<String, String> params);
+    Observable<SetInfoResult> completion(@Body Map<String, String> params);
 
     @POST("app/user/update")
     Observable<UserResult> updateUser(@Body Map<String, String> params);
+
+    @POST("app/user/feedback")
+    Observable<BaseBean> feedback(@Body Map<String, String> params);
 
     @GET("app/user/info")
     Observable<UserResult> userInfo(@QueryMap Map<String, String> params);
@@ -58,4 +63,6 @@ public interface ApiService {
     @POST("app/sys/upload-file")
     Observable<FileBean> uploadFile(@Part MultipartBody.Part body);
 
+    @GET("app/user/course")
+    Observable<CourseListResult> getCourseList(@QueryMap Map<String, String> params);
 }

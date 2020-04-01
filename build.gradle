@@ -36,6 +36,7 @@ ext {
             "rxlifecycle"           : 'com.trello.rxlifecycle2:rxlifecycle:2.2.2',
             "rxlifecycle-components": 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2',
             "rxpermissions"         : 'com.github.tbruyelle:rxpermissions:0.10.2',
+            "aspectj"               : 'org.aspectj:aspectjrt:1.8.9',
 
             "umeng-analytics"       : 'com.umeng.umsdk:analytics:8.0.0',
             "umeng-common"          : 'com.umeng.umsdk:common:2.0.0',
@@ -61,7 +62,8 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.4'
     }
 }
 

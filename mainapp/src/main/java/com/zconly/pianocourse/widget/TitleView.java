@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.callback.CommonCallback;
-import com.zconly.pianocourse.util.ImgLoader;
+import com.zconly.pianocourse.util.DeviceUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +28,7 @@ import butterknife.OnClick;
  * @UpdateDate: 2020-01-06 11:10
  * @UpdateRemark: 更新说明
  */
-public class TitleView extends LinearLayout {
+public class TitleView extends RelativeLayout {
 
     public static final int LEFT_IV = 0x0;
     public static final int LEFT_TV = 0x1;
@@ -53,8 +52,6 @@ public class TitleView extends LinearLayout {
 
     @BindView(R.id.title_center_ll)
     LinearLayout centerLl;
-    @BindView(R.id.title_right_rl)
-    RelativeLayout rightRl;
 
     @BindView(R.id.title_message_point_view)
     View msgPointView;
@@ -86,9 +83,24 @@ public class TitleView extends LinearLayout {
         initView(context);
     }
 
+    private void setCenterTvPadding() {
+        int leftPadding = 0;
+        int rightPadding = 0;
+        if (leftTv.getVisibility() == VISIBLE)
+            leftPadding += DeviceUtils.dp2px(40f);
+        if (leftIv.getVisibility() == VISIBLE)
+            leftPadding += DeviceUtils.dp2px(40f);
+        if (rightIv0.getVisibility() == VISIBLE)
+            rightPadding += DeviceUtils.dp2px(40f);
+        if (rightIv1.getVisibility() == VISIBLE)
+            rightPadding += DeviceUtils.dp2px(40f);
+        if (rightTv.getVisibility() == VISIBLE)
+            rightPadding += DeviceUtils.dp2px(40f);
+
+        centerTv.setPadding(leftPadding, 0, rightPadding, 0);
+    }
+
     private void initView(Context context) {
-        setOrientation(LinearLayout.HORIZONTAL);
-        setGravity(Gravity.CENTER_VERTICAL);
         View.inflate(context, R.layout.view_title, this);
         ButterKnife.bind(this, this);
 
@@ -97,7 +109,7 @@ public class TitleView extends LinearLayout {
         setLayoutParams(lp);
         setMinimumHeight(getResources().getDimensionPixelSize(R.dimen.title_height));
 
-        setBackgroundResource(R.color.color_white);
+        setBackgroundResource(R.drawable.shape_white_border_bottom);
 
         setTitle(titleStr);
         setTitleColor(titleColor);
@@ -157,36 +169,41 @@ public class TitleView extends LinearLayout {
     public TitleView setLeftTvImg(int res) {
         leftTv.setCompoundDrawablesWithIntrinsicBounds(res, 0, 0, 0);
         leftTv.setVisibility(res > 0 ? VISIBLE : GONE);
+        setCenterTvPadding();
         return this;
     }
 
     public TitleView setLeftTv(String text) {
         leftTv.setVisibility(TextUtils.isEmpty(text) ? GONE : VISIBLE);
         leftTv.setText(text);
+        setCenterTvPadding();
         return this;
     }
 
     public TitleView setLeftIv(int res) {
         leftIv.setVisibility(res <= 0 ? GONE : VISIBLE);
-        ImgLoader.showImgSmall(null, leftIv, res);
+        leftIv.setImageResource(res);
+        setCenterTvPadding();
         return this;
     }
 
     public TitleView setRightIv0(int res) {
-        rightRl.setVisibility(res <= 0 ? GONE : VISIBLE);
-        ImgLoader.showImgSmall(null, rightIv0, res);
+        rightIv0.setVisibility(res <= 0 ? GONE : VISIBLE);
+        rightIv0.setImageResource(res);
         return this;
     }
 
     public TitleView setRightIv1(int res) {
         rightIv1.setVisibility(res <= 0 ? GONE : VISIBLE);
-        ImgLoader.showImgSmall(null, rightIv1, res);
+        rightIv1.setImageResource(res);
+        setCenterTvPadding();
         return this;
     }
 
     public TitleView setRightTv(String text) {
         rightTv.setVisibility(TextUtils.isEmpty(text) ? GONE : VISIBLE);
         rightTv.setText(text);
+        setCenterTvPadding();
         return this;
     }
 
@@ -220,7 +237,7 @@ public class TitleView extends LinearLayout {
 
     public TitleView setMsgPoint(boolean show) {
         if (show) {
-            rightRl.setVisibility(VISIBLE);
+            rightIv0.setVisibility(VISIBLE);
             msgPointView.setVisibility(VISIBLE);
             msgTv.setVisibility(GONE);
         } else {
@@ -233,7 +250,7 @@ public class TitleView extends LinearLayout {
         if (TextUtils.isEmpty(text)) {
             msgTv.setVisibility(GONE);
         } else {
-            rightRl.setVisibility(VISIBLE);
+            rightIv0.setVisibility(VISIBLE);
             msgPointView.setVisibility(GONE);
             msgTv.setText(text);
             msgTv.setVisibility(VISIBLE);

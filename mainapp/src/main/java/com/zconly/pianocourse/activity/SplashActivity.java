@@ -41,12 +41,9 @@ public class SplashActivity extends BaseMvpActivity {
 
     @Override
     protected void initData() {
-        iv.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                MainActivity.start(mContext);
-                finish();
-            }
+        iv.postDelayed(() -> {
+            MainActivity.start(mContext);
+            finishDown();
         }, 1000);
     }
 

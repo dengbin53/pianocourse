@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/welcome"
+        style="@style/text_large_gray_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp40"
+        android:layout_marginTop="128dp"
+        android:gravity="center"
+        android:text="@string/content_welcome" />
+
+    <TextView
+        android:id="@+id/alert"
+        style="@style/text_small_black"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:gravity="center"
+        android:text="@string/content_login_alert" />
+
+    <TextView
+        android:id="@+id/empty_login_tv"
+        style="@style/button_large"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/space_large"
+        android:text="@string/btn_login" />
+
+</LinearLayout>

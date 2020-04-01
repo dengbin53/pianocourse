@@ -7,14 +7,16 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.bumptech.glide.Glide;
 import com.mvp.base.MvpActivity;
 import com.mvp.base.MvpPresenter;
 import com.mvp.exception.ApiException;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.util.DataUtil;
 import com.zconly.pianocourse.util.StatUtil;
+import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.util.ToastUtil;
-import com.zconly.pianocourse.widget.LoadingDialog;
+import com.zconly.pianocourse.widget.dialog.LoadingDialog;
 import com.zconly.pianocourse.widget.TitleView;
 
 import java.util.HashMap;
@@ -41,7 +43,7 @@ public abstract class BaseMvpActivity<P extends MvpPresenter> extends MvpActivit
         if (errorBean.getCode() == -100) {
             new AlertDialog.Builder(mContext)
                     .setMessage(errorBean.getMsg())
-                    .setNegativeButton("确定", (dialog, which) -> DataUtil.logout(getApplicationContext()))
+                    .setNegativeButton("确定", (dialog, which) -> SysConfigTool.logout())
                     .setCancelable(false)
                     .show();
         }
@@ -57,6 +59,12 @@ public abstract class BaseMvpActivity<P extends MvpPresenter> extends MvpActivit
     protected void onResume() {
         super.onResume();
         StatUtil.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Glide.with(getApplicationContext()).pauseRequests();
     }
 
     @Override

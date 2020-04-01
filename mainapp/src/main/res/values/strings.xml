@@ -21,7 +21,7 @@
     <string name="title_find_pass">设置新密码</string>
     <string name="title_set_info">完善资料</string>
     <string name="title_tourist">游客详情</string>
-    <string name="title_news_list">LETS新闻</string>
+    <string name="title_news_list">PianoCourse新闻</string>
     <string name="title_contact">通讯录</string>
     <string name="title_chose_currency">选择币种</string>
     <string name="title_service">体验项目</string>
@@ -55,7 +55,7 @@
     <string name="btn_add_service">添加服务</string>
     <string name="btn_delete">删除</string>
     <string name="btn_pay">支付</string>
-    <string name="btn_terms_of_service_confirm">注册即同意%1$sLETS用户服务条款与隐私政策%2$s</string>
+    <string name="btn_terms_of_service_confirm">注册即同意%1$sPianoCourse用户服务条款与隐私政策%2$s</string>
     <string name="btn_login">登录</string>
     <string name="btn_create_new_contact">创建新账号</string>
     <string name="btn_find_pass">忘记密码</string>
@@ -203,7 +203,7 @@
     <string name="toast_not_email">请输入正确的Email</string>
     <string name="toast_not_pass_length">密码长度为8-16位</string>
     <string name="toast_login_success">登录成功</string>
-    <string name="toast_logout">再按一次退出Lets</string>
+    <string name="toast_logout">再按一次退出PianoCourse</string>
     <string name="toast_not_code_length">请输入6位数字验证码</string>
     <string name="toast_account_error">账号有误</string>
     <string name="toast_sys_error">系统错误</string>
@@ -221,7 +221,7 @@
     <string name="toast_not_phone_or_email">请输入正确的手机号或邮箱</string>
     <string name="toast_no_name2">请输入姓名</string>
     <string name="toast_guide_leave">顾问请假了！</string>
-    <string name="toast_login">请先登录Lets?</string>
+    <string name="toast_login">请先登录PianoCourse?</string>
     <string name="toast_date">请选择正确的时间</string>
     <string name="toast_no_guide">负责顾问信息有误</string>
     <string name="toast_no_comment">暂无评论</string>
@@ -257,7 +257,7 @@
     <string name="content_set_info_done">您的信息已经提交</string>
     <string name="content_set_info_done2">我们的工作人员会在24小时内与您联系</string>
     <string name="content_comment_count">%1$d条评论</string>
-    <string name="content_welcome">LETS欢迎您</string>
+    <string name="content_welcome">PianoCourse欢迎您</string>
     <string name="content_login_alert">请先登录/注册</string>
     <string name="content_total">总计:&#160;</string>
     <string name="content_use_beijing_time">所选日程均为北京时间</string>
@@ -330,5 +330,6 @@
     <string name="download_pdf">下载 PDF</string>
     <string name="toast_connect_failuer">网络不可用</string>
     <string name="toast_code_send_success">验证码发送成功</string>
+    <string name="tab_home">胤悦学院</string>
 
 </resources>

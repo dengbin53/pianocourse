@@ -1,5 +1,9 @@
 package com.zconly.pianocourse.bean;
 
+import android.text.TextUtils;
+
+import com.zconly.pianocourse.mvp.service.H5Service;
+
 /**
  * 用户信息
  * Created by dengbin
@@ -14,7 +18,7 @@ public class UserBean extends BaseBean {
     private long id;                                // 主键
     private String mobile;                          // 手机号
     private String nickname;
-    private int role_id;
+    private int role_id; // 0未知 1管理员 2学生 3老师
     private int sex;
     private String signature;                       // 签名
     private int status;                         // 是否认证
@@ -23,7 +27,6 @@ public class UserBean extends BaseBean {
 
     private String mail;                            // 邮箱
     private int type;                               // 用户类型
-    private String name;
     private int relstat;                            // 关系状态
     private String remark;
     private long ctime;                             // 创建时间
@@ -141,14 +144,6 @@ public class UserBean extends BaseBean {
 
     public void setType(int type) {
         this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAvatar() {

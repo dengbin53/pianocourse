@@ -1,6 +1,8 @@
 package com.zconly.pianocourse.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -10,14 +12,19 @@ import android.widget.TextView;
 
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
+import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.SignUpPresenter;
 import com.zconly.pianocourse.mvp.view.SignUpView;
 import com.zconly.pianocourse.util.ActionUtil;
 import com.zconly.pianocourse.util.CountDownTimerTool;
 import com.zconly.pianocourse.util.StringTool;
 import com.zconly.pianocourse.util.ToastUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,32 +57,14 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
     private String pass2;
     private String code;
 
-    @SuppressLint("HandlerLeak")
-    Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case CountDownTimerTool.TIMER_TICK:
-                    sendTv.setEnabled(false);
-                    sendTv.setText(String.valueOf(msg.arg1));
-                    break;
-                case CountDownTimerTool.TIMER_FINISH:
-                    sendTv.setEnabled(true);
-                    sendTv.setText(getString(R.string.btn_re_send));
-                    break;
-                case GET_CODE_SUCCESS:
-                    codeEt.setHint(getString(R.string.hint_verification_code));
-                    startTimer(60);
-                    break;
-            }
-        }
-    };
+    public static void start(Context context, String mobile) {
+        Intent intent = new Intent(context, FindPassActivity.class);
+        intent.putExtra("email", mobile);
+        context.startActivity(intent);
+    }
 
     private void doFindPass() {
         emailOrPhone = emailEt.getText().toString();
-
         if (!StringTool.isEmailOrPhone(mContext, emailOrPhone))
             return;
 
@@ -100,9 +89,10 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
         Map<String, String> map = new HashMap<>();
         map.put("mobile", emailOrPhone);
         map.put("code", code);
-        map.put("behavior", "");
         map.put("password", pass);
+        map.put("behavior", "2");
         mPresenter.resetPassword(map);
+        // mPresenter.verify(emailOrPhone, code, "2");
     }
 
     // 倒计时
@@ -111,6 +101,7 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
         timer.start();
     }
 
+    @SingleClick
     @OnClick({R.id.re_send, R.id.finish, R.id.help})
     public void onClick(View v) {
         switch (v.getId()) {
@@ -141,19 +132,38 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
 
     @Override
     protected boolean isBindEventBus() {
-        return false;
+        return true;
     }
 
     @Override
     protected void initData() {
+
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void initView() {
         mTitleView.setTitle(getString(R.string.title_find_pass));
-
-        emailEt.setHint(getString(R.string.hint_phone));
-        codeEt.setHint(getString(R.string.hint_verification_code_phone));
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case CountDownTimerTool.TIMER_TICK:
+                        sendTv.setEnabled(false);
+                        sendTv.setText(String.valueOf(msg.arg1));
+                        break;
+                    case CountDownTimerTool.TIMER_FINISH:
+                        sendTv.setEnabled(true);
+                        sendTv.setText(getString(R.string.btn_re_send));
+                        break;
+                    case GET_CODE_SUCCESS:
+                        codeEt.setHint(getString(R.string.hint_verification_code));
+                        startTimer(60);
+                        break;
+                }
+            }
+        };
     }
 
     @Override
@@ -162,7 +172,7 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
     }
 
     @Override
-    public void retrieveSuccess(BaseBean response) {
+    public void sendCodeSuccess(BaseBean response) {
         mHandler.sendEmptyMessage(GET_CODE_SUCCESS);
     }
 
@@ -174,6 +184,12 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
     @Override
     public void resetSuccess(UserResult response) {
         ToastUtil.toast(getString(R.string.toast_find_pass_success));
-        LoginActivity.start(mContext);
+        SignInActivity.start(mContext);
+        finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(SignInEvent event) {
+        finishDown();
     }
 }

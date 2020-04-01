@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+import com.baidu.cloud.videoplayer.widget.BDCloudVideoView;
 import com.umeng.commonsdk.UMConfigure;
 import com.zconly.pianocourse.BuildConfig;
 import com.zconly.pianocourse.base.Constants;
@@ -70,7 +71,8 @@ public class InitService extends IntentService {
     }
 
     private void initUser() {
-
+        // 百度videoPlayer
+        BDCloudVideoView.setAK(Constants.BAI_DU_AK);
     }
 
     // 初始化一些全局参数

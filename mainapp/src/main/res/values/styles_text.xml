@@ -1,5 +1,10 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <style name="text_larger_black">
+        <item name="android:textColor">@color/color_text_black_gray</item>
+        <item name="android:textSize">@dimen/text_larger</item>
+    </style>
+
     <style name="text_large_black">
         <item name="android:textColor">@color/color_text_black_gray</item>
         <item name="android:textSize">@dimen/text_large</item>
@@ -80,9 +85,9 @@
         <item name="android:textSize">@dimen/text_smaller</item>
     </style>
 
-    <style name="text_smallest_gray_black">
+    <style name="text_smaller_gray_black">
         <item name="android:textColor">@color/color_text_gray_black</item>
-        <item name="android:textSize">@dimen/text_smallest</item>
+        <item name="android:textSize">@dimen/text_smaller</item>
     </style>
 
     <!--常规输入框-->

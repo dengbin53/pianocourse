@@ -30,7 +30,7 @@ public class ActContactCS extends BaseMvpActivity {
                 }
                 break;
             case R.id.login:
-                ActionUtil.startActForRet(mContext, LoginActivity.class, RequestCode.LOGIN);
+                ActionUtil.startActForRet(mContext, SignInActivity.class, RequestCode.LOGIN);
                 break;
             default:
                 break;

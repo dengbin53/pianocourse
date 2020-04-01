@@ -14,7 +14,7 @@ import com.zconly.pianocourse.bean.result.UserResult;
  */
 public interface SignUpView extends MvpView {
 
-    void retrieveSuccess(BaseBean response);
+    void sendCodeSuccess(BaseBean response);
 
     void verifySuccess(BaseBean response);
 

@@ -31,6 +31,7 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
         super(mView);
     }
 
+    // 找回密码-验证码
     public void retrieve(String mobile) {
         if (!isNetConnect()) return;
         Map<String, String> params = new HashMap<>();
@@ -51,8 +52,10 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
 
             @Override
             protected void onSuccess(BaseBean response) {
-                if (mView != null)
-                    mView.retrieveSuccess(response);
+                if (mView != null) {
+                    mView.dismissLoading();
+                    mView.sendCodeSuccess(response);
+                }
             }
         });
     }
@@ -77,8 +80,10 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
 
             @Override
             protected void onSuccess(BaseBean response) {
-                if (mView != null)
-                    mView.retrieveSuccess(response);
+                if (mView != null) {
+                    mView.dismissLoading();
+                    mView.sendCodeSuccess(response);
+                }
             }
         });
     }
@@ -106,8 +111,10 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
 
             @Override
             protected void onSuccess(BaseBean response) {
-                if (mView != null)
+                if (mView != null) {
+                    mView.dismissLoading();
                     mView.verifySuccess(response);
+                }
             }
         });
     }
@@ -130,8 +137,10 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
 
             @Override
             protected void onSuccess(UserResult response) {
-                if (mView != null)
+                if (mView != null) {
+                    mView.dismissLoading();
                     mView.resetSuccess(response);
+                }
             }
         });
     }

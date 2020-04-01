@@ -24,6 +24,8 @@ import com.mvp.exception.ApiException;
 import com.mvp.utils.Util;
 import com.trello.rxlifecycle2.components.support.RxDialogFragment;
 
+import butterknife.ButterKnife;
+
 /**
  * @Description: java类作用描述
  * @Author: dengbin
@@ -80,7 +82,8 @@ public abstract class MvpDialog extends RxDialogFragment implements MvpView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MvpBaseDialogTheme);
+        int style = getStyle();
+        setStyle(DialogFragment.STYLE_NO_TITLE, style > 0 ? style : R.style.MvpBaseDialogTheme);
     }
 
     @Override
@@ -97,6 +100,7 @@ public abstract class MvpDialog extends RxDialogFragment implements MvpView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         view.setClickable(true);
         if (gravity == Gravity.BOTTOM) {
             // AnimationUtil.slideToUp(view);
@@ -144,6 +148,8 @@ public abstract class MvpDialog extends RxDialogFragment implements MvpView {
      * init object
      */
     protected abstract void initView(Bundle bundle);
+
+    protected abstract int getStyle();
 
     @Override
     public void onDestroyView() {

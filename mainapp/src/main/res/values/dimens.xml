@@ -10,14 +10,19 @@
     <dimen name="dp10">10dp</dimen>
     <dimen name="img_to_text">4dp</dimen>
     <dimen name="tab_height_main">56dp</dimen>
+    <dimen name="tab_height">40dp</dimen>
 
-    <dimen name="text_larger">20sp</dimen>
-    <dimen name="text_large">18sp</dimen>
-    <dimen name="text_normal">16sp</dimen>
-    <dimen name="text_small">14sp</dimen>
-    <dimen name="text_smaller">12sp</dimen>
-    <dimen name="text_smallest">10sp</dimen>
+    <dimen name="text_larger">18sp</dimen>
+    <dimen name="text_large">16sp</dimen>
+    <dimen name="text_normal">14sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_smaller">10sp</dimen>
+
+    <dimen name="avatar_large">64dp</dimen>
+    <dimen name="avatar_normal">48dp</dimen>
+    <dimen name="avatar_small">32dp</dimen>
+
     <dimen name="drawable_padding">2dp</dimen>
-    <dimen name="avatar_large">72dp</dimen>
+    <dimen name="dp40">40dp</dimen>
 
 </resources>

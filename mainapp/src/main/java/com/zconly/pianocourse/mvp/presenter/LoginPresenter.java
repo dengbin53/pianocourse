@@ -4,7 +4,7 @@ import com.mvp.exception.ApiException;
 import com.mvp.observer.HttpRxObservable;
 import com.mvp.observer.HttpRxObserver;
 import com.mvp.utils.RetrofitUtils;
-import com.zconly.pianocourse.activity.LoginActivity;
+import com.zconly.pianocourse.activity.SignInActivity;
 import com.zconly.pianocourse.bean.result.TokenResult;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.view.LoginView;
@@ -35,7 +35,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         params.put("username", phone);
         params.put("password", pwd);
         Observable<TokenResult> observer = RetrofitUtils.create(ApiService.class).signIn(params);
-        HttpRxObservable.getObservable(observer, (LoginActivity) mView).subscribe(new HttpRxObserver<TokenResult>() {
+        HttpRxObservable.getObservable(observer, (SignInActivity) mView).subscribe(new HttpRxObserver<TokenResult>() {
             @Override
             protected void onStart(Disposable d) {
                 if (mView != null)

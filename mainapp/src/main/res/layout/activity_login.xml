@@ -4,18 +4,18 @@
     android:layout_height="match_parent"
     android:background="@color/color_white"
     android:orientation="vertical"
-    android:padding="32dp">
+    android:padding="@dimen/space_large">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:src="@mipmap/ic_logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -43,10 +43,9 @@
     <TextView
         android:id="@+id/login"
         style="@style/button_large"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/space_large"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="@dimen/space_normal"
+        android:layout_marginEnd="8dp"
         android:text="@string/btn_login" />
 
     <RelativeLayout
@@ -59,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:paddingStart="@dimen/space_normal"
             android:text="@string/btn_create_new_contact" />
 
         <TextView
@@ -67,8 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/space_normal"
             android:gravity="center_vertical"
+            android:paddingEnd="@dimen/space_normal"
             android:text="@string/btn_find_pass" />
 
     </RelativeLayout>

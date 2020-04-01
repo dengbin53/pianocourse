@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner_white_8">
+
+    <TextView
+        android:id="@+id/dialog_confirm_title"
+        style="@style/text_normal_black"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_marginTop="@dimen/space_large"
+        android:gravity="center"
+        android:text=""
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/dialog_confirm_content"
+        style="@style/text_normal_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_confirm_title"
+        android:layout_margin="@dimen/space_normal"
+        android:paddingLeft="@dimen/space_normal"
+        android:paddingRight="@dimen/space_normal"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/dialog_confirm_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:layout_below="@+id/dialog_confirm_content"
+        android:layout_marginTop="24dp"
+        android:background="@color/color_bg_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_below="@id/dialog_confirm_line"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_confirm_btnleft"
+            style="@style/text_normal_black"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/confirm" />
+
+        <TextView
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@color/color_bg_gray" />
+
+        <TextView
+            android:id="@+id/dialog_confirm_btnright"
+            style="@style/text_normal_black"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/cancel" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,3 +1,4 @@
-rootProject.name='pianocourse'
+rootProject.name = 'pianocourse'
 include ':mainapp'
 include ':mvplib'
+include ':baiduvideo'

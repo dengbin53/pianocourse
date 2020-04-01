@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
@@ -297,6 +299,7 @@ public class ImgLoader {
 
         if (circle) { // 圆形图片
             rb = rb.transform(new CircleCrop())
+                    .thumbnail(loadTransform(iv.getContext(), defImg))
                     .dontAnimate(); // 防止设置placeholder导致第一次不显示网络图片,只显示默认图片的问题
         } else if (round > 0) { // 圆角图片
             RoundedCornersTransformation rctf = new RoundedCornersTransformation(round, 0,
@@ -308,6 +311,12 @@ public class ImgLoader {
         }
 
         rb.into(iv);
+    }
+
+    private static RequestBuilder<Drawable> loadTransform(Context context, @DrawableRes int placeholderId) {
+        return Glide.with(context)
+                .load(placeholderId)
+                .apply(new RequestOptions().centerCrop().transform(new CircleCrop()));
     }
 
     private static RequestBuilder<Drawable> getRequestBuilder(RequestManager rm, String url, int defImg) {

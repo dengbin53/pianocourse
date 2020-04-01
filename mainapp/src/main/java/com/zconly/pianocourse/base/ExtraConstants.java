@@ -20,4 +20,5 @@ public class ExtraConstants {
     public static final String EXTRA_TITLE = "extra_title";
     public static final String EXTRA_IS_BOOK = "extra_is_book";
     public static final String EXTRA_BANNER = "extra_banner";
+    public static final String EXTRA_COURSE_TYPE = "extra_course_type";
 }

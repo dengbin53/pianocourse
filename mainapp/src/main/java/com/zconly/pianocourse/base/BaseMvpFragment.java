@@ -5,11 +5,14 @@ import android.content.Intent;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.bumptech.glide.Glide;
 import com.mvp.base.MvpFragment;
 import com.mvp.base.MvpPresenter;
+import com.mvp.exception.ApiException;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.util.StatUtil;
-import com.zconly.pianocourse.widget.LoadingDialog;
+import com.zconly.pianocourse.util.ToastUtil;
+import com.zconly.pianocourse.widget.dialog.LoadingDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +28,14 @@ import java.util.Map;
 public abstract class BaseMvpFragment<P extends MvpPresenter> extends MvpFragment<P> {
 
     @Override
+    public void onError(ApiException ae) {
+        super.onError(ae);
+        if (ae != null)
+            ToastUtil.toast(ae.getMsg());
+        dismissLoading();
+    }
+
+    @Override
     public void loading(String msg) {
         super.loading(msg);
         LoadingDialog.loading((FragmentActivity) mContext, msg);
@@ -34,6 +45,12 @@ public abstract class BaseMvpFragment<P extends MvpPresenter> extends MvpFragmen
     public void dismissLoading() {
         super.dismissLoading();
         LoadingDialog.dismissLoadingDialog();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Glide.with(this).pauseRequests();
     }
 
     public void insertUmeng(String eventId, String key, String value) {

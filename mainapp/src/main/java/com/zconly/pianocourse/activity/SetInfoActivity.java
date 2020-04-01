@@ -14,8 +14,10 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.RequestCode;
+import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.base.callback.MClickCallback;
 import com.zconly.pianocourse.bean.FileBean;
+import com.zconly.pianocourse.bean.result.SetInfoResult;
 import com.zconly.pianocourse.bean.result.UserResult;
 import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.SetInfoPresenter;
@@ -113,6 +115,8 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         }
     };
 
+    private Map<String, String> params;
+
     private void signUp() {
         String nickname = nicknameView.getValue();
         if (TextUtils.isEmpty(nickname.trim())) {
@@ -120,19 +124,19 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
             return;
         }
 
-        Map<String, String> map = new HashMap<>();
-        map.put("mobile", mobile);
-        map.put("password", pass);
-        map.put("examlevel", examLevel + "");
-        map.put("duration", pianoTime + "");
-        map.put("nickname", nickname);
-        map.put("birthday", pianoTime + "");
-        map.put("sex", sex + "");
-        map.put("signature", signatureView.getValue());
-        map.put("code", code + "");
-        map.put("role_id", "1"); // 0未知 1管理员 2学生 3老师
+        params = new HashMap<>();
+        params.put("mobile", mobile);
+        params.put("password", pass);
+        params.put("examlevel", examLevel + "");
+        params.put("duration", pianoTime + "");
+        params.put("nickname", nickname);
+        params.put("birthday", pianoTime + "");
+        params.put("sex", sex + "");
+        params.put("signature", signatureView.getValue());
+        params.put("code", code + "");
+        params.put("role_id", "1"); // 0未知 1管理员 2学生 3老师
 
-        mPresenter.completion(map);
+        mPresenter.completion(params);
     }
 
     private void uploadAvatar() {
@@ -202,6 +206,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         ImageUtil.crop(mContext, uri, cropedImageUri, CropType.ICON);
     }
 
+    @SingleClick
     @OnClick({R.id.finish, R.id.help, R.id.avatar})
     public void onClick(View v) {
         switch (v.getId()) {
@@ -230,17 +235,15 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
                 if (data == null)
                     break;
                 String str = FileUtils.getPath(mContext, data.getData());
-                File file = new File(str);
-                toCropAvatar(FileUtils.getFileUri(mContext, file));
+                toCropAvatar(FileUtils.getFileUri(mContext, new File(str)));
                 break;
             case RequestCode.RC_CAMERA_WITH_DATA: // 照相机程序返回的,再次调用图片剪辑程序去修剪图片
                 if (mCurrentPhotoFile == null) {
                     ToastUtil.toast("拍照获取图片失败");
                     break;
                 }
-                Uri uri = FileUtils.getFileUri(mContext, mCurrentPhotoFile);
-                FileUtils.save(uri, mContext);
-                toCropAvatar(uri);
+                FileUtils.save(Uri.fromFile(mCurrentPhotoFile), mContext);
+                toCropAvatar(Uri.fromFile(mCurrentPhotoFile));
                 break;
             case RequestCode.RC_CROP_IMG:
                 getImageToView();
@@ -290,7 +293,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     }
 
     @Override
-    public void completionSuccess(UserResult response) {
+    public void completionSuccess(SetInfoResult response) {
         SysConfigTool.setUser(response.getData().getUser());
         SysConfigTool.saveToken(response.getData().getToken().getToken());
         Logger.i("completionSuccess");
@@ -304,14 +307,16 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
 
     @Override
     public void uploadSuccess(FileBean response) {
-        Map<String, String> params = new HashMap<>();
+        params.remove("mobile");
+        params.remove("password");
+        params.remove("code");
         params.put("avatar", response.getData());
         mPresenter.updateUser(params);
     }
 
     @Override
     public void updateUserSuccess(UserResult response) {
-        SysConfigTool.setUser(response.getData().getUser());
+        SysConfigTool.setUser(response.getData());
         finishWork();
     }
 
@@ -322,6 +327,6 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SignInEvent event) {
-        finish();
+        finishDown();
     }
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_list_course"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/space_normal"
+    android:paddingTop="@dimen/space_large"
+    android:paddingEnd="@dimen/space_normal"
+    android:paddingBottom="@dimen/space_large">
+
+    <ImageView
+        android:id="@+id/item_list_course_iv"
+        android:layout_width="114dp"
+        android:layout_height="114dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/item_list_course_title_tv"
+        style="@style/text_normal_black"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_toEndOf="@id/item_list_course_iv"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/space_normal" />
+
+    <TextView
+        android:id="@+id/item_list_course_desc_tv"
+        style="@style/text_small_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_list_course_title_tv"
+        android:layout_toEndOf="@id/item_list_course_iv"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:minHeight="24dp"
+        android:paddingStart="@dimen/space_normal" />
+
+    <TextView
+        android:id="@+id/item_list_course_teacher_tv"
+        style="@style/text_small_black"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_below="@id/item_list_course_desc_tv"
+        android:layout_toEndOf="@id/item_list_course_iv"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/space_normal" />
+
+    <LinearLayout
+        android:id="@+id/item_list_course_status_ll"
+        style="@style/text_small_black"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@id/item_list_course_iv"
+        android:layout_toEndOf="@id/item_list_course_iv"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_normal">
+
+        <TextView
+            android:id="@+id/item_list_course_count_tv"
+            style="@style/text_small_black"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+
+        <TextView
+            android:id="@+id/item_list_course_status_tv"
+            style="@style/text_small_black"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_normal" />
+    </LinearLayout>
+
+</RelativeLayout>

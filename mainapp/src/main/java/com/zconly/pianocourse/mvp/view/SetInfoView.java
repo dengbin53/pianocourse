@@ -1,7 +1,6 @@
 package com.zconly.pianocourse.mvp.view;
 
-import com.mvp.base.MvpView;
-import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.bean.result.SetInfoResult;
 
 /**
  * @Description: java类作用描述
@@ -13,5 +12,5 @@ import com.zconly.pianocourse.bean.result.UserResult;
  */
 public interface SetInfoView extends UploadView, UserView {
 
-    void completionSuccess(UserResult response);
+    void completionSuccess(SetInfoResult response);
 }

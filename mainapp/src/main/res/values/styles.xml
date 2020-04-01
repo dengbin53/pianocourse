@@ -7,7 +7,7 @@
         <!--状态栏颜色-->
         <item name="colorPrimaryDark">@color/color_bg_gray</item>
         <!--控制各个控件被选中时的颜色-->
-        <item name="colorAccent">@color/color_red</item>
+        <item name="colorAccent">@color/color_yellow</item>
         <!--页面背景色-->
         <item name="android:windowBackground">@color/color_bg_default</item>
     </style>
@@ -17,6 +17,24 @@
         <item name="android:windowBackground">@mipmap/img_splash</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- dialog alpha动画 -->
+    <style name="dialogAnimationAlpha" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_alpha</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_alpha</item>
+    </style>
+
+    <!-- dialog移动动画 -->
+    <style name="dialogAnimationTranslate" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_translate</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_translate</item>
+    </style>
+
+    <!-- dialog缩放动画 -->
+    <style name="dialogAnimationScale" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_scale</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_scale</item>
     </style>
 
     <style name="updateDialogStyle" parent="android:Theme.Dialog">
@@ -31,11 +49,57 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <!-- 移动dialog样式 -->
+    <style name="dialog_translate" parent="@android:style/Theme.Holo.Light">
+
+        <!-- 显示动画 -->
+        <item name="android:windowAnimationStyle">@style/dialogAnimationTranslate</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- 缩放dialog样式 -->
+    <style name="dialog_sacle" parent="@android:style/Theme.Holo.Light.Dialog">
+
+        <!-- 显示动画 -->
+        <item name="android:windowAnimationStyle">@style/dialogAnimationScale</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景透明   去掉背景色边框也就去掉了 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- 淡入淡出 -->
+    <style name="dialog_alpha" parent="@android:style/Theme.Holo.Light">
+        <!-- 显示动画 -->
+        <item name="android:windowAnimationStyle">@style/dialogAnimationAlpha</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
     <!--提交按钮-->
     <style name="button_large">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/item_height_small</item>
-        <item name="android:background">@drawable/selector_corner_yellow_gray</item>
+        <item name="android:background">@drawable/selector_circle_yellow_gray</item>
         <item name="android:textColor">@color/color_text_black_gray</item>
         <item name="android:textSize">@dimen/text_large</item>
         <item name="android:layout_marginTop">@dimen/space_normal</item>
@@ -44,6 +108,30 @@
         <item name="android:enabled">true</item>
         <item name="android:layout_marginStart">32dp</item>
         <item name="android:layout_marginEnd">32dp</item>
+    </style>
+
+    <style name="tab_layout_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/text_normal</item>
+    </style>
+
+    <!--通用 tabLayout 属性-->
+    <style name="tab_layout" parent="tab_layout_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/tab_height</item>
+        <item name="android:background">@drawable/shape_white_border_bottom</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabIndicatorColor">@color/color_red</item>
+        <item name="tabPaddingStart">@dimen/space_normal</item>
+        <item name="tabPaddingEnd">@dimen/space_normal</item>
+        <item name="tabSelectedTextColor">@color/color_red</item>
+        <item name="tabMinWidth">48dp</item>
+        <item name="tabUnboundedRipple">false</item>
+        <item name="tabRippleColor">@color/color_bg_gray_light</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabTextColor">@color/color_text_black</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabTextAppearance">@style/tab_layout_text</item>
     </style>
 
 </resources>

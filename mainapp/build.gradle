@@ -1,9 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-aspectjx'
 apply from: "package.gradle" // 多渠道包配置
 
 android {
     compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION
     buildToolsVersion rootProject.ext.BUILD_TOOLS_VERSION
+
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.zconly.pianocourse"
@@ -14,7 +19,7 @@ android {
         versionName rootProject.ext.BUILD_VERSION_NAME
 
         ndk {
-            abiFilters "armeabi", "armeabi-v7a"
+            abiFilters "armeabi-v7a"
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -37,6 +42,9 @@ android {
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
         exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/androidx.core_core.version'
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+        exclude 'META-INF/androidx.versionedparcelable_versionedparcelable.version'
     }
 
     signingConfigs {
@@ -92,11 +100,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
-    implementation project(':mvplib')
+    implementation project(path: ':mvplib')
+    implementation project(path: ':baiduvideo')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -122,6 +130,7 @@ dependencies {
     implementation rootProject.ext.compilelibs['retrofit2adapter']
     implementation rootProject.ext.compilelibs['logging-interceptor']
     implementation rootProject.ext.compilelibs['rxpermissions']
+    implementation rootProject.ext.compilelibs['aspectj']
 
     implementation rootProject.ext.compilelibs['umeng-analytics']
     implementation rootProject.ext.compilelibs['umeng-common']
@@ -132,4 +141,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
 }

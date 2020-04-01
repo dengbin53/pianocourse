@@ -21,7 +21,7 @@ public class MHeaderInterceptor extends ParamsInterceptor {
     @Override
     protected Map<String, String> getHeader() {
         Map<String, String> headerMap = new HashMap<>();
-        headerMap.put("Authorization", SysConfigTool.getToken());
+        headerMap.put("Authorization", "Bearer " + SysConfigTool.getToken());
         headerMap.put("platform", "1");
         headerMap.put("User-Agent", "piano-course-android");
         headerMap.put("cversion", Constants.CLIENT_VERSION + "");
