@@ -23,7 +23,7 @@ public class ActContactCS extends BaseMvpActivity {
                 break;
             case R.id.chat:
                 if (SysConfigTool.isLogin()) {
-                    ActionUtil.startChat(mContext, Constants.CS_ACCOUNT + "");
+                    // ActionUtil.startChat(mContext, Constants.CS_ACCOUNT + "");
                 } else {
                     // DialogLogin dl = new DialogLogin(this);
                     // dl.show(getFragmentManager(), null);

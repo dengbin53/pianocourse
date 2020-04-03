@@ -13,6 +13,7 @@ import android.widget.PopupMenu;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
+import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.RequestCode;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.base.callback.MClickCallback;
@@ -134,7 +135,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         params.put("sex", sex + "");
         params.put("signature", signatureView.getValue());
         params.put("code", code + "");
-        params.put("role_id", "1"); // 0未知 1管理员 2学生 3老师
+        params.put("role_id", Constants.TYPE_ROLE_STUDENT + ""); // 0未知 1管理员 2学生 3老师
 
         mPresenter.completion(params);
     }

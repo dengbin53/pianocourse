@@ -15,7 +15,7 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.fragment.HomeFragment;
 import com.zconly.pianocourse.fragment.MineFragment;
-import com.zconly.pianocourse.fragment.MsgFragment;
+import com.zconly.pianocourse.fragment.NoticeFragment;
 import com.zconly.pianocourse.util.ToastUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -76,7 +76,7 @@ public class MainActivity extends BaseMvpActivity {
     protected void initView() {
 
         fragments[0] = new HomeFragment();
-        fragments[1] = new MsgFragment();
+        fragments[1] = new NoticeFragment();
         fragments[2] = new MineFragment();
         switchContent(fragments[0]);
 

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zconly.pianocourse.widget.MKeyValueView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:name_value="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_list_title_tv"
-    style="@style/text_large_black"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_height_small"
-    android:gravity="center_vertical"
-    android:layout_gravity="center_vertical"
-    android:background="@drawable/shape_white_border_bottom"
-    android:paddingStart="@dimen/space_normal" />
+    android:layout_marginTop="@dimen/space_normal"
+    android:background="@drawable/selector_white_gray_light"
+    name_value:arrow="true"
+    name_value:hint=""
+    name_value:name=""
+    name_value:value="更多" />

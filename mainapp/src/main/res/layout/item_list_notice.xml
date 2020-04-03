@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/space_normal"
+    android:layout_marginTop="@dimen/space_normal"
+    android:layout_marginEnd="@dimen/space_normal"
+    android:background="@drawable/shape_corner_white"
+    android:elevation="1dp"
+    android:padding="@dimen/space_normal">
+
+    <ImageView
+        android:id="@+id/notice_iv"
+        android:layout_width="@dimen/avatar_normal"
+        android:layout_height="@dimen/avatar_normal"
+        android:layout_marginEnd="@dimen/space_normal" />
+
+    <TextView
+        android:id="@+id/notice_name_tv"
+        style="@style/text_small_black"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/notice_iv"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/notice_time_tv"
+        style="@style/text_small_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/notice_name_tv"
+        android:layout_toEndOf="@id/notice_iv"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/notice_content_tv"
+        style="@style/text_normal_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notice_iv"
+        android:layout_marginTop="@dimen/space_normal" />
+
+</RelativeLayout>

@@ -119,7 +119,16 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.CourseListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.CourseDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.VideoDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FavoriteActivity"
             android:screenOrientation="portrait" />
 
         <service android:name=".service.InitService" />

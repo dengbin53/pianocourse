@@ -41,7 +41,7 @@ import okhttp3.RequestBody;
  * @UpdateDate: 2020/3/23 21:56
  * @UpdateRemark: 更新说明
  */
-class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
+public class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
 
     public BasePresenter(V mView) {
         super(mView);

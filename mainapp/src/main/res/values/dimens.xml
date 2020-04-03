@@ -9,7 +9,7 @@
     <dimen name="text_count">10sp</dimen>
     <dimen name="dp10">10dp</dimen>
     <dimen name="img_to_text">4dp</dimen>
-    <dimen name="tab_height_main">56dp</dimen>
+    <dimen name="tab_height_main">48dp</dimen>
     <dimen name="tab_height">40dp</dimen>
 
     <dimen name="text_larger">18sp</dimen>
@@ -19,10 +19,11 @@
     <dimen name="text_smaller">10sp</dimen>
 
     <dimen name="avatar_large">64dp</dimen>
-    <dimen name="avatar_normal">48dp</dimen>
+    <dimen name="avatar_normal">40dp</dimen>
     <dimen name="avatar_small">32dp</dimen>
 
     <dimen name="drawable_padding">2dp</dimen>
     <dimen name="dp40">40dp</dimen>
+    <dimen name="space_half">4dp</dimen>
 
 </resources>

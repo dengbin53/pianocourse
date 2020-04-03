@@ -72,13 +72,13 @@ public class ImgLoader {
 
     // 圆角图片 round 圆角；rw 限制宽高
     public static void showImgRound(String url, ImageView iv, int round, int rw) {
-        doShowImg(getRequestManager(iv.getContext()), url, iv, R.mipmap.bg_img, round, null,
+        doShowImg(getRequestManager(iv.getContext()), url, iv, R.drawable.shape_gray_light, round, null,
                 false, rw, rw, null);
     }
 
     // 圆角图片 round 圆角 ct 圆角类型
     public static void showImgRound(String url, ImageView iv, int round, RoundedCornersTransformation.CornerType ct) {
-        doShowImg(getRequestManager(iv.getContext()), url, iv, R.mipmap.bg_img, round, ct, false,
+        doShowImg(getRequestManager(iv.getContext()), url, iv, R.drawable.shape_gray_light, round, ct, false,
                 WIDTH_MIDDLE, WIDTH_MIDDLE, null);
     }
 
@@ -88,7 +88,7 @@ public class ImgLoader {
     }
 
     public static void showImg(String url, ImageView iv) {
-        showImg(url, iv, R.mipmap.bg_img);
+        showImg(url, iv, R.drawable.shape_gray_light);
     }
 
     public static void showImg(String url, ImageView iv, int defImg) {
@@ -111,7 +111,7 @@ public class ImgLoader {
     }
 
     public static void showImgResize(String url, ImageView iv, int resizeWidth, int resizeHeight) {
-        showImgResize(url, iv, resizeWidth, resizeHeight, R.mipmap.bg_img);
+        showImgResize(url, iv, resizeWidth, resizeHeight, R.drawable.shape_gray_light);
     }
 
     public static void showImgResize(String url, ImageView iv, int resizeWidth, int resizeHeight, int defImg) {
@@ -124,7 +124,7 @@ public class ImgLoader {
                                                    DownloadImgListener<Drawable> listener) {
         if (TextUtils.isEmpty(url))
             return;
-        doShowImg(getRequestManager(iv.getContext()), url, iv, R.mipmap.bg_img, 0, null,
+        doShowImg(getRequestManager(iv.getContext()), url, iv, R.drawable.shape_gray_light, 0, null,
                 false, w, h, listener);
     }
 
@@ -134,7 +134,7 @@ public class ImgLoader {
 
     public static void showImgAndListener(Context context, String url, ImageView iv,
                                           DownloadImgListener<Drawable> listener) {
-        doShowImg(getRequestManager(context), url, iv, R.mipmap.bg_img, 0, null, false,
+        doShowImg(getRequestManager(context), url, iv, R.drawable.shape_gray_light, 0, null, false,
                 0, 0, listener);
     }
 
@@ -335,7 +335,7 @@ public class ImgLoader {
         } else {
             rb = rb.load(new File(url));
         }
-        return rb.placeholder(R.mipmap.bg_img);
+        return rb.placeholder(R.drawable.shape_gray_light);
     }
 
     public interface DownloadImgListener<T> {

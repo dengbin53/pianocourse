@@ -50,9 +50,8 @@
                 style="@style/text_normal_gray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/space_normal"
-                android:drawableRight="@mipmap/ic_arrow_right" />
+                android:drawableEnd="@mipmap/ic_arrow_right" />
 
         </LinearLayout>
 
@@ -63,21 +62,20 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
         android:layout_marginTop="@dimen/space_normal"
-        android:background="@drawable/selector_white_gray_light"
+        android:background="@drawable/selector_white_gray_border_bottom"
         android:visibility="gone"
         name_value:arrow="true"
         name_value:hint=""
         name_value:name="@string/key_my_order"
         name_value:value="" />
 
-    <!--    <include layout="@layout/view_line_h" />-->
-
     <com.zconly.pianocourse.widget.MKeyValueView
         android:id="@+id/favorite"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
+        android:layout_marginTop="@dimen/space_normal"
         android:background="@drawable/selector_white_gray_light"
-        android:visibility="gone"
+        android:visibility="visible"
         name_value:arrow="true"
         name_value:hint=""
         name_value:name="@string/key_my_favorite"

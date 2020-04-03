@@ -28,6 +28,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/space_normal"
+        android:scaleType="centerInside"
         android:src="@mipmap/ic_arrow_right" />
 
 </merge>

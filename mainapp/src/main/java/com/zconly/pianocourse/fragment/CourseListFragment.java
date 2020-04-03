@@ -13,11 +13,22 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.adapter.CourseListAdapter;
 import com.zconly.pianocourse.base.BaseMvpFragment;
+import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.ExtraConstants;
+import com.zconly.pianocourse.bean.BannerBean;
+import com.zconly.pianocourse.bean.CourseBean;
+import com.zconly.pianocourse.bean.EvaluateBean;
+import com.zconly.pianocourse.bean.FavoriteBean;
+import com.zconly.pianocourse.bean.LiveBean;
 import com.zconly.pianocourse.bean.result.CourseListResult;
-import com.zconly.pianocourse.bean.result.CourseResult;
+import com.zconly.pianocourse.bean.result.VideoListResult;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
+import com.zconly.pianocourse.mvp.presenter.FavoritePresenter;
 import com.zconly.pianocourse.mvp.view.CourseView;
+import com.zconly.pianocourse.mvp.view.FavoriteView;
+import com.zconly.pianocourse.util.DataUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -29,7 +40,7 @@ import butterknife.BindView;
  * @UpdateDate: 2020/3/18 21:03
  * @UpdateRemark: 更新说明
  */
-public class CourseListFragment extends BaseMvpFragment<CoursePresenter> implements CourseView {
+public class CourseListFragment extends BaseMvpFragment<CoursePresenter> implements CourseView, FavoriteView {
 
     @BindView(R.id.smart_refresh_layout)
     SmartRefreshLayout mSmartRefreshLayout;
@@ -37,13 +48,13 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
     RecyclerView mRecyclerView;
 
     private CourseListAdapter mAdapter;
-    private int type;
+    private int category;
     private int page;
 
-    public static CourseListFragment getInstance(int type) {
+    public static CourseListFragment getInstance(int category) {
         CourseListFragment fragment = new CourseListFragment();
         Bundle arg = new Bundle();
-        arg.putInt(ExtraConstants.EXTRA_COURSE_TYPE, type);
+        arg.putInt(ExtraConstants.EXTRA_COURSE_TYPE, category);
         fragment.setArguments(arg);
         return fragment;
     }
@@ -53,7 +64,7 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
         Bundle bundle = getArguments();
         if (bundle == null)
             return;
-        type = bundle.getInt(ExtraConstants.EXTRA_COURSE_TYPE);
+        category = bundle.getInt(ExtraConstants.EXTRA_COURSE_TYPE);
 
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -75,7 +86,11 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
     }
 
     private void getData() {
-        mPresenter.getCourseList(type, page);
+        if (category == Constants.CATEGORY_FAVORITE_COURSE) {
+            new FavoritePresenter(this).getFavoriteList(page, Constants.TYPE_FAVORITE_COURSE);
+        } else {
+            mPresenter.getCourseList(page, null, category + "");
+        }
     }
 
     @Override
@@ -100,11 +115,51 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
 
     @Override
     public void getCourseListSuccess(CourseListResult response) {
-        mAdapter.setNewData(response.getData());
+        if (response.getData() == null)
+            return;
+        List<CourseBean> data = response.getData().getData();
+        if (page == 0) {
+            mAdapter.setNewData(data);
+        } else {
+            mAdapter.addData(data);
+        }
+        page++;
+        mSmartRefreshLayout.setEnableLoadMore(data.size() >= Constants.PAGE_COUNT);
     }
 
     @Override
-    public void getCourseSuccess(CourseResult response) {
+    public void getVideoListSuccess(VideoListResult response) {
 
     }
+
+    @Override
+    public void getBannerListSuccess(BannerBean.BannerListResult response) {
+
+    }
+
+    @Override
+    public void getLiveDataSuccess(LiveBean response) {
+
+    }
+
+    @Override
+    public void getEvaluateSuccess(EvaluateBean.EvaluateListResult response) {
+
+    }
+
+    @Override
+    public void getFavoriteSuccess(FavoriteBean.FavoriteListResult response) {
+        isLoadDataCompleted = true;
+        if (response.getData() == null)
+            return;
+        List<CourseBean> data = DataUtil.parseFavoriteCourse(response.getData().getData());
+        if (page == 0) {
+            mAdapter.setNewData(data);
+        } else {
+            mAdapter.addData(data);
+        }
+        page++;
+        mSmartRefreshLayout.setEnableLoadMore(data.size() >= Constants.PAGE_COUNT);
+    }
+
 }

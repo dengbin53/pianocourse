@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_marginStart="@dimen/space_normal"
+    android:layout_marginTop="@dimen/space_normal"
+    android:layout_marginEnd="@dimen/space_normal"
+    android:background="@drawable/shape_corner_white"
+    android:elevation="1dp"
+    android:padding="@dimen/space_normal">
+
+    <TextView
+        android:id="@+id/item_video_title_tv"
+        style="@style/text_normal_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/item_video_time_tv"
+        style="@style/text_small_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:id="@+id/item_video_play_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:drawableStart="@mipmap/ic_play_small"
+        android:gravity="center"
+        android:text="播放" />
+
+</RelativeLayout>

@@ -16,11 +16,13 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.SignInActivity;
 import com.zconly.pianocourse.base.BaseMvpFragment;
-import com.zconly.pianocourse.bean.MsgBean;
-import com.zconly.pianocourse.bean.result.MsgResult;
+import com.zconly.pianocourse.bean.NoticeBean;
+import com.zconly.pianocourse.event.LogoutEvent;
 import com.zconly.pianocourse.event.SignInEvent;
-import com.zconly.pianocourse.mvp.presenter.MsgPresenter;
-import com.zconly.pianocourse.mvp.view.MsgView;
+import com.zconly.pianocourse.mvp.presenter.NoticePresenter;
+import com.zconly.pianocourse.mvp.view.NoticeView;
+import com.zconly.pianocourse.util.DateUtils;
+import com.zconly.pianocourse.util.ImgLoader;
 import com.zconly.pianocourse.util.SysConfigTool;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -38,7 +40,7 @@ import butterknife.BindView;
  * @UpdateDate: 2020/3/18 21:03
  * @UpdateRemark: 更新说明
  */
-public class MsgFragment extends BaseMvpFragment<MsgPresenter> implements MsgView {
+public class NoticeFragment extends BaseMvpFragment<NoticePresenter> implements NoticeView {
 
     @BindView(R.id.smart_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
@@ -49,8 +51,6 @@ public class MsgFragment extends BaseMvpFragment<MsgPresenter> implements MsgVie
     private int page;
 
     private void getData() {
-        if (mAdapter.getEmptyViewCount() > 0)
-            mAdapter.setEmptyView(null);
         mPresenter.getMsg(page);
     }
 
@@ -67,24 +67,23 @@ public class MsgFragment extends BaseMvpFragment<MsgPresenter> implements MsgVie
                 initData();
             }
         });
+        mRefreshLayout.setEnableLoadMore(false);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,
                 LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter = new mAdapter(null));
-        if (!SysConfigTool.isLogin()) {
-            View ev = LayoutInflater.from(mContext).inflate(R.layout.view_empty_login, mRecyclerView,
-                    false);
-            ev.findViewById(R.id.empty_login_tv).setOnClickListener(v -> {
-                SignInActivity.start(mContext);
-            });
-            mAdapter.setEmptyView(ev);
-        }
     }
 
     @Override
     protected void initData() {
-        if (!SysConfigTool.isLogin())
+        if (!SysConfigTool.isLogin()) {
+            View ev = LayoutInflater.from(mContext).inflate(R.layout.view_empty_login, mRecyclerView,
+                    false);
+            ev.findViewById(R.id.empty_login_tv).setOnClickListener(v -> SignInActivity.start(mContext));
+            mAdapter.setEmptyView(ev);
             return;
+        }
+        mAdapter.isUseEmpty(false);
         page = 0;
         getData();
     }
@@ -100,17 +99,30 @@ public class MsgFragment extends BaseMvpFragment<MsgPresenter> implements MsgVie
     }
 
     @Override
-    protected MsgPresenter getPresenter() {
-        return new MsgPresenter(this);
+    protected NoticePresenter getPresenter() {
+        return new NoticePresenter(this);
     }
 
     @Override
-    public void getMsgSuccess(MsgResult result) {
-        mAdapter.setEmptyView(null);
+    public void getNoticeSuccess(NoticeBean.NoticeResult result) {
+        if (result.getData() == null)
+            return;
+        if (page == 0) {
+            mAdapter.setNewData(result.getData().getData());
+        } else {
+            mAdapter.addData(result.getData().getData());
+        }
+        page++;
+        mRefreshLayout.setEnableLoadMore(page < result.getData().getTotalPage());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SignInEvent event) {
+        initData();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(LogoutEvent event) {
         initData();
     }
 
@@ -121,15 +133,18 @@ public class MsgFragment extends BaseMvpFragment<MsgPresenter> implements MsgVie
         mRefreshLayout.finishLoadMore();
     }
 
-    private class mAdapter extends BaseQuickAdapter<MsgBean, BaseViewHolder> {
+    private class mAdapter extends BaseQuickAdapter<NoticeBean, BaseViewHolder> {
 
-        mAdapter(@Nullable List<MsgBean> data) {
-            super(R.layout.item_list_msg, data);
+        mAdapter(@Nullable List<NoticeBean> data) {
+            super(R.layout.item_list_notice, data);
         }
 
         @Override
-        protected void convert(@NonNull BaseViewHolder helper, MsgBean item) {
-
+        protected void convert(@NonNull BaseViewHolder helper, NoticeBean item) {
+            ImgLoader.showAvatar(null, helper.getView(R.id.notice_iv));
+            helper.setText(R.id.notice_name_tv, "消息");
+            helper.setText(R.id.notice_time_tv, DateUtils.getTime2M(item.getC_time()));
+            helper.setText(R.id.notice_content_tv, item.getContent());
         }
     }
 }

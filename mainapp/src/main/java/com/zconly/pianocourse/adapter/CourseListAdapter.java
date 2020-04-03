@@ -1,5 +1,6 @@
 package com.zconly.pianocourse.adapter;
 
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,8 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.CourseDetailActivity;
+import com.zconly.pianocourse.activity.CourseListActivity;
+import com.zconly.pianocourse.activity.WebViewActivity;
 import com.zconly.pianocourse.adapter.viewholder.CourseHolder;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.CourseBean;
@@ -29,6 +32,7 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<CourseBean, Cou
         super(beans);
         addItemType(CourseBean.TITLE, R.layout.item_list_title);
         addItemType(CourseBean.ITEM, R.layout.item_list_course);
+        addItemType(CourseBean.LIVE, R.layout.item_list_live);
 
         setOnItemClickListener(this);
     }
@@ -42,8 +46,19 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<CourseBean, Cou
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         CourseBean bean = getItem(position);
-        if (bean.getItemType() != CourseBean.ITEM)
+        if (bean == null)
             return;
-        CourseDetailActivity.start(mContext, bean);
+        if (bean.getItemType() == CourseBean.ITEM) {
+            CourseDetailActivity.start(mContext, bean);
+        } else if (bean.getItemType() == CourseBean.LIVE) {
+            WebViewActivity.start(mContext, bean.getTitle(), bean.getUrl());
+        } else {
+            if (TextUtils.isEmpty(bean.getUrl())) {
+                CourseListActivity.start(mContext, bean.getViewType());
+            } else {
+                WebViewActivity.start(mContext, bean.getTitle(), bean.getUrl());
+            }
+        }
     }
+
 }

@@ -12,12 +12,11 @@ import com.mvp.base.MvpActivity;
 import com.mvp.base.MvpPresenter;
 import com.mvp.exception.ApiException;
 import com.zconly.pianocourse.R;
-import com.zconly.pianocourse.util.DataUtil;
 import com.zconly.pianocourse.util.StatUtil;
 import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.util.ToastUtil;
-import com.zconly.pianocourse.widget.dialog.LoadingDialog;
 import com.zconly.pianocourse.widget.TitleView;
+import com.zconly.pianocourse.widget.dialog.LoadingDialog;
 
 import java.util.HashMap;
 

@@ -1,11 +1,30 @@
 package com.zconly.pianocourse.mvp.presenter;
 
-import com.zconly.pianocourse.bean.CourseBean;
+import android.text.TextUtils;
+
+import com.mvp.exception.ApiException;
+import com.mvp.observer.HttpRxObservable;
+import com.mvp.observer.HttpRxObserver;
+import com.mvp.utils.RetrofitUtils;
+import com.trello.rxlifecycle2.LifecycleProvider;
+import com.trello.rxlifecycle2.android.FragmentEvent;
+import com.zconly.pianocourse.activity.CourseDetailActivity;
+import com.zconly.pianocourse.activity.VideoDetailActivity;
+import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.bean.BannerBean;
+import com.zconly.pianocourse.bean.EvaluateBean;
+import com.zconly.pianocourse.bean.LiveBean;
 import com.zconly.pianocourse.bean.result.CourseListResult;
+import com.zconly.pianocourse.bean.result.VideoListResult;
+import com.zconly.pianocourse.mvp.service.ApiService;
+import com.zconly.pianocourse.mvp.service.H5Service;
 import com.zconly.pianocourse.mvp.view.CourseView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * @Description: java类作用描述
@@ -21,38 +40,151 @@ public class CoursePresenter extends BasePresenter<CourseView> {
         super(mView);
     }
 
-    public void getCourseList(int type, int page) {
-
-        CourseListResult result = new CourseListResult();
-        List<CourseBean> data = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            CourseBean cb = new CourseBean();
-            cb.setTitle("测试测试测试");
-            cb.setType(i % 2);
-            cb.setVideoUrl("https://media.w3.org/2010/05/sintel/trailer.mp4");
-            cb.setImg("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585660781241&di=d7e499dc50dd9bd14ea1decafeb3b1ba&imgtype=0&src=http%3A%2F%2Fimage.xinli001.com%2F20150317%2F1732148496c98d90d07bd7.jpg");
-            data.add(cb);
+    public void getCourseList(int page, String id, String category) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("currentPage", page + "");
+        params.put("pageSize", Constants.PAGE_COUNT + "");
+        Map<String, String> t = null;
+        if (!TextUtils.isEmpty(id)) {
+            t = new HashMap<>();
+            t.put("id", id);
         }
-        result.setData(data);
-        mView.getCourseListSuccess(result);
-//        Map<String, String> params = new HashMap<>();
-//        params.put("page", page + "");
-//        params.put("type", type + "");
-//        Observable<CourseListResult> o = RetrofitUtils.create(ApiService.class).getCourseList(params);
-//        HttpRxObservable.getObservableFragment(o, (LifecycleProvider<FragmentEvent>) mView)
-//                .subscribe(new HttpRxObserver<CourseListResult>() {
-//                    @Override
-//                    protected void onError(ApiException e) {
-//                        if (mView != null)
-//                            mView.onError(e);
-//                    }
-//
-//                    @Override
-//                    protected void onSuccess(CourseListResult response) {
-//                        if (mView != null)
-//                            mView.getCourseListSuccess(response);
-//                    }
-//                });
+        if (!TextUtils.isEmpty(category)) {
+            if (t == null)
+                t = new HashMap<>();
+            t.put("category", category);
+        }
+        if (t != null)
+            params.put("t", t);
+        Observable<CourseListResult> o = RetrofitUtils.create(ApiService.class).getCourseList(params);
+        HttpRxObservable.getObservableFragment(o, (LifecycleProvider<FragmentEvent>) mView)
+                .subscribe(new HttpRxObserver<CourseListResult>() {
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
+
+                    @Override
+                    protected void onSuccess(CourseListResult response) {
+                        if (mView instanceof CourseView) {
+                            mView.dismissLoading();
+                            mView.getCourseListSuccess(response);
+                        }
+                    }
+                });
     }
 
+    public void getVideoList(long id) {
+        Map<String, String> params = new HashMap<>();
+        params.put("lesson_id", id + "");
+        Observable<VideoListResult> o = RetrofitUtils.create(ApiService.class).getVideoList(params);
+        HttpRxObservable.getObservable(o, (CourseDetailActivity) mView).subscribe(new HttpRxObserver<VideoListResult>() {
+            @Override
+            protected void onStart(Disposable d) {
+                if (mView != null)
+                    mView.loading("");
+            }
+
+            @Override
+            protected void onError(ApiException e) {
+                if (mView != null)
+                    mView.onError(e);
+            }
+
+            @Override
+            protected void onSuccess(VideoListResult response) {
+                if (mView instanceof CourseView) {
+                    mView.dismissLoading();
+                    mView.getVideoListSuccess(response);
+                }
+            }
+        });
+    }
+
+    public void getBanner() {
+        Observable<BannerBean.BannerListResult> o = RetrofitUtils.create(ApiService.class).getBanner();
+        HttpRxObservable.getObservableFragment(o, (LifecycleProvider<FragmentEvent>) mView)
+                .subscribe(new HttpRxObserver<BannerBean.BannerListResult>() {
+                    @Override
+                    protected void onStart(Disposable d) {
+                        if (mView != null)
+                            mView.loading("");
+                    }
+
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
+
+                    @Override
+                    protected void onSuccess(BannerBean.BannerListResult response) {
+                        if (mView != null) {
+                            mView.dismissLoading();
+                            mView.getBannerListSuccess(response);
+                        }
+                    }
+                });
+    }
+
+    public void getLiveData() {
+        Observable<LiveBean> o = RetrofitUtils.createH5(H5Service.class).getLiveData();
+        HttpRxObservable.getObservableFragment(o, (LifecycleProvider<FragmentEvent>) mView)
+                .subscribe(new HttpRxObserver<LiveBean>() {
+                    @Override
+                    protected void onStart(Disposable d) {
+                        if (mView != null)
+                            mView.loading("");
+                    }
+
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
+
+                    @Override
+                    protected void onSuccess(LiveBean response) {
+                        if (mView != null) {
+                            mView.dismissLoading();
+                            mView.getLiveDataSuccess(response);
+                        }
+                    }
+                });
+    }
+
+    public void getEvaluateList(long id, int page) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("currentPage", page + "");
+        params.put("pageSize", Constants.PAGE_COUNT + "");
+        if (id > 0) {
+            Map<String, String> t = new HashMap<>();
+            t.put("exercise_id", id + "");
+            params.put("t", t);
+        }
+        Observable<EvaluateBean.EvaluateListResult> o = RetrofitUtils.create(ApiService.class).getEvaluate(params);
+        HttpRxObservable.getObservable(o, (VideoDetailActivity) mView).subscribe(
+                new HttpRxObserver<EvaluateBean.EvaluateListResult>() {
+                    @Override
+                    protected void onStart(Disposable d) {
+                        if (mView != null)
+                            mView.loading("");
+                    }
+
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
+
+                    @Override
+                    protected void onSuccess(EvaluateBean.EvaluateListResult response) {
+                        if (mView != null) {
+                            mView.dismissLoading();
+                            mView.getEvaluateSuccess(response);
+                        }
+                    }
+                });
+    }
 }

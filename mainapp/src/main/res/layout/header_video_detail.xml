@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.baidu.cloud.videoplayer.util.VideoPlayerView
+        android:id="@+id/header_course_bd_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="256dp" />
+
+    <TextView
+        android:id="@+id/header_course_title_tv"
+        style="@style/text_normal_black"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/space_normal"
+        android:paddingEnd="@dimen/space_normal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@drawable/shape_white_border_bottom"
+        android:paddingStart="@dimen/space_normal"
+        android:paddingTop="@dimen/space_normal"
+        android:paddingEnd="@dimen/space_normal">
+
+        <ImageView
+            android:id="@+id/header_course_teacher_iv"
+            android:layout_width="@dimen/avatar_normal"
+            android:layout_height="@dimen/avatar_normal"
+            android:layout_marginEnd="@dimen/space_normal" />
+
+        <TextView
+            android:id="@+id/header_course_teacher_tv"
+            style="@style/text_small_black"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_toEndOf="@id/header_course_teacher_iv"
+            android:gravity="bottom" />
+
+        <TextView
+            android:id="@+id/header_course_time_tv"
+            style="@style/text_small_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_below="@id/header_course_teacher_tv"
+            android:layout_toEndOf="@id/header_course_teacher_iv"
+            android:gravity="top" />
+
+        <TextView
+            android:id="@+id/header_course_like_tv"
+            style="@style/text_small_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/header_course_time_tv"
+            android:layout_marginEnd="@dimen/space_normal"
+            android:layout_toStartOf="@id/header_course_favorite_tv"
+            android:drawableStart="@mipmap/ic_like"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/header_course_favorite_tv"
+            style="@style/text_small_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/header_course_time_tv"
+            android:layout_alignParentEnd="true"
+            android:drawableStart="@mipmap/ic_favorite"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center_vertical" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/header_video_course_rv"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:paddingTop="@dimen/space_normal"
+        android:paddingBottom="@dimen/space_normal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/header_video_evaluate_count_tv"
+            style="@style/text_normal_black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center" />
+
+        <ImageView
+            android:id="@+id/header_video_evaluate_sort_iv"
+            android:layout_width="@dimen/item_height"
+            android:layout_height="@dimen/item_height"
+            android:scaleType="centerInside"
+            android:src="@drawable/selector_sort" />
+
+    </RelativeLayout>
+
+</LinearLayout>

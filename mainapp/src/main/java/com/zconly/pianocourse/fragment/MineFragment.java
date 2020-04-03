@@ -6,12 +6,14 @@ import android.widget.TextView;
 
 import com.mvp.base.MvpPresenter;
 import com.zconly.pianocourse.R;
+import com.zconly.pianocourse.activity.FavoriteActivity;
 import com.zconly.pianocourse.activity.SignInActivity;
 import com.zconly.pianocourse.activity.mine.FeedbackActivity;
 import com.zconly.pianocourse.activity.mine.SettingActivity;
 import com.zconly.pianocourse.activity.mine.UserInfoEditActivity;
 import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.bean.UserBean;
+import com.zconly.pianocourse.event.LogoutEvent;
 import com.zconly.pianocourse.event.UserUpdateEvent;
 import com.zconly.pianocourse.util.DataUtil;
 import com.zconly.pianocourse.util.ImgLoader;
@@ -52,7 +54,8 @@ public class MineFragment extends BaseMvpFragment {
             case R.id.mine_user_rv:
                 UserInfoEditActivity.start(mContext);
                 break;
-            case R.id.favorite:
+            case R.id.favorite: // 收藏
+                FavoriteActivity.start(mContext, 0);
                 break;
             case R.id.feedback:
                 FeedbackActivity.start(mContext);
@@ -84,7 +87,7 @@ public class MineFragment extends BaseMvpFragment {
             loginRl.setVisibility(View.VISIBLE);
         } else {
             loginRl.setVisibility(View.GONE);
-            ImgLoader.showAvatar(this, DataUtil.getAvatar(user.getAvatar()), avatarView);
+            ImgLoader.showAvatar(this, DataUtil.getImgUrl(user.getAvatar()), avatarView);
             nameTv.setText(user.getNickname());
             signatureTv.setText(user.getSignature());
         }
@@ -107,6 +110,11 @@ public class MineFragment extends BaseMvpFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(UserUpdateEvent event) {
+        initData();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(LogoutEvent event) {
         initData();
     }
 

@@ -9,4 +9,5 @@ package com.zconly.pianocourse.event;
  * @UpdateRemark: 更新说明
  */
 public class CourseEvent {
+
 }

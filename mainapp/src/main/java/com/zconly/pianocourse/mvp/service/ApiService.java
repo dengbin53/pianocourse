@@ -1,9 +1,14 @@
 package com.zconly.pianocourse.mvp.service;
 
+import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.EvaluateBean;
 import com.zconly.pianocourse.bean.FileBean;
+import com.zconly.pianocourse.bean.NoticeBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.bean.result.CourseListResult;
+import com.zconly.pianocourse.bean.FavoriteBean;
+import com.zconly.pianocourse.bean.result.VideoListResult;
 import com.zconly.pianocourse.bean.result.SetInfoResult;
 import com.zconly.pianocourse.bean.result.TokenResult;
 import com.zconly.pianocourse.bean.result.UserResult;
@@ -59,10 +64,25 @@ public interface ApiService {
     @GET("app/user/info")
     Observable<UserResult> userInfo(@QueryMap Map<String, String> params);
 
+    @GET("app/lesson-banner/list")
+    Observable<BannerBean.BannerListResult> getBanner();
+
     @Multipart
     @POST("app/sys/upload-file")
     Observable<FileBean> uploadFile(@Part MultipartBody.Part body);
 
-    @GET("app/user/course")
-    Observable<CourseListResult> getCourseList(@QueryMap Map<String, String> params);
+    @POST("app/lesson/list")
+    Observable<CourseListResult> getCourseList(@Body Map<String, Object> params);
+
+    @GET("app/lesson-video/list")
+    Observable<VideoListResult> getVideoList(@QueryMap Map<String, String> params);
+
+    @POST("app/evaluate/list")
+    Observable<EvaluateBean.EvaluateListResult> getEvaluate(@Body Map<String, Object> params);
+
+    @POST("app/system-notice/list")
+    Observable<NoticeBean.NoticeResult> getNoticeList(@Body Map<String, String> params);
+
+    @POST("app/lesson-video-favorite/list")
+    Observable<FavoriteBean.FavoriteListResult> getFavoriteList(@Body Map<String, Object> params);
 }

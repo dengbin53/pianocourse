@@ -260,7 +260,7 @@ public class UserInfoEditActivity extends BaseMvpActivity<EditInfoPresenter> imp
     protected void initData() {
         user = SysConfigTool.getUser();
 
-        ImgLoader.showAvatar(DataUtil.getAvatar(user.getAvatar()), avatarView);
+        ImgLoader.showAvatar(DataUtil.getImgUrl(user.getAvatar()), avatarView);
         nicknameView.setValue(user.getNickname());
         sexView.setValue(DataUtil.getSexString(user.getSex()));
         birthView.setValue(DateTool.formatYMD(user.getBirthday()));

@@ -3,8 +3,15 @@ package com.zconly.pianocourse.util;
 import android.text.TextUtils;
 
 import com.zconly.pianocourse.R;
+import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.MainApplication;
+import com.zconly.pianocourse.bean.CourseBean;
+import com.zconly.pianocourse.bean.FavoriteBean;
+import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.mvp.service.H5Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description: java类作用描述
@@ -30,10 +37,34 @@ public class DataUtil {
             return MainApplication.getInstance().getString(R.string.unit_sex_other);
     }
 
-    public static String getAvatar(String avatar){
-        if (TextUtils.isEmpty(avatar) || avatar.startsWith("http"))
-            return avatar;
-        return H5Service.FILE_HOST + avatar;
+    public static String getImgUrl(String serverUrl) {
+        if (TextUtils.isEmpty(serverUrl) || serverUrl.startsWith("http"))
+            return serverUrl;
+        return H5Service.FILE_HOST + serverUrl;
     }
 
+    public static String getCategory(int category) {
+        if (category == Constants.CATEGORY_PARENTS_COURSE) return "家长课";
+        if (category == Constants.CATEGORY_TEACHER_COURSE) return "老师课";
+        if (category == Constants.CATEGORY_OTHER_COURSE) return "曲目精讲";
+        return null;
+    }
+
+    public static List<VideoBean> parseFavoriteVideo(List<FavoriteBean> beans) {
+        List<VideoBean> data = new ArrayList<>();
+        for (FavoriteBean bean : beans) {
+            VideoBean vb = bean.getLessonVideo();
+            data.add(vb);
+        }
+        return data;
+    }
+
+    public static List<CourseBean> parseFavoriteCourse(List<FavoriteBean> beans) {
+        List<CourseBean> data = new ArrayList<>();
+        for (FavoriteBean bean : beans) {
+            CourseBean vb = bean.getLesson();
+            data.add(vb);
+        }
+        return data;
+    }
 }

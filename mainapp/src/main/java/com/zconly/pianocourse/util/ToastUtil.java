@@ -1,6 +1,7 @@
 package com.zconly.pianocourse.util;
 
 import android.os.Handler;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.zconly.pianocourse.base.MainApplication;
@@ -21,6 +22,8 @@ public class ToastUtil {
     private static Toast toast;
 
     public static void toast(String message) {
+        if (TextUtils.isEmpty(message))
+            return;
         if (toast != null)
             toast.cancel();
         toast = Toast.makeText(MainApplication.getInstance(), message, Toast.LENGTH_SHORT);
@@ -33,6 +36,8 @@ public class ToastUtil {
      * @param resID
      */
     public static void toast(int resID) {
+        if (resID <= 0)
+            return;
         if (toast != null)
             toast.cancel();
         toast = Toast.makeText(MainApplication.getInstance(), resID, Toast.LENGTH_SHORT);
