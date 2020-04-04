@@ -134,4 +134,22 @@
         <item name="tabTextAppearance">@style/tab_layout_text</item>
     </style>
 
+    <style name="style_divider_h">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider</item>
+        <item name="android:background">@color/color_divider</item>
+    </style>
+
+    <style name="style_divider_v">
+        <item name="android:layout_width">@dimen/divider</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/color_divider</item>
+    </style>
+
+    <style name="style_divider_space">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_normal</item>
+        <item name="android:background">@color/color_bg_default</item>
+    </style>
+
 </resources>

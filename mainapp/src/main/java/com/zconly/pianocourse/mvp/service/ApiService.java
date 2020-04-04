@@ -2,16 +2,16 @@ package com.zconly.pianocourse.mvp.service;
 
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BaseBean;
-import com.zconly.pianocourse.bean.EvaluateBean;
+import com.zconly.pianocourse.bean.CommentBean;
+import com.zconly.pianocourse.bean.FavoriteBean;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.NoticeBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.bean.result.CourseListResult;
-import com.zconly.pianocourse.bean.FavoriteBean;
-import com.zconly.pianocourse.bean.result.VideoListResult;
 import com.zconly.pianocourse.bean.result.SetInfoResult;
 import com.zconly.pianocourse.bean.result.TokenResult;
 import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.bean.result.VideoListResult;
 
 import java.util.Map;
 
@@ -71,18 +71,40 @@ public interface ApiService {
     @POST("app/sys/upload-file")
     Observable<FileBean> uploadFile(@Part MultipartBody.Part body);
 
+    // 课程列表
     @POST("app/lesson/list")
     Observable<CourseListResult> getCourseList(@Body Map<String, Object> params);
 
+    // 课程内视频列表
     @GET("app/lesson-video/list")
     Observable<VideoListResult> getVideoList(@QueryMap Map<String, String> params);
 
-    @POST("app/evaluate/list")
-    Observable<EvaluateBean.EvaluateListResult> getEvaluate(@Body Map<String, Object> params);
+    // comment
+    @POST("app/lesson-video-comment/add")
+    Observable<CommentBean.CommentResult> addComment(@Body Map<String, String> params);
+
+    @POST("app/lesson-video-comment/list")
+    Observable<CommentBean.CommentListResult> getComment(@Body Map<String, Object> params);
 
     @POST("app/system-notice/list")
     Observable<NoticeBean.NoticeResult> getNoticeList(@Body Map<String, String> params);
 
     @POST("app/lesson-video-favorite/list")
     Observable<FavoriteBean.FavoriteListResult> getFavoriteList(@Body Map<String, Object> params);
+
+    @POST("app/lesson-video-favorite/add")
+    Observable<BaseBean> favorite(@Body Map<String, Object> params);
+
+    // 点赞视频
+    @GET("app/lesson-video-like/add")
+    Observable<BaseBean> like(@QueryMap Map<String, Object> params);
+
+    // 点赞评论 id
+    @GET("app/lesson-video-comment-thumbup/add")
+    Observable<BaseBean> likeComment(@QueryMap Map<String, Object> params);
+
+    // 增加查看 lv_id
+    @GET("app/lesson-video-watch/add")
+    Observable<BaseBean> addVideoWatch(@QueryMap Map<String, Object> params);
+    
 }

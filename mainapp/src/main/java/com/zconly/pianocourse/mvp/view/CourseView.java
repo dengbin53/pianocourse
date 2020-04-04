@@ -2,7 +2,7 @@ package com.zconly.pianocourse.mvp.view;
 
 import com.mvp.base.MvpView;
 import com.zconly.pianocourse.bean.BannerBean;
-import com.zconly.pianocourse.bean.EvaluateBean;
+import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.LiveBean;
 import com.zconly.pianocourse.bean.result.CourseListResult;
 import com.zconly.pianocourse.bean.result.VideoListResult;
@@ -25,5 +25,7 @@ public interface CourseView extends MvpView {
 
     void getLiveDataSuccess(LiveBean response);
 
-    void getEvaluateSuccess(EvaluateBean.EvaluateListResult response);
+    void getCommentSuccess(CommentBean.CommentListResult response);
+
+    void addCommentSuccess(CommentBean.CommentResult response);
 }

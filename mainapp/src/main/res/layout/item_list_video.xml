@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/item_video_time_tv"
-        style="@style/text_small_gray"
+        style="@style/text_smaller_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
@@ -29,6 +29,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:drawableStart="@mipmap/ic_play_small"
+        android:drawablePadding="@dimen/drawable_padding"
         android:gravity="center"
         android:text="播放" />
 

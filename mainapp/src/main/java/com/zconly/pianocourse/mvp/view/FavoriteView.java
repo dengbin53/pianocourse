@@ -1,6 +1,7 @@
 package com.zconly.pianocourse.mvp.view;
 
 import com.mvp.base.MvpView;
+import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
 
 /**
@@ -13,5 +14,9 @@ import com.zconly.pianocourse.bean.FavoriteBean;
  */
 public interface FavoriteView extends MvpView {
 
-    void getFavoriteSuccess(FavoriteBean.FavoriteListResult response);
+    void getFavoriteListSuccess(FavoriteBean.FavoriteListResult response);
+
+    void favoriteSuccess(BaseBean response);
+
+    void likeSuccess(BaseBean response);
 }

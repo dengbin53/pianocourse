@@ -279,13 +279,15 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     }
 
     @Override
-    protected void initView() {
+    protected boolean initView() {
         mTitleView.setTitle(getString(R.string.title_set_info));
 
         sexView.setClickCallback(clickCallback);
         birthView.setClickCallback(clickCallback);
         pianoLevelView.setClickCallback(clickCallback);
         pianoTimeView.setClickCallback(clickCallback);
+
+        return true;
     }
 
     @Override

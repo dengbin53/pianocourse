@@ -43,7 +43,7 @@ public class FavoriteActivity extends BaseMvpActivity<BasePresenter> {
     }
 
     @Override
-    protected void initView() {
+    protected boolean initView() {
         mTitleView.setTitle("我的收藏");
 
         List<Fragment> fragments = new ArrayList<>();
@@ -55,6 +55,8 @@ public class FavoriteActivity extends BaseMvpActivity<BasePresenter> {
 
         mViewPager.setAdapter(new BaseFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         mTabLayout.setupWithViewPager(mViewPager);
+
+        return true;
     }
 
     @Override

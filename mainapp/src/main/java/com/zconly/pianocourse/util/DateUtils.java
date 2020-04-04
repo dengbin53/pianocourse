@@ -36,11 +36,6 @@ public class DateUtils {
         return format.format(time);
     }
 
-    public static String getTime2m(long time) {
-        DateFormat format = SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
-        return format.format(time);
-    }
-
     public static boolean isSameDay(long inputTime) {
         TimeInfo tStartAndEndTime = getTodayStartAndEndTime();
         return inputTime > tStartAndEndTime.getStartTime() && inputTime < tStartAndEndTime.getEndTime();

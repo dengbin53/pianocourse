@@ -17,7 +17,7 @@ import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.CourseBean;
-import com.zconly.pianocourse.bean.EvaluateBean;
+import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.LiveBean;
 import com.zconly.pianocourse.bean.result.CourseListResult;
 import com.zconly.pianocourse.bean.result.VideoListResult;
@@ -64,6 +64,7 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
         View header = getLayoutInflater().inflate(R.layout.header_course_home, mRecyclerView, false);
         mHeader = new MHeader(header);
         mAdapter.addHeaderView(header);
+        mAdapter.addFooterView(getLayoutInflater().inflate(R.layout.footer_space,mRecyclerView,false));
     }
 
     @Override
@@ -139,7 +140,12 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
     }
 
     @Override
-    public void getEvaluateSuccess(EvaluateBean.EvaluateListResult response) {
+    public void getCommentSuccess(CommentBean.CommentListResult response) {
+
+    }
+
+    @Override
+    public void addCommentSuccess(CommentBean.CommentResult response) {
 
     }
 

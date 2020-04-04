@@ -285,7 +285,7 @@ public class UserInfoEditActivity extends BaseMvpActivity<EditInfoPresenter> imp
     }
 
     @Override
-    protected void initView() {
+    protected boolean initView() {
         mTitleView.setTitle(getString(R.string.title_user_info_edit));
         sexView.setClickCallback(clickCallback);
         pianoTimeView.setClickCallback(clickCallback);
@@ -293,6 +293,7 @@ public class UserInfoEditActivity extends BaseMvpActivity<EditInfoPresenter> imp
         pianoLevelView.setClickCallback(clickCallback);
         nicknameView.setActionListener(nicknameListener);
         signatureView.setActionListener(signatureListener);
+        return true;
     }
 
     @Override

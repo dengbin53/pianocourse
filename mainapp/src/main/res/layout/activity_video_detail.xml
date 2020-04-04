@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/view_refresh_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_normal">
+
+        <EditText
+            android:id="@+id/video_comment_et"
+            style="@style/text_small_black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_corner_white"
+            android:hint="@string/hint_comment"
+            android:minHeight="@dimen/item_height_small"
+            android:paddingStart="@dimen/space_normal"
+            android:paddingEnd="@dimen/space_normal" />
+
+        <TextView
+            android:id="@+id/video_comment_done_tv"
+            style="@style/text_normal_yellow"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginEnd="@dimen/space_normal"
+            android:gravity="center"
+            android:text="@string/btn_done" />
+
+    </LinearLayout>
+
+</LinearLayout>

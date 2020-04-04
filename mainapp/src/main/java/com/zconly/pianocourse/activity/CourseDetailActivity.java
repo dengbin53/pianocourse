@@ -14,24 +14,26 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.adapter.VideoListAdapter;
 import com.zconly.pianocourse.base.BaseMvpActivity;
+import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.ExtraConstants;
+import com.zconly.pianocourse.mvp.view.AbstractFavoriteView;
 import com.zconly.pianocourse.bean.BannerBean;
+import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.CourseBean;
-import com.zconly.pianocourse.bean.EvaluateBean;
+import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.LiveBean;
 import com.zconly.pianocourse.bean.result.CourseListResult;
 import com.zconly.pianocourse.bean.result.VideoListResult;
-import com.zconly.pianocourse.event.CourseEvent;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
+import com.zconly.pianocourse.mvp.presenter.FavoritePresenter;
 import com.zconly.pianocourse.mvp.view.CourseView;
+import com.zconly.pianocourse.util.ArrayUtil;
 import com.zconly.pianocourse.util.DataUtil;
 import com.zconly.pianocourse.util.ImgLoader;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @Description: 课程详情
@@ -64,22 +66,22 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
     }
 
     @Override
-    protected void initView() {
+    protected boolean initView() {
         mTitleView.setTitle("大师课目录");
         courseBean = (CourseBean) getIntent().getSerializableExtra(ExtraConstants.EXTRA_DATA);
-        mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> initData());
+        mSmartRefreshLayout.setOnRefreshListener(refreshLayout ->
+                mPresenter.getCourseList(0, courseBean.getId() + "", courseBean.getCategory() + ""));
         mSmartRefreshLayout.setEnableLoadMore(false);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
                 false));
-        mRecyclerView.setAdapter(mAdapter = new VideoListAdapter(null));
+        mRecyclerView.setAdapter(mAdapter = new VideoListAdapter(courseBean, null));
         View view = LayoutInflater.from(mContext).inflate(R.layout.header_course_detail, mRecyclerView,
                 false);
         mHeader = new MHeader(view);
         mAdapter.addHeaderView(view);
-        mAdapter.setOnItemClickListener((adapter, view1, position) -> {
-            VideoDetailActivity.start(mContext, mAdapter.getItem(position), courseBean);
-        });
+
+        return true;
     }
 
     @Override
@@ -100,12 +102,15 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
 
     @Override
     protected boolean isBindEventBus() {
-        return true;
+        return false;
     }
 
     @Override
     public void getCourseListSuccess(CourseListResult response) {
-
+        if (response.getData() == null || ArrayUtil.isEmpty(response.getData().getData()))
+            return;
+        courseBean = response.getData().getData().get(0);
+        initData();
     }
 
     @Override
@@ -124,16 +129,16 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
     }
 
     @Override
-    public void getEvaluateSuccess(EvaluateBean.EvaluateListResult response) {
+    public void getCommentSuccess(CommentBean.CommentListResult response) {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(CourseEvent event) {
+    @Override
+    public void addCommentSuccess(CommentBean.CommentResult response) {
 
     }
 
-    class MHeader {
+    class MHeader extends AbstractFavoriteView {
 
         @BindView(R.id.header_course_iv)
         ImageView imageView;
@@ -148,8 +153,43 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
         @BindView(R.id.header_course_favorite_tv)
         TextView favoriteTv;
 
+        private FavoritePresenter favoritePresenter;
+
         MHeader(View view) {
             ButterKnife.bind(this, view);
+        }
+
+        @Override
+        public void favoriteSuccess(BaseBean response) {
+            int favorited = courseBean.getFavorited() > 0 ? 0 : 1;
+            courseBean.setFavorited(favorited);
+            courseBean.setFavorite_count(favorited > 0 ? courseBean.getFavorite_count() + 1
+                    : courseBean.getFavorite_count() - 1);
+            setFavorite();
+        }
+
+        @Override
+        public void likeSuccess(BaseBean response) {
+            int liked = courseBean.getLiked() > 0 ? 0 : 1;
+            courseBean.setLiked(liked);
+            courseBean.setLike_count(liked > 0 ? courseBean.getLike_count() + 1 : courseBean.getLike_count() - 1);
+            setLike();
+        }
+
+        @OnClick({R.id.header_course_like_tv, R.id.header_course_favorite_tv})
+        void onClick(View view) {
+            if (favoritePresenter == null)
+                favoritePresenter = new FavoritePresenter(this);
+            switch (view.getId()) {
+                case R.id.header_course_like_tv:
+                    favoritePresenter.like(courseBean.getId(), 0);
+                    break;
+                case R.id.header_course_favorite_tv:
+                    favoritePresenter.favorite(courseBean.getId(), 0);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void setData() {
@@ -157,8 +197,19 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
             titleTv.setText(courseBean.getTitle());
             teacherTv.setText(courseBean.getTeacher());
             descTv.setText(courseBean.getDescription());
-            likeTv.setText(courseBean.getLike_count() + "次点赞");
-            favoriteTv.setText(courseBean.getFavorite_count() + "次收藏");
+
+            setLike();
+            setFavorite();
+        }
+
+        private void setFavorite() {
+            favoriteTv.setSelected(courseBean.getFavorited() > 0);
+            favoriteTv.setText(courseBean.getFavorite_count() + Constants.END_FAVORITE);
+        }
+
+        private void setLike() {
+            likeTv.setSelected(courseBean.getLiked() > 0);
+            likeTv.setText(courseBean.getLike_count() + Constants.END_LIKE);
         }
 
     }

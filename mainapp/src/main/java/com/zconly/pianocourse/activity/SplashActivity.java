@@ -21,7 +21,7 @@ public class SplashActivity extends BaseMvpActivity {
 
     @SuppressLint("CheckResult")
     @Override
-    protected void initView() {
+    protected boolean initView() {
         RxPermissions rxPermissions = new RxPermissions(mContext);
         rxPermissions.request(Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -37,6 +37,7 @@ public class SplashActivity extends BaseMvpActivity {
 
                     }
                 });
+        return true;
     }
 
     @Override

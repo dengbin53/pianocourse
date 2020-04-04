@@ -142,7 +142,7 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
 
     @SuppressLint("HandlerLeak")
     @Override
-    protected void initView() {
+    protected boolean initView() {
         mTitleView.setTitle(getString(R.string.title_find_pass));
         mHandler = new Handler() {
             @Override
@@ -164,6 +164,8 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
                 }
             }
         };
+
+        return true;
     }
 
     @Override

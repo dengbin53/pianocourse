@@ -147,7 +147,7 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
 
     @SuppressLint("HandlerLeak")
     @Override
-    protected void initView() {
+    protected boolean initView() {
         String str = getString(R.string.btn_terms_of_service_confirm);
         str = String.format(str, "<u>", "</u>");
         termsOfServiceTv.setText(Html.fromHtml(str));
@@ -172,6 +172,8 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
                 }
             }
         };
+
+        return true;
     }
 
     @Override

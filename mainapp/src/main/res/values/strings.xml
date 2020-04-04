@@ -72,7 +72,7 @@
     <string name="btn_check_quick">快速审核</string>
     <string name="btn_contact">通讯录</string>
     <string name="btn_my_activity">我负责的体验</string>
-    <string name="btn_send">发送</string>
+    <string name="btn_done">完成</string>
     <string name="btn_img">图片</string>
     <string name="btn_copy">复制</string>
     <string name="btn_next">下一步</string>

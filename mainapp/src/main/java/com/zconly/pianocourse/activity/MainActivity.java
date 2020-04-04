@@ -73,8 +73,7 @@ public class MainActivity extends BaseMvpActivity {
     }
 
     @Override
-    protected void initView() {
-
+    protected boolean initView() {
         fragments[0] = new HomeFragment();
         fragments[1] = new NoticeFragment();
         fragments[2] = new MineFragment();
@@ -109,6 +108,8 @@ public class MainActivity extends BaseMvpActivity {
                 refresh((int) tab.getTag());
             }
         });
+
+        return true;
     }
 
     @Override

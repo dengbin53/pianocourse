@@ -38,8 +38,9 @@ public class ActContactCS extends BaseMvpActivity {
     }
 
     @Override
-    protected void initView() {
+    protected boolean initView() {
         ((TitleView) mTitleView).setTitle(getString(R.string.key_contact_cs));
+        return true;
     }
 
     @Override

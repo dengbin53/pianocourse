@@ -67,13 +67,13 @@ public class WebViewActivity extends BaseMvpActivity {
     }
 
     @Override
-    public void initView() {
+    public boolean initView() {
         title = getIntent().getStringExtra("title");
         url = getIntent().getStringExtra(TAG_DATA);
 
         if (TextUtils.isEmpty(url)) {
             finish();
-            return;
+            return false;
         }
 
         ((TitleView) mTitleView).setTitle(title);
@@ -121,6 +121,7 @@ public class WebViewActivity extends BaseMvpActivity {
             }
         });
 
+        return true;
     }
 
     @Override

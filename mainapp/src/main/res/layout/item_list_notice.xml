@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/notice_time_tv"
-        style="@style/text_small_gray"
+        style="@style/text_smaller_gray"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_below="@id/notice_name_tv"

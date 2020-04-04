@@ -95,7 +95,7 @@ public class SignInActivity extends BaseMvpActivity<LoginPresenter> implements L
     }
 
     @Override
-    protected void initView() {
+    protected boolean initView() {
         String llc = SysConfigTool.getLastLoginContact();
         if (!TextUtils.isEmpty(llc)) {
             emailEt.setText(llc);
@@ -103,6 +103,8 @@ public class SignInActivity extends BaseMvpActivity<LoginPresenter> implements L
         }
 
         emailEt.setHint(getString(R.string.hint_phone));
+
+        return true;
     }
 
     @Override

@@ -49,8 +49,8 @@ public abstract class MvpActivity<P extends MvpPresenter, T extends View> extend
         if (isBindEventBus())
             EventBus.getDefault().register(this);
 
-        initView();
-        initData();
+        if (initView())
+            initData();
     }
 
     protected void doSetContentView(int id) {
@@ -84,7 +84,7 @@ public abstract class MvpActivity<P extends MvpPresenter, T extends View> extend
         }
     }
 
-    protected abstract void initView();
+    protected abstract boolean initView();
 
     protected abstract void initData();
 

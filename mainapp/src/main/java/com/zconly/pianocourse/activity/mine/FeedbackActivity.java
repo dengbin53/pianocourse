@@ -46,9 +46,10 @@ public class FeedbackActivity extends BaseMvpActivity<FeedbackPresenter> impleme
     }
 
     @Override
-    public void initView() {
+    public boolean initView() {
         mTitleView.setTitle(getString(R.string.key_feedback));
         mTitleView.postDelayed(() -> ViewTool.edtFocusable(contentEt), 128);
+        return true;
     }
 
     @Override

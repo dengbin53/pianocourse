@@ -23,6 +23,7 @@
     <color name="color_text_gray_light">#CCCCCC</color>
     <color name="color_text_gray_dark">#666666</color>
     <color name="color_yellow">#EACF8C</color>
+    <color name="color_yellow_60">#99EACF8C</color>
     <color name="gray_text_light">#BBBBBB</color>
 
 </resources>

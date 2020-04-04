@@ -12,14 +12,9 @@ import com.zconly.pianocourse.adapter.base.BaseFragmentPagerAdapter;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.ExtraConstants;
-import com.zconly.pianocourse.bean.BannerBean;
-import com.zconly.pianocourse.bean.EvaluateBean;
-import com.zconly.pianocourse.bean.LiveBean;
-import com.zconly.pianocourse.bean.result.CourseListResult;
-import com.zconly.pianocourse.bean.result.VideoListResult;
 import com.zconly.pianocourse.fragment.CourseListFragment;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
-import com.zconly.pianocourse.mvp.view.CourseView;
+import com.zconly.pianocourse.widget.TitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +29,7 @@ import butterknife.BindView;
  * @UpdateDate: 2020/3/18 21:03
  * @UpdateRemark: 更新说明
  */
-public class CourseListActivity extends BaseMvpActivity<CoursePresenter> implements CourseView {
+public class CourseListActivity extends BaseMvpActivity {
 
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
@@ -48,8 +43,8 @@ public class CourseListActivity extends BaseMvpActivity<CoursePresenter> impleme
     }
 
     @Override
-    protected void initView() {
-        mTitleView.setTitle("大师课");
+    protected boolean initView() {
+        ((TitleView) mTitleView).setTitle("大师课");
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(CourseListFragment.getInstance(Constants.CATEGORY_PARENTS_COURSE));
@@ -62,6 +57,8 @@ public class CourseListActivity extends BaseMvpActivity<CoursePresenter> impleme
 
         mViewPager.setAdapter(new BaseFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         mTabLayout.setupWithViewPager(mViewPager);
+
+        return true;
     }
 
     @Override
@@ -81,32 +78,7 @@ public class CourseListActivity extends BaseMvpActivity<CoursePresenter> impleme
 
     @Override
     protected CoursePresenter getPresenter() {
-        return new CoursePresenter(this);
-    }
-
-    @Override
-    public void getCourseListSuccess(CourseListResult response) {
-
-    }
-
-    @Override
-    public void getVideoListSuccess(VideoListResult response) {
-
-    }
-
-    @Override
-    public void getBannerListSuccess(BannerBean.BannerListResult response) {
-
-    }
-
-    @Override
-    public void getLiveDataSuccess(LiveBean response) {
-
-    }
-
-    @Override
-    public void getEvaluateSuccess(EvaluateBean.EvaluateListResult response) {
-
+        return null;
     }
 
     @Override

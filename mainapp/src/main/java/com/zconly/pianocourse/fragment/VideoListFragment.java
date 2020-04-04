@@ -15,6 +15,7 @@ import com.zconly.pianocourse.adapter.VideoListAdapter;
 import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.ExtraConstants;
+import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
 import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.mvp.presenter.FavoritePresenter;
@@ -75,7 +76,7 @@ public class VideoListFragment extends BaseMvpFragment<FavoritePresenter> implem
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
                 false));
-        mRecyclerView.setAdapter(mAdapter = new VideoListAdapter(null));
+        mRecyclerView.setAdapter(mAdapter = new VideoListAdapter(null, null));
     }
 
     private void getData() {
@@ -103,7 +104,7 @@ public class VideoListFragment extends BaseMvpFragment<FavoritePresenter> implem
     }
 
     @Override
-    public void getFavoriteSuccess(FavoriteBean.FavoriteListResult response) {
+    public void getFavoriteListSuccess(FavoriteBean.FavoriteListResult response) {
         isLoadDataCompleted = true;
         if (response.getData() == null)
             return;
@@ -116,6 +117,16 @@ public class VideoListFragment extends BaseMvpFragment<FavoritePresenter> implem
         }
         page++;
         mSmartRefreshLayout.setEnableLoadMore(data.size() >= Constants.PAGE_COUNT);
+    }
+
+    @Override
+    public void favoriteSuccess(BaseBean response) {
+
+    }
+
+    @Override
+    public void likeSuccess(BaseBean response) {
+
     }
 
     @Override

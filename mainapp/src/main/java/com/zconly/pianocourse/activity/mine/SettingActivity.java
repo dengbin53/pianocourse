@@ -83,9 +83,10 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter> implement
     }
 
     @Override
-    public void initView() {
+    public boolean initView() {
         mTitleView.setTitle(getString(R.string.title_setting));
         cleanCacheView.setValue(DataCleanManager.getTotalCacheSize(mContext));
+        return true;
     }
 
     @Override
