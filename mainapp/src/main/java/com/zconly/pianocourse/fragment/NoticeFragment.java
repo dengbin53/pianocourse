@@ -81,9 +81,9 @@ public class NoticeFragment extends BaseMvpFragment<NoticePresenter> implements 
                     false);
             ev.findViewById(R.id.empty_login_tv).setOnClickListener(v -> SignInActivity.start(mContext));
             mAdapter.setEmptyView(ev);
+            mAdapter.setNewData(null);
             return;
         }
-        mAdapter.isUseEmpty(false);
         page = 0;
         getData();
     }
@@ -133,7 +133,7 @@ public class NoticeFragment extends BaseMvpFragment<NoticePresenter> implements 
         mRefreshLayout.finishLoadMore();
     }
 
-    private class mAdapter extends BaseQuickAdapter<NoticeBean, BaseViewHolder> {
+    private static class mAdapter extends BaseQuickAdapter<NoticeBean, BaseViewHolder> {
 
         mAdapter(@Nullable List<NoticeBean> data) {
             super(R.layout.item_list_notice, data);

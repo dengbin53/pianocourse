@@ -38,6 +38,14 @@ public class CourseBean extends BaseBean implements MultiItemEntity {
     private int viewType;
     private String url;
 
+    public CourseBean() {
+
+    }
+
+    public CourseBean(long id) {
+        this.id = id;
+    }
+
     @Override
     public int getItemType() {
         return getViewType();

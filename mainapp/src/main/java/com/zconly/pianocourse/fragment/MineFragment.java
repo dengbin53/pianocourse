@@ -14,6 +14,7 @@ import com.zconly.pianocourse.activity.mine.UserInfoEditActivity;
 import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.event.LogoutEvent;
+import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.event.UserUpdateEvent;
 import com.zconly.pianocourse.util.DataUtil;
 import com.zconly.pianocourse.util.ImgLoader;
@@ -110,6 +111,11 @@ public class MineFragment extends BaseMvpFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(UserUpdateEvent event) {
+        initData();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(SignInEvent event) {
         initData();
     }
 

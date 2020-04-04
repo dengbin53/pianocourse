@@ -13,16 +13,18 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.zconly.pianocourse.R;
+import com.zconly.pianocourse.activity.CourseDetailActivity;
+import com.zconly.pianocourse.activity.WebViewActivity;
 import com.zconly.pianocourse.adapter.viewholder.CommonBannerHolder;
+import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.MainApplication;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.CourseBean;
 
 import java.util.List;
 
 public class ViewUtil {
-
-    public static final float BANNER_TYPE_0 = 360f / 184f;
 
     public static void setTextPaint(TextPaint ds) {
         ds.setColor(MainApplication.getInstance().getResources().getColor(R.color.color_red));
@@ -64,7 +66,12 @@ public class ViewUtil {
                     T data = bannerData.get(position);
 
                     if (data instanceof BannerBean) {
-                        // TODO: 2020/4/2
+                        BannerBean bean = (BannerBean) data;
+                        if (bean.getType() == Constants.TYPE_BANNER_COURSE) {
+                            CourseDetailActivity.start(bannerView.getContext(), new CourseBean(bean.getLesson_id()));
+                        } else {
+                            WebViewActivity.start(bannerView.getContext(), bean.getTitle(), bean.getUrl());
+                        }
                     }
                 });
     }
@@ -77,7 +84,7 @@ public class ViewUtil {
     }
 
     public static int getBannerHeight(int width, float type) {
-        return (int) (width / BANNER_TYPE_0);
+        return (int) (width / type);
     }
 
     // 取消RecyclerView Animation

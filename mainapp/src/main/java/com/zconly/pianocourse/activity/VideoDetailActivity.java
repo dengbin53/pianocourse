@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -164,8 +165,12 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
         if (courseBean == null) {
             mPresenter.getCourseList(0, videoBean.getLesson_id() + "", null);
         } else {
-            mHeader.setHeaderData();
+            getData();
         }
+    }
+
+    private void getData() {
+        mHeader.setHeaderData();
         getVideoList();
         getCommentList();
     }
@@ -190,7 +195,7 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
         if (response.getData() == null || ArrayUtil.isEmpty(response.getData().getData()))
             return;
         courseBean = response.getData().getData().get(0);
-        mHeader.setHeaderData();
+        getData();
     }
 
     @Override
@@ -302,6 +307,10 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
 
         MHeader(View view) {
             ButterKnife.bind(this, view);
+            ViewGroup.LayoutParams lp = videoView.getLayoutParams();
+            lp.width = DeviceUtils.getScreenWidth();
+            lp.height = (int) (lp.width / Constants.VIDEO_ASPECT_RATIO);
+            videoView.setLayoutParams(lp);
         }
 
         @Override

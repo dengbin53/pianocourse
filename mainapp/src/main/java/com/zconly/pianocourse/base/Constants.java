@@ -23,10 +23,11 @@ public class Constants {
     public static final int TYPE_FAVORITE_COURSE = 0;
     public static final int TYPE_FAVORITE_VIDEO = 1;
 
-    public static final int VIEW_TYPE_NORMAL = 0;
-    public static final int VIEW_TYPE_FOOTER = 1;
-    public static final int VIEW_TYPE_HEADER = 2;
-    public static final int VIEW_TYPE_NORMAL_2 = 3;
+    public static final int TYPE_BANNER_COURSE = 0;
+    public static final int TYPE_BANNER_WEB = 1;
+
+    public static final float BANNER_ASPECT_RATIO_0 = 16f / 9f;
+    public static final float VIDEO_ASPECT_RATIO = 16f / 9f;
 
     // 一天的毫秒数
     public static final long DAY_OF_MILLIS = 60000 * 60 * 24;

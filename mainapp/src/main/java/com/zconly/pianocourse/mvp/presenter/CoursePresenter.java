@@ -82,7 +82,7 @@ public class CoursePresenter extends BasePresenter<CourseView> {
         };
         Observable<CourseListResult> o = RetrofitUtils.create(ApiService.class).getCourseList(params);
         if (mView instanceof BaseMvpActivity) {
-            HttpRxObservable.getObservableFragment(o, (BaseMvpActivity) mView).subscribe(hro);
+            HttpRxObservable.getObservable(o, (BaseMvpActivity) mView).subscribe(hro);
         } else if (mView instanceof BaseMvpFragment) {
             HttpRxObservable.getObservableFragment(o, (BaseMvpFragment) mView).subscribe(hro);
         } else {

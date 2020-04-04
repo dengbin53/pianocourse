@@ -62,33 +62,6 @@ public class NoticeBean extends BaseBean {
     }
 
     public static class NoticeListBean extends BaseBean {
-        private int totalPage;
-        private int total;
-        private int pageSize;
-
-        public int getTotalPage() {
-            return totalPage;
-        }
-
-        public void setTotalPage(int totalPage) {
-            this.totalPage = totalPage;
-        }
-
-        public int getTotal() {
-            return total;
-        }
-
-        public void setTotal(int total) {
-            this.total = total;
-        }
-
-        public int getPageSize() {
-            return pageSize;
-        }
-
-        public void setPageSize(int pageSize) {
-            this.pageSize = pageSize;
-        }
 
         private List<NoticeBean> data;
 

@@ -1,5 +1,6 @@
 package com.zconly.pianocourse.adapter.viewholder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -69,8 +70,9 @@ public class CourseHolder extends BaseViewHolder {
                 singleTitleTv.setName(item.getTitle());
                 break;
             case CourseBean.ITEM:
+                String url = TextUtils.isEmpty(item.getCover_small()) ? item.getCover() : item.getCover_small();
                 if (iv != null)
-                    ImgLoader.showImgRound(DataUtil.getImgUrl(item.getCover()), iv);
+                    ImgLoader.showImgRound(DataUtil.getImgUrl(url), iv);
                 if (titleTv != null)
                     titleTv.setText(item.getTitle());
                 if (descTv != null)

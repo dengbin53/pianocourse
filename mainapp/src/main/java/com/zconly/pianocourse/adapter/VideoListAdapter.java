@@ -9,6 +9,7 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.VideoDetailActivity;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.VideoBean;
+import com.zconly.pianocourse.callback.DataCallback;
 import com.zconly.pianocourse.util.DateUtils;
 
 import java.util.List;
@@ -23,13 +24,13 @@ import java.util.List;
  */
 public class VideoListAdapter extends BaseQuickAdapter<VideoBean, BaseViewHolder> {
 
-    private final CourseBean courseBean;
+    private final DataCallback<CourseBean> commonCallback;
 
-    public VideoListAdapter(CourseBean courseBean, @Nullable List<VideoBean> data) {
+    public VideoListAdapter(@Nullable List<VideoBean> data, DataCallback<CourseBean> callback) {
         super(R.layout.item_list_video, data);
-        this.courseBean = courseBean;
-        setOnItemClickListener((adapter, view1, position) ->
-                VideoDetailActivity.start(mContext, getItem(position), this.courseBean));
+        this.commonCallback = callback;
+        setOnItemClickListener((adapter, view1, position) -> VideoDetailActivity.start(mContext, getItem(position),
+                commonCallback == null ? null : commonCallback.callback(position)));
     }
 
     @Override

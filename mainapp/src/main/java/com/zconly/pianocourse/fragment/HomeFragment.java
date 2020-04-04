@@ -1,6 +1,7 @@
 package com.zconly.pianocourse.fragment;
 
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,14 +17,15 @@ import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.BannerBean;
-import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.CommentBean;
+import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.LiveBean;
 import com.zconly.pianocourse.bean.result.CourseListResult;
 import com.zconly.pianocourse.bean.result.VideoListResult;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
 import com.zconly.pianocourse.mvp.view.CourseView;
 import com.zconly.pianocourse.util.ArrayUtil;
+import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -64,7 +66,7 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
         View header = getLayoutInflater().inflate(R.layout.header_course_home, mRecyclerView, false);
         mHeader = new MHeader(header);
         mAdapter.addHeaderView(header);
-        mAdapter.addFooterView(getLayoutInflater().inflate(R.layout.footer_space,mRecyclerView,false));
+        mAdapter.addFooterView(getLayoutInflater().inflate(R.layout.footer_space, mRecyclerView, false));
     }
 
     @Override
@@ -159,7 +161,7 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
     class MHeader {
 
         @BindView(R.id.home_banner)
-        ConvenientBanner banner;
+        ConvenientBanner<BannerBean> banner;
         @BindView(R.id.header_course_tv0)
         TextView tv0;
         @BindView(R.id.header_course_tv1)
@@ -195,6 +197,13 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
         }
 
         void updateBanner(List<BannerBean> bannerBeans) {
+            int width = DeviceUtils.getScreenWidth();
+            int height = ViewUtil.getBannerHeight(width, Constants.BANNER_ASPECT_RATIO_0);
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) banner.getLayoutParams();
+            lp.width = width;
+            lp.height = height;
+            banner.setLayoutParams(lp);
+
             ViewUtil.updateBanner(banner, bannerBeans);
         }
 
