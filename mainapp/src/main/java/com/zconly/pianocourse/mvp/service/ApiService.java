@@ -3,15 +3,14 @@ package com.zconly.pianocourse.mvp.service;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.CommentBean;
+import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.NoticeBean;
+import com.zconly.pianocourse.bean.TokenBean;
 import com.zconly.pianocourse.bean.UserBean;
-import com.zconly.pianocourse.bean.result.CourseListResult;
-import com.zconly.pianocourse.bean.result.SetInfoResult;
-import com.zconly.pianocourse.bean.result.TokenResult;
-import com.zconly.pianocourse.bean.result.UserResult;
-import com.zconly.pianocourse.bean.result.VideoListResult;
+import com.zconly.pianocourse.bean.UserDataBean;
+import com.zconly.pianocourse.bean.VideoBean;
 
 import java.util.Map;
 
@@ -35,7 +34,7 @@ import retrofit2.http.QueryMap;
 public interface ApiService {
 
     @POST("app/user/signIn")
-    Observable<TokenResult> signIn(@Body Map<String, String> body);
+    Observable<TokenBean.TokenResult> signIn(@Body Map<String, String> body);
 
     @POST("app/user/short-msg/signUp")
     Observable<BaseBean> signUpCode(@Body Map<String, String> params);
@@ -44,7 +43,7 @@ public interface ApiService {
     Observable<UserBean> signOut(@QueryMap Map<String, String> params);
 
     @POST("app/user/reset-password")
-    Observable<UserResult> resetPassword(@Body Map<String, String> params);
+    Observable<UserBean.UserResult> resetPassword(@Body Map<String, String> params);
 
     @POST("app/user/short-msg/retrieve")
     Observable<BaseBean> retrieve(@Body Map<String, String> params);
@@ -53,16 +52,16 @@ public interface ApiService {
     Observable<BaseBean> verify(@Body Map<String, String> params);
 
     @POST("app/user/completion")
-    Observable<SetInfoResult> completion(@Body Map<String, String> params);
+    Observable<UserDataBean.SetInfoResult> completion(@Body Map<String, String> params);
 
     @POST("app/user/update")
-    Observable<UserResult> updateUser(@Body Map<String, String> params);
+    Observable<UserBean.UserResult> updateUser(@Body Map<String, String> params);
 
     @POST("app/user/feedback")
     Observable<BaseBean> feedback(@Body Map<String, String> params);
 
     @GET("app/user/info")
-    Observable<UserResult> userInfo(@QueryMap Map<String, String> params);
+    Observable<UserBean.UserResult> userInfo(@QueryMap Map<String, String> params);
 
     @GET("app/lesson-banner/list")
     Observable<BannerBean.BannerListResult> getBanner();
@@ -73,11 +72,11 @@ public interface ApiService {
 
     // 课程列表
     @POST("app/lesson/list")
-    Observable<CourseListResult> getCourseList(@Body Map<String, Object> params);
+    Observable<CourseBean.CourseListResult> getCourseList(@Body Map<String, Object> params);
 
     // 课程内视频列表
     @GET("app/lesson-video/list")
-    Observable<VideoListResult> getVideoList(@QueryMap Map<String, String> params);
+    Observable<VideoBean.VideoListResult> getVideoList(@QueryMap Map<String, String> params);
 
     // comment
     @POST("app/lesson-video-comment/add")
@@ -106,5 +105,5 @@ public interface ApiService {
     // 增加查看 lv_id
     @GET("app/lesson-video-watch/add")
     Observable<BaseBean> addVideoWatch(@QueryMap Map<String, Object> params);
-    
+
 }

@@ -1,7 +1,7 @@
 package com.zconly.pianocourse.mvp.view;
 
 import com.mvp.base.MvpView;
-import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.bean.UserBean;
 
 /**
  * @Description: java类作用描述
@@ -12,7 +12,7 @@ import com.zconly.pianocourse.bean.result.UserResult;
  * @UpdateRemark: 更新说明
  */
 public interface UserView extends MvpView {
-    void updateUserSuccess(UserResult response);
+    void updateUserSuccess(UserBean.UserResult response);
 
-    void getUserInfoSuccess(UserResult response);
+    void getUserInfoSuccess(UserBean.UserResult response);
 }

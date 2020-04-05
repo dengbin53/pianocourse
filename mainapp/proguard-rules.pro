@@ -240,11 +240,16 @@ public static java.lang.String TABLENAME;
 
 # 友盟统计
 -keep class com.umeng.commonsdk.** {*;}
+-keep class com.umeng.** {*;}
+-keep public class [com.zconly.pianocourse].R$*{
+    public static final int *;
+}
 -keepclassmembers class * {
     public <init> (org.json.JSONObject);
 }
--keep public class [com.zongxueguan.naochanle_android].R$*{
-    public static final int *;
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
 }
 
 # 微信支付

@@ -1,10 +1,13 @@
 package com.zconly.pianocourse.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
@@ -12,7 +15,7 @@ import com.mvp.base.MvpActivity;
 import com.mvp.base.MvpPresenter;
 import com.mvp.exception.ApiException;
 import com.zconly.pianocourse.R;
-import com.zconly.pianocourse.util.StatUtil;
+import com.zconly.pianocourse.util.UmengUtil;
 import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.util.ToastUtil;
 import com.zconly.pianocourse.widget.TitleView;
@@ -30,6 +33,30 @@ import java.util.HashMap;
  */
 public abstract class BaseMvpActivity<P extends MvpPresenter> extends MvpActivity<P, TitleView> {
 
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        // super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onPause() {
+        UmengUtil.onPause(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UmengUtil.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Glide.with(getApplicationContext()).pauseRequests();
+    }
+
     @Override
     public void onError(ApiException errorBean) {
         super.onError(errorBean);
@@ -46,24 +73,6 @@ public abstract class BaseMvpActivity<P extends MvpPresenter> extends MvpActivit
                     .setCancelable(false)
                     .show();
         }
-    }
-
-    @Override
-    protected void onPause() {
-        StatUtil.onPause(this);
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        StatUtil.onResume(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Glide.with(getApplicationContext()).pauseRequests();
     }
 
     @Override
@@ -134,7 +143,7 @@ public abstract class BaseMvpActivity<P extends MvpPresenter> extends MvpActivit
     public void insertUmeng(Context context, String eventId, String key, String value) {
         HashMap<String, String> map = new HashMap<>();
         map.put(key, value);
-        StatUtil.onEvent(context, eventId, map);
+        UmengUtil.onEvent(context, eventId, map);
     }
 
     public void hideSoftInput() {

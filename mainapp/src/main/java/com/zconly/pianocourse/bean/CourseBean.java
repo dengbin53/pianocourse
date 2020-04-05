@@ -3,6 +3,8 @@ package com.zconly.pianocourse.bean;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.util.List;
+
 /**
  * @Description: java类作用描述
  * @Author: dengbin
@@ -201,5 +203,33 @@ public class CourseBean extends BaseBean implements MultiItemEntity {
 
     public void setLiked(int liked) {
         this.liked = liked;
+    }
+
+    public static class CourseListBean extends BaseBean {
+
+        private List<CourseBean> data;
+
+        public List<CourseBean> getData() {
+            return data;
+        }
+
+        public void setData(List<CourseBean> data) {
+            this.data = data;
+        }
+
+    }
+
+    public static class CourseListResult extends BaseBean {
+
+        private CourseListBean data;
+
+        public CourseListBean getData() {
+            return data;
+        }
+
+        public void setData(CourseListBean data) {
+            this.data = data;
+        }
+
     }
 }

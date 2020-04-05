@@ -9,4 +9,5 @@ package com.zconly.pianocourse.mvp.view;
  * @UpdateRemark: 更新说明
  */
 public interface EditInfoView extends UploadView, UserView {
+
 }

@@ -10,8 +10,8 @@ import com.mvp.base.MvpFragment;
 import com.mvp.base.MvpPresenter;
 import com.mvp.exception.ApiException;
 import com.zconly.pianocourse.R;
-import com.zconly.pianocourse.util.StatUtil;
 import com.zconly.pianocourse.util.ToastUtil;
+import com.zconly.pianocourse.util.UmengUtil;
 import com.zconly.pianocourse.widget.dialog.LoadingDialog;
 
 import java.util.HashMap;
@@ -26,6 +26,24 @@ import java.util.Map;
  * @UpdateRemark: 更新说明
  */
 public abstract class BaseMvpFragment<P extends MvpPresenter> extends MvpFragment<P> {
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        UmengUtil.onPageStart(getClass().getSimpleName());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        UmengUtil.onPageEnd(getClass().getSimpleName());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Glide.with(this).pauseRequests();
+    }
 
     @Override
     public void onError(ApiException ae) {
@@ -47,16 +65,10 @@ public abstract class BaseMvpFragment<P extends MvpPresenter> extends MvpFragmen
         LoadingDialog.dismissLoadingDialog();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Glide.with(this).pauseRequests();
-    }
-
     public void insertUmeng(String eventId, String key, String value) {
         Map<String, String> map = new HashMap<>();
         map.put(key, value);
-        StatUtil.onEvent(mContext, eventId, map);
+        UmengUtil.onEvent(mContext, eventId, map);
     }
 
     @Override

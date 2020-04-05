@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.SingleClick;
-import com.zconly.pianocourse.bean.result.TokenResult;
-import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.bean.TokenBean;
+import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.LoginPresenter;
 import com.zconly.pianocourse.mvp.view.LoginView;
@@ -138,19 +138,19 @@ public class SignInActivity extends BaseMvpActivity<LoginPresenter> implements L
     }
 
     @Override
-    public void loginSuccess(TokenResult response) {
+    public void loginSuccess(TokenBean.TokenResult response) {
         String token = response.getData().getToken();
         SysConfigTool.saveToken(token);
         mPresenter.getUserInfo(0);
     }
 
     @Override
-    public void updateUserSuccess(UserResult response) {
+    public void updateUserSuccess(UserBean.UserResult response) {
 
     }
 
     @Override
-    public void getUserInfoSuccess(UserResult response) {
+    public void getUserInfoSuccess(UserBean.UserResult response) {
         SysConfigTool.setUser(response.getData());
         EventBus.getDefault().post(new SignInEvent());
     }

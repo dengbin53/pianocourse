@@ -1,5 +1,7 @@
 package com.zconly.pianocourse.bean;
 
+import java.util.List;
+
 /**
  * @Description: java类作用描述
  * @Author: dengbin
@@ -153,5 +155,17 @@ public class VideoBean extends BaseBean {
 
     public void setLiked(int liked) {
         this.liked = liked;
+    }
+
+    public static class VideoListResult extends BaseBean {
+        private List<VideoBean> data;
+
+        public List<VideoBean> getData() {
+            return data;
+        }
+
+        public void setData(List<VideoBean> data) {
+            this.data = data;
+        }
     }
 }

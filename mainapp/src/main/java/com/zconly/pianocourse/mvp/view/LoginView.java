@@ -1,6 +1,6 @@
 package com.zconly.pianocourse.mvp.view;
 
-import com.zconly.pianocourse.bean.result.TokenResult;
+import com.zconly.pianocourse.bean.TokenBean;
 
 /**
  * @Description: java类作用描述
@@ -12,6 +12,6 @@ import com.zconly.pianocourse.bean.result.TokenResult;
  */
 public interface LoginView extends UserView {
 
-    void loginSuccess(TokenResult response);
+    void loginSuccess(TokenBean.TokenResult response);
 
 }

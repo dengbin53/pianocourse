@@ -5,7 +5,7 @@ import com.mvp.observer.HttpRxObservable;
 import com.mvp.observer.HttpRxObserver;
 import com.mvp.utils.RetrofitUtils;
 import com.zconly.pianocourse.activity.SetInfoActivity;
-import com.zconly.pianocourse.bean.result.SetInfoResult;
+import com.zconly.pianocourse.bean.UserDataBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.view.SetInfoView;
 
@@ -30,28 +30,29 @@ public class SetInfoPresenter extends BasePresenter<SetInfoView> {
 
     public void completion(Map<String, String> params) {
         if (!isNetConnect()) return;
-        Observable<SetInfoResult> observer = RetrofitUtils.create(ApiService.class).completion(params);
-        HttpRxObservable.getObservable(observer, (SetInfoActivity) mView).subscribe(new HttpRxObserver<SetInfoResult>() {
-            @Override
-            protected void onStart(Disposable d) {
-                if (mView != null)
-                    mView.loading("");
-            }
+        Observable<UserDataBean.SetInfoResult> observer = RetrofitUtils.create(ApiService.class).completion(params);
+        HttpRxObservable.getObservable(observer, (SetInfoActivity) mView).subscribe(
+                new HttpRxObserver<UserDataBean.SetInfoResult>() {
+                    @Override
+                    protected void onStart(Disposable d) {
+                        if (mView != null)
+                            mView.loading("");
+                    }
 
-            @Override
-            protected void onError(ApiException e) {
-                if (mView != null)
-                    mView.onError(e);
-            }
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
 
-            @Override
-            protected void onSuccess(SetInfoResult response) {
-                if (mView != null) {
-                    mView.dismissLoading();
-                    mView.completionSuccess(response);
-                }
-            }
-        });
+                    @Override
+                    protected void onSuccess(UserDataBean.SetInfoResult response) {
+                        if (mView != null) {
+                            mView.dismissLoading();
+                            mView.completionSuccess(response);
+                        }
+                    }
+                });
     }
 
 }

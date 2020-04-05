@@ -1,7 +1,7 @@
 package com.zconly.pianocourse.mvp.view;
 
 import com.mvp.base.MvpView;
-import com.zconly.pianocourse.bean.result.AppUpdateResult;
+import com.zconly.pianocourse.bean.AppUpdateBean;
 
 /**
  * @Description: java类作用描述
@@ -12,5 +12,5 @@ import com.zconly.pianocourse.bean.result.AppUpdateResult;
  * @UpdateRemark: 更新说明
  */
 interface UpdateView extends MvpView {
-    void getAppUpdateSuccess(AppUpdateResult result);
+    void getAppUpdateSuccess(AppUpdateBean.AppUpdateResult result);
 }

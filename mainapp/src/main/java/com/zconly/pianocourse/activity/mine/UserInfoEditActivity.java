@@ -23,7 +23,6 @@ import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.base.callback.MClickCallback;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.UserBean;
-import com.zconly.pianocourse.bean.result.UserResult;
 import com.zconly.pianocourse.event.UserUpdateEvent;
 import com.zconly.pianocourse.mvp.presenter.BasePresenter;
 import com.zconly.pianocourse.mvp.view.EditInfoView;
@@ -312,13 +311,13 @@ public class UserInfoEditActivity extends BaseMvpActivity<BasePresenter<EditInfo
     }
 
     @Override
-    public void updateUserSuccess(UserResult response) {
+    public void updateUserSuccess(UserBean.UserResult response) {
         SysConfigTool.setUser(user = response.getData());
         EventBus.getDefault().post(new UserUpdateEvent());
     }
 
     @Override
-    public void getUserInfoSuccess(UserResult response) {
+    public void getUserInfoSuccess(UserBean.UserResult response) {
 
     }
 }

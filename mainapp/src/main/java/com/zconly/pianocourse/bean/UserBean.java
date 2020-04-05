@@ -1,9 +1,5 @@
 package com.zconly.pianocourse.bean;
 
-import android.text.TextUtils;
-
-import com.zconly.pianocourse.mvp.service.H5Service;
-
 /**
  * 用户信息
  * Created by dengbin
@@ -207,6 +203,19 @@ public class UserBean extends BaseBean {
         if (!(o instanceof UserBean))
             return false;
         return getId() == ((UserBean) o).getId();
+    }
+
+    public static class UserResult extends BaseBean {
+
+        private UserBean data;
+
+        public UserBean getData() {
+            return data;
+        }
+
+        public void setData(UserBean data) {
+            this.data = data;
+        }
     }
 
 }

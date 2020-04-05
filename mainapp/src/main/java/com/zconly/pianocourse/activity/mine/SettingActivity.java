@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.FindPassActivity;
 import com.zconly.pianocourse.base.BaseMvpActivity;
-import com.zconly.pianocourse.bean.result.AppUpdateResult;
+import com.zconly.pianocourse.bean.AppUpdateBean;
 import com.zconly.pianocourse.event.LogoutEvent;
 import com.zconly.pianocourse.mvp.presenter.SettingPresenter;
 import com.zconly.pianocourse.mvp.view.SettingView;
@@ -115,7 +115,7 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter> implement
     }
 
     @Override
-    public void getAppUpdateSuccess(AppUpdateResult result) {
+    public void getAppUpdateSuccess(AppUpdateBean.AppUpdateResult result) {
 
     }
 }

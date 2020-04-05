@@ -14,7 +14,7 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.BaseBean;
-import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.SignUpPresenter;
 import com.zconly.pianocourse.mvp.service.H5Service;
@@ -197,7 +197,7 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
     }
 
     @Override
-    public void resetSuccess(UserResult response) {
+    public void resetSuccess(UserBean.UserResult response) {
 
     }
 

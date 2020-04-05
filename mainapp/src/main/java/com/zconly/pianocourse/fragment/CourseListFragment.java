@@ -21,8 +21,7 @@ import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
 import com.zconly.pianocourse.bean.LiveBean;
-import com.zconly.pianocourse.bean.result.CourseListResult;
-import com.zconly.pianocourse.bean.result.VideoListResult;
+import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
 import com.zconly.pianocourse.mvp.presenter.FavoritePresenter;
 import com.zconly.pianocourse.mvp.view.CourseView;
@@ -115,7 +114,7 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
     }
 
     @Override
-    public void getCourseListSuccess(CourseListResult response) {
+    public void getCourseListSuccess(CourseBean.CourseListResult response) {
         if (response.getData() == null)
             return;
         List<CourseBean> data = response.getData().getData();
@@ -129,7 +128,7 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
     }
 
     @Override
-    public void getVideoListSuccess(VideoListResult response) {
+    public void getVideoListSuccess(VideoBean.VideoListResult response) {
 
     }
 

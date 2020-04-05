@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import com.baidu.cloud.videoplayer.widget.BDCloudVideoView;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.zconly.pianocourse.BuildConfig;
 import com.zconly.pianocourse.base.Constants;
@@ -61,7 +62,9 @@ public class InitService extends IntentService {
 
     private void initUmeng() {
         UMConfigure.init(getApplicationContext(), UMConfigure.DEVICE_TYPE_PHONE, "");
-        UMConfigure.setLogEnabled(BuildConfig.DEBUG);
+        UMConfigure.setLogEnabled(BuildConfig.MSB_DEBUG);
+        // 选用LEGACY_AUTO页面采集模式
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.LEGACY_AUTO);
         // 微信
 //        PlatformConfig.setWeixin("wx6069a847f3d0f3f4", "aae2b5419a74ec74bb4849307975c52c");
         // 新浪微博

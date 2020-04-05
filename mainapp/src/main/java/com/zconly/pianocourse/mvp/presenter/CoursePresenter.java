@@ -15,9 +15,9 @@ import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.CommentBean;
+import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.LiveBean;
-import com.zconly.pianocourse.bean.result.CourseListResult;
-import com.zconly.pianocourse.bean.result.VideoListResult;
+import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.service.H5Service;
 import com.zconly.pianocourse.mvp.view.CourseView;
@@ -59,7 +59,7 @@ public class CoursePresenter extends BasePresenter<CourseView> {
         if (t != null)
             params.put("t", t);
 
-        HttpRxObserver<CourseListResult> hro = new HttpRxObserver<CourseListResult>() {
+        HttpRxObserver<CourseBean.CourseListResult> hro = new HttpRxObserver<CourseBean.CourseListResult>() {
             @Override
             protected void onStart(Disposable d) {
                 if (mView != null)
@@ -73,14 +73,14 @@ public class CoursePresenter extends BasePresenter<CourseView> {
             }
 
             @Override
-            protected void onSuccess(CourseListResult response) {
+            protected void onSuccess(CourseBean.CourseListResult response) {
                 if (mView instanceof CourseView) {
                     mView.dismissLoading();
                     mView.getCourseListSuccess(response);
                 }
             }
         };
-        Observable<CourseListResult> o = RetrofitUtils.create(ApiService.class).getCourseList(params);
+        Observable<CourseBean.CourseListResult> o = RetrofitUtils.create(ApiService.class).getCourseList(params);
         if (mView instanceof BaseMvpActivity) {
             HttpRxObservable.getObservable(o, (BaseMvpActivity) mView).subscribe(hro);
         } else if (mView instanceof BaseMvpFragment) {
@@ -93,9 +93,9 @@ public class CoursePresenter extends BasePresenter<CourseView> {
     public void getVideoList(long id) {
         Map<String, String> params = new HashMap<>();
         params.put("lesson_id", id + "");
-        Observable<VideoListResult> o = RetrofitUtils.create(ApiService.class).getVideoList(params);
+        Observable<VideoBean.VideoListResult> o = RetrofitUtils.create(ApiService.class).getVideoList(params);
         HttpRxObservable.getObservable(o, (LifecycleProvider<ActivityEvent>) mView)
-                .subscribe(new HttpRxObserver<VideoListResult>() {
+                .subscribe(new HttpRxObserver<VideoBean.VideoListResult>() {
                     @Override
                     protected void onStart(Disposable d) {
                         if (mView != null)
@@ -109,7 +109,7 @@ public class CoursePresenter extends BasePresenter<CourseView> {
                     }
 
                     @Override
-                    protected void onSuccess(VideoListResult response) {
+                    protected void onSuccess(VideoBean.VideoListResult response) {
                         if (mView instanceof CourseView) {
                             mView.dismissLoading();
                             mView.getVideoListSuccess(response);

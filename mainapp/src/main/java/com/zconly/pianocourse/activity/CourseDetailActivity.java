@@ -22,9 +22,7 @@ import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.LiveBean;
-import com.zconly.pianocourse.bean.result.CourseListResult;
-import com.zconly.pianocourse.bean.result.VideoListResult;
-import com.zconly.pianocourse.callback.DataCallback;
+import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
 import com.zconly.pianocourse.mvp.presenter.FavoritePresenter;
 import com.zconly.pianocourse.mvp.view.AbstractFavoriteView;
@@ -113,7 +111,7 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
     }
 
     @Override
-    public void getCourseListSuccess(CourseListResult response) {
+    public void getCourseListSuccess(CourseBean.CourseListResult response) {
         if (response.getData() == null || ArrayUtil.isEmpty(response.getData().getData()))
             return;
         courseBean = response.getData().getData().get(0);
@@ -121,7 +119,7 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
     }
 
     @Override
-    public void getVideoListSuccess(VideoListResult response) {
+    public void getVideoListSuccess(VideoBean.VideoListResult response) {
         mAdapter.setNewData(response.getData());
     }
 

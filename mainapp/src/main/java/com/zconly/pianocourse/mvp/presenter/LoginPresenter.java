@@ -5,7 +5,7 @@ import com.mvp.observer.HttpRxObservable;
 import com.mvp.observer.HttpRxObserver;
 import com.mvp.utils.RetrofitUtils;
 import com.zconly.pianocourse.activity.SignInActivity;
-import com.zconly.pianocourse.bean.result.TokenResult;
+import com.zconly.pianocourse.bean.TokenBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.view.LoginView;
 
@@ -34,27 +34,28 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         Map<String, String> params = new HashMap<>();
         params.put("username", phone);
         params.put("password", pwd);
-        Observable<TokenResult> observer = RetrofitUtils.create(ApiService.class).signIn(params);
-        HttpRxObservable.getObservable(observer, (SignInActivity) mView).subscribe(new HttpRxObserver<TokenResult>() {
-            @Override
-            protected void onStart(Disposable d) {
-                if (mView != null)
-                    mView.loading("");
-            }
+        Observable<TokenBean.TokenResult> observer = RetrofitUtils.create(ApiService.class).signIn(params);
+        HttpRxObservable.getObservable(observer, (SignInActivity) mView).subscribe(
+                new HttpRxObserver<TokenBean.TokenResult>() {
+                    @Override
+                    protected void onStart(Disposable d) {
+                        if (mView != null)
+                            mView.loading("");
+                    }
 
-            @Override
-            protected void onError(ApiException e) {
-                if (mView != null)
-                    mView.onError(e);
-            }
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
 
-            @Override
-            protected void onSuccess(TokenResult response) {
-                if (mView != null) {
-                    mView.dismissLoading();
-                    mView.loginSuccess(response);
-                }
-            }
-        });
+                    @Override
+                    protected void onSuccess(TokenBean.TokenResult response) {
+                        if (mView != null) {
+                            mView.dismissLoading();
+                            mView.loginSuccess(response);
+                        }
+                    }
+                });
     }
 }

@@ -2,7 +2,7 @@ package com.zconly.pianocourse.mvp.view;
 
 import com.mvp.base.MvpView;
 import com.zconly.pianocourse.bean.BaseBean;
-import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.bean.UserBean;
 
 /**
  * @Description: java类作用描述
@@ -18,5 +18,5 @@ public interface SignUpView extends MvpView {
 
     void verifySuccess(BaseBean response);
 
-    void resetSuccess(UserResult response);
+    void resetSuccess(UserBean.UserResult response);
 }

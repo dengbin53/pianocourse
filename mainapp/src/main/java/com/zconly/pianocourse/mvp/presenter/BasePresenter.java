@@ -15,7 +15,7 @@ import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.base.MainApplication;
 import com.zconly.pianocourse.bean.FileBean;
-import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.view.UploadView;
 import com.zconly.pianocourse.mvp.view.UserView;
@@ -101,8 +101,8 @@ public class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
 
     public void updateUser(Map<String, String> params) {
         if (!isNetConnect()) return;
-        Observable<UserResult> ob = RetrofitUtils.create(ApiService.class).updateUser(params);
-        Observer<UserResult> observer = new HttpRxObserver<UserResult>() {
+        Observable<UserBean.UserResult> ob = RetrofitUtils.create(ApiService.class).updateUser(params);
+        Observer<UserBean.UserResult> observer = new HttpRxObserver<UserBean.UserResult>() {
 
             @Override
             protected void onStart(Disposable d) {
@@ -117,7 +117,7 @@ public class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
             }
 
             @Override
-            protected void onSuccess(UserResult response) {
+            protected void onSuccess(UserBean.UserResult response) {
                 if (mView instanceof UserView) {
                     mView.dismissLoading();
                     ((UserView) mView).updateUserSuccess(response);
@@ -138,8 +138,8 @@ public class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
         if (!isNetConnect()) return;
         Map<String, String> params = new HashMap<>();
         params.put("user_id", id <= 0 ? "" : "" + id);
-        Observable<UserResult> ob = RetrofitUtils.create(ApiService.class).userInfo(params);
-        Observer<UserResult> observer = new HttpRxObserver<UserResult>() {
+        Observable<UserBean.UserResult> ob = RetrofitUtils.create(ApiService.class).userInfo(params);
+        Observer<UserBean.UserResult> observer = new HttpRxObserver<UserBean.UserResult>() {
 
             @Override
             protected void onStart(Disposable d) {
@@ -154,7 +154,7 @@ public class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
             }
 
             @Override
-            protected void onSuccess(UserResult response) {
+            protected void onSuccess(UserBean.UserResult response) {
                 if (mView instanceof UserView) {
                     mView.dismissLoading();
                     ((UserView) mView).getUserInfoSuccess(response);

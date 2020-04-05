@@ -34,8 +34,6 @@ import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.LiveBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.bean.VideoBean;
-import com.zconly.pianocourse.bean.result.CourseListResult;
-import com.zconly.pianocourse.bean.result.VideoListResult;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
 import com.zconly.pianocourse.mvp.presenter.FavoritePresenter;
 import com.zconly.pianocourse.mvp.view.AbstractFavoriteView;
@@ -191,7 +189,7 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
     }
 
     @Override
-    public void getCourseListSuccess(CourseListResult response) {
+    public void getCourseListSuccess(CourseBean.CourseListResult response) {
         if (response.getData() == null || ArrayUtil.isEmpty(response.getData().getData()))
             return;
         courseBean = response.getData().getData().get(0);
@@ -199,7 +197,7 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
     }
 
     @Override
-    public void getVideoListSuccess(VideoListResult response) {
+    public void getVideoListSuccess(VideoBean.VideoListResult response) {
         mHeader.setVideoData(response.getData());
     }
 

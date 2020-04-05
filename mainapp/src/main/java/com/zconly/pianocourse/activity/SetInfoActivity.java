@@ -18,8 +18,8 @@ import com.zconly.pianocourse.base.RequestCode;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.base.callback.MClickCallback;
 import com.zconly.pianocourse.bean.FileBean;
-import com.zconly.pianocourse.bean.result.SetInfoResult;
-import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.bean.UserBean;
+import com.zconly.pianocourse.bean.UserDataBean;
 import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.SetInfoPresenter;
 import com.zconly.pianocourse.mvp.view.SetInfoView;
@@ -296,7 +296,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     }
 
     @Override
-    public void completionSuccess(SetInfoResult response) {
+    public void completionSuccess(UserDataBean.SetInfoResult response) {
         SysConfigTool.setUser(response.getData().getUser());
         SysConfigTool.saveToken(response.getData().getToken().getToken());
         Logger.i("completionSuccess");
@@ -318,13 +318,13 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     }
 
     @Override
-    public void updateUserSuccess(UserResult response) {
+    public void updateUserSuccess(UserBean.UserResult response) {
         SysConfigTool.setUser(response.getData());
         finishWork();
     }
 
     @Override
-    public void getUserInfoSuccess(UserResult response) {
+    public void getUserInfoSuccess(UserBean.UserResult response) {
 
     }
 

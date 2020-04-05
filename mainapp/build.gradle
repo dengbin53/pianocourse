@@ -71,7 +71,9 @@ android {
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            manifestPlaceholders = [UMENG_APPKEY: "5e27c683cb23d2f0b700007e"]
+            manifestPlaceholders = [UMENG_APPKEY: "5e8a06ab978eea071c37c204"] // 邓斌
+            // Umeng Message Secret c0f96d72b1c0ddec2449b79129a2c74e
+            // App Master Secret x19vbfoeqjdfkwym15hw0p5vw74tmngq
 
             buildConfigField("boolean", "MSB_DEBUG", "true")
 
@@ -86,7 +88,7 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            manifestPlaceholders = [UMENG_APPKEY: "5e27c683cb23d2f0b700007e"]
+            manifestPlaceholders = [UMENG_APPKEY: "5e8a06ab978eea071c37c204"]
 
             buildConfigField("boolean", "MSB_DEBUG", "false")
 
@@ -132,8 +134,10 @@ dependencies {
     implementation rootProject.ext.compilelibs['rxpermissions']
     implementation rootProject.ext.compilelibs['aspectj']
 
-    implementation rootProject.ext.compilelibs['umeng-analytics']
     implementation rootProject.ext.compilelibs['umeng-common']
+    implementation rootProject.ext.compilelibs['umeng-utdid']
+    implementation rootProject.ext.compilelibs['umeng-analytics']
+    // implementation rootProject.ext.compilelibs['umeng-push']
 
     implementation rootProject.ext.compilelibs['smartrefresh']
     implementation rootProject.ext.compilelibs['brvah']

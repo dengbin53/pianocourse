@@ -7,7 +7,7 @@ import com.mvp.utils.RetrofitUtils;
 import com.zconly.pianocourse.activity.FindPassActivity;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.bean.BaseBean;
-import com.zconly.pianocourse.bean.result.UserResult;
+import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.view.SignUpView;
 
@@ -121,27 +121,28 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
 
     public void resetPassword(Map<String, String> params) {
         if (!isNetConnect()) return;
-        Observable<UserResult> observer = RetrofitUtils.create(ApiService.class).resetPassword(params);
-        HttpRxObservable.getObservable(observer, (FindPassActivity) mView).subscribe(new HttpRxObserver<UserResult>() {
-            @Override
-            protected void onStart(Disposable d) {
-                if (mView != null)
-                    mView.loading("");
-            }
+        Observable<UserBean.UserResult> observer = RetrofitUtils.create(ApiService.class).resetPassword(params);
+        HttpRxObservable.getObservable(observer, (FindPassActivity) mView).subscribe(
+                new HttpRxObserver<UserBean.UserResult>() {
+                    @Override
+                    protected void onStart(Disposable d) {
+                        if (mView != null)
+                            mView.loading("");
+                    }
 
-            @Override
-            protected void onError(ApiException e) {
-                if (mView != null)
-                    mView.onError(e);
-            }
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
 
-            @Override
-            protected void onSuccess(UserResult response) {
-                if (mView != null) {
-                    mView.dismissLoading();
-                    mView.resetSuccess(response);
-                }
-            }
-        });
+                    @Override
+                    protected void onSuccess(UserBean.UserResult response) {
+                        if (mView != null) {
+                            mView.dismissLoading();
+                            mView.resetSuccess(response);
+                        }
+                    }
+                });
     }
 }

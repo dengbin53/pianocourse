@@ -3,9 +3,9 @@ package com.zconly.pianocourse.mvp.view;
 import com.mvp.base.MvpView;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.CommentBean;
+import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.LiveBean;
-import com.zconly.pianocourse.bean.result.CourseListResult;
-import com.zconly.pianocourse.bean.result.VideoListResult;
+import com.zconly.pianocourse.bean.VideoBean;
 
 /**
  * @Description: java类作用描述
@@ -17,9 +17,9 @@ import com.zconly.pianocourse.bean.result.VideoListResult;
  */
 public interface CourseView extends MvpView {
 
-    void getCourseListSuccess(CourseListResult response);
+    void getCourseListSuccess(CourseBean.CourseListResult response);
 
-    void getVideoListSuccess(VideoListResult response);
+    void getVideoListSuccess(VideoBean.VideoListResult response);
 
     void getBannerListSuccess(BannerBean.BannerListResult response);
 
