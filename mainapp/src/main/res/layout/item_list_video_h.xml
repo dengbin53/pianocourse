@@ -3,4 +3,5 @@
     android:id="@+id/video_iv"
     android:layout_width="72dp"
     android:layout_height="72dp"
-    android:layout_marginStart="@dimen/space_normal" />
+    android:layout_marginStart="@dimen/space_normal"
+    android:scaleType="centerCrop" />

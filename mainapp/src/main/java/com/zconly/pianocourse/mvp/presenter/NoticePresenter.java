@@ -45,6 +45,7 @@ public class NoticePresenter extends BasePresenter<NoticeView> {
                     @Override
                     protected void onSuccess(NoticeBean.NoticeResult response) {
                         if (mView != null) {
+                            mView.dismissLoading();
                             mView.getNoticeSuccess(response);
                         }
                     }

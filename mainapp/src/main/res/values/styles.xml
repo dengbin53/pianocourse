@@ -14,7 +14,7 @@
 
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@mipmap/img_splash</item>
+        <!-- <item name="android:windowBackground">@mipmap/img_splash</item> -->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>
@@ -51,7 +51,6 @@
 
     <!-- 移动dialog样式 -->
     <style name="dialog_translate" parent="@android:style/Theme.Holo.Light">
-
         <!-- 显示动画 -->
         <item name="android:windowAnimationStyle">@style/dialogAnimationTranslate</item>
         <!-- 边框 -->

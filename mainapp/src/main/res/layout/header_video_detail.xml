@@ -38,7 +38,7 @@
             android:id="@+id/header_video_teacher_tv"
             style="@style/text_small_black"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_height="20dp"
             android:layout_alignTop="@id/header_video_teacher_iv"
             android:layout_toEndOf="@id/header_video_teacher_iv"
             android:gravity="center" />
@@ -47,7 +47,7 @@
             android:id="@+id/header_video_time_tv"
             style="@style/text_smaller_gray"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_height="20dp"
             android:layout_alignBottom="@id/header_video_teacher_iv"
             android:layout_toEndOf="@id/header_video_teacher_iv"
             android:gravity="center" />
@@ -56,7 +56,7 @@
             android:id="@+id/header_video_like_tv"
             style="@style/text_small_gray"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_height="20dp"
             android:layout_alignBottom="@id/header_video_teacher_iv"
             android:layout_marginEnd="@dimen/space_normal"
             android:layout_toStartOf="@id/header_video_favorite_tv"
@@ -68,7 +68,7 @@
             android:id="@+id/header_video_favorite_tv"
             style="@style/text_small_gray"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_height="20dp"
             android:layout_alignBottom="@id/header_video_teacher_iv"
             android:layout_alignParentEnd="true"
             android:drawableStart="@drawable/selector_favorite"
@@ -90,9 +90,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/header_video_video_rv"
         android:layout_width="match_parent"
-        android:layout_height="88dp"
+        android:layout_height="80dp"
         android:background="@color/color_white"
-        android:paddingTop="@dimen/space_normal"
         android:paddingBottom="@dimen/space_normal" />
 
     <RelativeLayout

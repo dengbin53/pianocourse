@@ -25,7 +25,7 @@ import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.bean.result.UserResult;
 import com.zconly.pianocourse.event.UserUpdateEvent;
-import com.zconly.pianocourse.mvp.presenter.EditInfoPresenter;
+import com.zconly.pianocourse.mvp.presenter.BasePresenter;
 import com.zconly.pianocourse.mvp.view.EditInfoView;
 import com.zconly.pianocourse.util.CropType;
 import com.zconly.pianocourse.util.DataUtil;
@@ -51,7 +51,7 @@ import butterknife.OnClick;
 /**
  * 编辑我的资料
  */
-public class UserInfoEditActivity extends BaseMvpActivity<EditInfoPresenter> implements EditInfoView {
+public class UserInfoEditActivity extends BaseMvpActivity<BasePresenter<EditInfoView>> implements EditInfoView {
 
     @BindView(R.id.nick_name)
     MKeyValueEditView nicknameView;
@@ -275,8 +275,8 @@ public class UserInfoEditActivity extends BaseMvpActivity<EditInfoPresenter> imp
     }
 
     @Override
-    protected EditInfoPresenter getPresenter() {
-        return new EditInfoPresenter(this);
+    protected BasePresenter<EditInfoView> getPresenter() {
+        return new BasePresenter<>(this);
     }
 
     @Override

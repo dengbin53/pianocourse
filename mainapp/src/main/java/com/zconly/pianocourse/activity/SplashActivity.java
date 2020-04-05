@@ -2,8 +2,9 @@ package com.zconly.pianocourse.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.net.Uri;
+import android.view.View;
+import android.widget.VideoView;
 
 import com.mvp.base.MvpPresenter;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -11,13 +12,22 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SplashActivity extends BaseMvpActivity {
 
-    @BindView(R.id.splash_iv)
-    ImageView iv;
-    @BindView(R.id.splash_tv)
-    TextView tv;
+    @BindView(R.id.splash_video_view)
+    VideoView videoView;
+
+    private void gotoMain() {
+        MainActivity.start(mContext);
+        finishDown();
+    }
+
+    @OnClick({R.id.splash_tv})
+    public void onClick(View view) {
+        gotoMain();
+    }
 
     @SuppressLint("CheckResult")
     @Override
@@ -42,10 +52,15 @@ public class SplashActivity extends BaseMvpActivity {
 
     @Override
     protected void initData() {
-        iv.postDelayed(() -> {
-            MainActivity.start(mContext);
-            finishDown();
-        }, 1000);
+        final String uri = "android.resource://" + getPackageName() + "/" + R.raw.guide00;
+        videoView.setVideoURI(Uri.parse(uri));
+        videoView.start();
+        videoView.setOnPreparedListener(mp -> {
+            mp.start();
+            mp.setLooping(false);
+        });
+
+        videoView.setOnCompletionListener(mp -> gotoMain());
     }
 
     @Override
@@ -66,5 +81,11 @@ public class SplashActivity extends BaseMvpActivity {
     @Override
     protected boolean hasTitleView() {
         return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        videoView.stopPlayback();
+        super.onDestroy();
     }
 }

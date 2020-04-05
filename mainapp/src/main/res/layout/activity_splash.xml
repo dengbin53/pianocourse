@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.SplashActivity">
 
-    <ImageView
-        android:id="@+id/splash_iv"
+    <com.zconly.pianocourse.widget.MPVideoView
+        android:id="@+id/splash_video_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="center"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/splash_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        style="@style/button_large"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_small"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="128dp"
+        android:text="立即体验"
+        android:textColor="@color/color_white" />
 
 </RelativeLayout>

@@ -389,8 +389,8 @@ public static java.lang.String TABLENAME;
 -keep class com.baidu.cloud.media.**{ *;}
 
 # local
--keep class com.zconly.pianocourse.event.** {*;}
--keep class package com.zconly.pianocourse.widget.** {*;}
+-keep class com.zconly.pianocourse.event.** { *; }
+-keep class com.zconly.pianocourse.widget.** { *; }
 -keep class * extends com.zconly.pianocourse.bean.BaseBean
 
 # linkedme
