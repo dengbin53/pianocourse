@@ -9,9 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import com.baidu.cloud.videoplayer.widget.BDCloudVideoView;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.commonsdk.UMConfigure;
-import com.zconly.pianocourse.BuildConfig;
+import com.xiaoe.shop.webcore.core.XiaoEWeb;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.Logger;
@@ -47,9 +45,9 @@ public class InitService extends IntentService {
         switch (tag) {
             case "init_app":
                 Logger.i("init_app");
-                initUmeng();
                 initConstants();
                 initUser();
+                getXiaoEToken();
                 break;
             case "download_ads_image": // 下载广告图
                 Logger.i("download_ads_image");
@@ -60,17 +58,9 @@ public class InitService extends IntentService {
         }
     }
 
-    private void initUmeng() {
-        UMConfigure.init(getApplicationContext(), UMConfigure.DEVICE_TYPE_PHONE, "");
-        UMConfigure.setLogEnabled(BuildConfig.MSB_DEBUG);
-        // 选用LEGACY_AUTO页面采集模式
-        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.LEGACY_AUTO);
-        // 微信
-//        PlatformConfig.setWeixin("wx6069a847f3d0f3f4", "aae2b5419a74ec74bb4849307975c52c");
-        // 新浪微博
-//        PlatformConfig.setSinaWeibo("1488037763", "796dc73d08831af9d5aaf10e7ab4ffc8",
-//                "http://sns.whalecloud.com");
-//        PlatformConfig.setQQZone("1103288394", "svSMPZvpVbrk8v9v");
+    private void getXiaoEToken() {
+        XiaoEWeb.init(getApplicationContext(), Constants.XIAO_E_APP_ID, Constants.XIAO_E_CLIENT_ID,
+                XiaoEWeb.WebViewType.Android);
     }
 
     private void initUser() {

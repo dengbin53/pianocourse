@@ -65,6 +65,7 @@ public class CourseHolder extends BaseViewHolder {
     public void bindData(CourseBean item) {
         switch (item.getItemType()) {
             case CourseBean.TITLE:
+            case CourseBean.LIVE_TITLE:
                 if (singleTitleTv == null)
                     break;
                 singleTitleTv.setName(item.getTitle());

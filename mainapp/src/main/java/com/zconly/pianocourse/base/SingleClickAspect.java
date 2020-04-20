@@ -21,13 +21,14 @@ import java.lang.reflect.Method;
  */
 @Aspect
 public class SingleClickAspect {
+
     /**
      * 定义切点，标记切点为所有被@SingleClick注解的方法
-     * 注意：这里me.baron.test.annotation.SingleClick需要替换成
-     * 你自己项目中SingleClick这个类的全路径哦
+     * 注意：这里me.baron.test.annotation.SingleClick需要替换成你自己项目中SingleClick这个类的全路径哦
      */
-    @Pointcut("execution(@com.meishubao.client.base.SingleClick * *(..))")
+    @Pointcut("execution(@com.zconly.pianocourse.base.SingleClick * *(..))")
     public void methodAnnotated() {
+
     }
 
     /**

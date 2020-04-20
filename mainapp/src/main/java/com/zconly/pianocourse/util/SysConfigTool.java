@@ -1,8 +1,12 @@
 package com.zconly.pianocourse.util;
 
 
+import android.content.Context;
 import android.text.TextUtils;
 
+import com.xiaoe.shop.webcore.core.XiaoEWeb;
+import com.zconly.pianocourse.activity.SignInActivity;
+import com.zconly.pianocourse.base.MainApplication;
 import com.zconly.pianocourse.bean.SysConfig;
 import com.zconly.pianocourse.bean.UserBean;
 
@@ -106,6 +110,7 @@ public class SysConfigTool {
     public static void logout() {
         saveToken("");
         setUser(null);
+        XiaoEWeb.userLogout(MainApplication.getInstance());
     }
 
     public static long getCid() {
@@ -116,8 +121,12 @@ public class SysConfigTool {
         SPTool.putLong("cid", cid);
     }
 
-    public static boolean isLogin() {
-        return getUser() != null;
+    public static boolean isLogin(Context context, boolean toLogin) {
+        boolean isLogin = getUser() != null;
+        if (toLogin && !isLogin) {
+            SignInActivity.start(context);
+        }
+        return isLogin;
     }
 }
 

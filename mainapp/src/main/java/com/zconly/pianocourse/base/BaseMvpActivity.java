@@ -8,16 +8,18 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.mvp.base.MvpActivity;
 import com.mvp.base.MvpPresenter;
 import com.mvp.exception.ApiException;
+import com.umeng.message.PushAgent;
 import com.zconly.pianocourse.R;
-import com.zconly.pianocourse.util.UmengUtil;
 import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.util.ToastUtil;
+import com.zconly.pianocourse.util.UmengUtil;
 import com.zconly.pianocourse.widget.TitleView;
 import com.zconly.pianocourse.widget.dialog.LoadingDialog;
 
@@ -32,6 +34,13 @@ import java.util.HashMap;
  * @UpdateRemark: 更新说明
  */
 public abstract class BaseMvpActivity<P extends MvpPresenter> extends MvpActivity<P, TitleView> {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // 该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用
+        PushAgent.getInstance(this).onAppStart();
+    }
 
     @SuppressLint("MissingSuperCall")
     @Override

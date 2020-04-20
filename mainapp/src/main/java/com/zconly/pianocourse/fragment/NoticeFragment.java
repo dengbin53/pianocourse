@@ -76,7 +76,7 @@ public class NoticeFragment extends BaseMvpFragment<NoticePresenter> implements 
 
     @Override
     protected void initData() {
-        if (!SysConfigTool.isLogin()) {
+        if (!SysConfigTool.isLogin(mContext, false)) {
             View ev = LayoutInflater.from(mContext).inflate(R.layout.view_empty_login, mRecyclerView,
                     false);
             ev.findViewById(R.id.empty_login_tv).setOnClickListener(v -> SignInActivity.start(mContext));

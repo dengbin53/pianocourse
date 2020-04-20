@@ -1,24 +1,13 @@
-ext {
-    COMPILE_SDK_VERSION = 28
-    BUILD_TOOLS_VERSION = "28.0.3"
-    MIN_SDK_VERSION = 21
-    TARGET_SDK_VERSION = 28
-    ANDROID_SUPPORT_VERSION = "1.1.0"
-    BUILD_VERSION_CODE = 1
-    BUILD_VERSION_NAME = "1.0.0"
+# PianoCourse
 
-    release_keystore = getRootDir().getPath() + "/docs/pianocourse.jks"
-
-    // 依赖库
-    compilelibs = [
             "androidx_multidex"     : 'androidx.multidex:multidex:2.0.1',
             "androidx_appcompat"    : 'androidx.appcompat:appcompat:' + ANDROID_SUPPORT_VERSION,
             "androidx_constraint"   : 'androidx.constraintlayout:constraintlayout:' + ANDROID_SUPPORT_VERSION,
             "androidx_material"     : 'com.google.android.material:material:' + ANDROID_SUPPORT_VERSION,
 
             "eventbus"              : 'org.greenrobot:eventbus:3.2.0',
-            "okhttp"                : 'com.squareup.okhttp3:okhttp:3.12.0',
-            "gson"                  : 'com.google.code.gson:gson:2.8.2',
+            "okhttp"                : 'com.squareup.okhttp3:okhttp:4.4.1',
+            "gson"                  : 'com.google.code.gson:gson:2.8.6',
             "greendao"              : 'org.greenrobot:greendao:3.2.2',
             "glide"                 : 'com.github.bumptech.glide:glide:4.11.0',
             "glide_compiler"        : 'com.github.bumptech.glide:compiler:4.11.0',
@@ -26,22 +15,21 @@ ext {
             "butterknife"           : 'com.jakewharton:butterknife:10.2.1',
             "butterknife_compiler"  : 'com.jakewharton:butterknife-compiler:10.2.1',
 
-            "rxjava2"               : 'io.reactivex.rxjava2:rxjava:2.2.15',
+            "rxjava2"               : 'io.reactivex.rxjava2:rxjava:2.2.19',
             "rxandroid2"            : 'io.reactivex.rxjava2:rxandroid:2.1.1',
-            "retrofit2"             : 'com.squareup.retrofit2:retrofit:2.6.2',
-            "retfofit2converter"    : 'com.squareup.retrofit2:converter-gson:2.6.2',
-            "retrofit2adapter"      : 'com.squareup.retrofit2:adapter-rxjava2:2.6.2',
-            "logging-interceptor"   : 'com.squareup.okhttp3:logging-interceptor:3.12.0',
+            "retrofit2"             : 'com.squareup.retrofit2:retrofit:2.8.1',
+            "retfofit2converter"    : 'com.squareup.retrofit2:converter-gson:2.8.1',
+            "retrofit2adapter"      : 'com.squareup.retrofit2:adapter-rxjava2:2.8.1',
+            "logging-interceptor"   : 'com.squareup.okhttp3:logging-interceptor:4.4.1',
             "rxlifecycle"           : 'com.trello.rxlifecycle2:rxlifecycle:2.2.2',
             "rxlifecycle-components": 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2',
             "rxpermissions"         : 'com.github.tbruyelle:rxpermissions:0.10.2',
-
             "aspectj"               : 'org.aspectj:aspectjrt:1.9.5',
 
             "umeng-analytics"       : 'com.umeng.umsdk:analytics:8.1.6',
             "umeng-common"          : 'com.umeng.umsdk:common:2.2.5',
-            "umeng-push"            : 'com.umeng.umsdk:push:6.0.5',
-            "umeng-utdid"           : 'com.umeng.umsdk:utdid:1.5.2',
+            "umeng-push"            : 'com.umeng.umsdk:push:6.0.1',
+            "umeng-utdid"           : 'com.umeng.umsdk:utdid:1.1.5.3',
 
             "convenient-banner"     : 'com.bigkoo:ConvenientBanner:2.1.4',
             "switch-button"         : 'com.github.zcweng:switch-button:0.0.2@aar',
@@ -49,42 +37,4 @@ ext {
             "smartrefresh"          : 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0',
             "smartrefresh-header"   : 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0',
             "brvah"                 : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50',
-            "xiaoe"                 : 'com.xiaoe.shop:webcore:2.0.1',
-    ]
-}
-
-buildscript {
-
-    repositories {
-
-        maven { url 'https://dl.bintray.com/umsdk/release' }
-        maven { url "https://jitpack.io" }
-        maven { url "https://dl.bintray.com/xiaoeteam/xiaoeSDK" }
-
-        google()
-        jcenter()
-
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
-        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.4'
-    }
-}
-
-allprojects {
-    repositories {
-
-        maven { url 'https://dl.bintray.com/umsdk/release' }
-        maven { url "https://jitpack.io" }
-        maven { url "https://dl.bintray.com/xiaoeteam/xiaoeSDK" }
-
-        mavenCentral()
-        google()
-        jcenter()
-
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+            

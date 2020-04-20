@@ -11,6 +11,7 @@ import com.zconly.pianocourse.bean.TokenBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.bean.UserDataBean;
 import com.zconly.pianocourse.bean.VideoBean;
+import com.zconly.pianocourse.bean.XiaoeTokenBean;
 
 import java.util.Map;
 
@@ -105,5 +106,9 @@ public interface ApiService {
     // 增加查看 lv_id
     @GET("app/lesson-video-watch/add")
     Observable<BaseBean> addVideoWatch(@QueryMap Map<String, Object> params);
+
+    //
+    @GET("app/system-ext/login")
+    Observable<XiaoeTokenBean.XiaoeTokenResult> xiaoeLogin();
 
 }

@@ -57,6 +57,7 @@
 
 -keep class com.chad.library.adapter.** {*;}
 -keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+-keep public class * extends com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 -keep public class * extends com.chad.library.adapter.base.BaseViewHolder
 -keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
      <init>(...);
@@ -397,6 +398,9 @@ public static java.lang.String TABLENAME;
 -keep class com.zconly.pianocourse.event.** { *; }
 -keep class com.zconly.pianocourse.widget.** { *; }
 -keep class * extends com.zconly.pianocourse.bean.BaseBean
+-keep class * {
+    @com.zconly.pianocourse.base.SingleClick <methods>;
+}
 
 # linkedme
 -keep class com.microquation.linkedme.android.** { *; }

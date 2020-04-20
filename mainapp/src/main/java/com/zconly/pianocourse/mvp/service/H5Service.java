@@ -17,6 +17,6 @@ public interface H5Service {
     // 服务条款和隐私协议
     String TERMS_OF_SERVICE = BuildConfig.HOST_H5 + "fwtk.html";
 
-    @GET("temp/liveconfig/liveconfig.json")
+    @GET("conf/liveconfig/liveconfig.json")
     Observable<LiveBean> getLiveData();
 }

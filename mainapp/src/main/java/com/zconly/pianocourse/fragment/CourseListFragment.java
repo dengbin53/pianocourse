@@ -114,6 +114,13 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
     }
 
     @Override
+    public void dismissLoading() {
+        super.dismissLoading();
+        mSmartRefreshLayout.finishRefresh();
+        mSmartRefreshLayout.finishLoadMore();
+    }
+
+    @Override
     public void getCourseListSuccess(CourseBean.CourseListResult response) {
         if (response.getData() == null)
             return;

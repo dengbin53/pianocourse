@@ -72,11 +72,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             manifestPlaceholders = [UMENG_APPKEY: "5e8a06ab978eea071c37c204"] // 邓斌
+
             // Umeng Message Secret c0f96d72b1c0ddec2449b79129a2c74e
             // App Master Secret x19vbfoeqjdfkwym15hw0p5vw74tmngq
-
             buildConfigField("boolean", "MSB_DEBUG", "true")
-
+            buildConfigField('String', 'UMENG_MESSAGE_SECRET', '"c0f96d72b1c0ddec2449b79129a2c74e"')
             buildConfigField('String', 'HOST_API', '"https://musicdata.tech/yuebo/"')
             buildConfigField('String', 'HOST_H5', '"https://musicdata.tech/"')
         }
@@ -91,6 +91,7 @@ android {
             manifestPlaceholders = [UMENG_APPKEY: "5e8a06ab978eea071c37c204"]
 
             buildConfigField("boolean", "MSB_DEBUG", "false")
+            buildConfigField('String', 'UMENG_MESSAGE_SECRET', '"c0f96d72b1c0ddec2449b79129a2c74e"')
 
             buildConfigField('String', 'HOST_API', '"https://musicdata.tech/yuebo/"')
             buildConfigField('String', 'HOST_H5', '"https://musicdata.tech/yuebo/"')
@@ -102,6 +103,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
@@ -137,7 +143,24 @@ dependencies {
     implementation rootProject.ext.compilelibs['umeng-common']
     implementation rootProject.ext.compilelibs['umeng-utdid']
     implementation rootProject.ext.compilelibs['umeng-analytics']
-    // implementation rootProject.ext.compilelibs['umeng-push']
+    implementation rootProject.ext.compilelibs['umeng-push']
+    implementation rootProject.ext.compilelibs['xiaoe']
+
+    //基础组件库依赖(必须)
+    implementation 'com.umeng.umsdk:common:2.2.5'
+    implementation 'com.umeng.umsdk:utdid:1.5.2'
+
+    //友盟push相关依赖(必须)
+    implementation 'com.umeng.umsdk:push:6.0.5'
+
+    implementation 'com.umeng.umsdk:alicloud-httpdns:1.2.5'
+    implementation 'com.umeng.umsdk:alicloud-utils:1.1.5'
+    implementation 'com.umeng.umsdk:alicloud_beacon:1.0.1'
+
+    implementation 'com.umeng.umsdk:agoo-accs:3.3.8.8-open-fix2'
+    implementation 'com.umeng.umsdk:agoo_networksdk:3.5.5'
+    implementation 'com.umeng.umsdk:agoo_tlog:3.0.0.17'
+    implementation 'com.umeng.umsdk:agoo_tnet4android:3.1.14.9'
 
     implementation rootProject.ext.compilelibs['smartrefresh']
     implementation rootProject.ext.compilelibs['brvah']

@@ -62,8 +62,7 @@ public class CoursePresenter extends BasePresenter<CourseView> {
         HttpRxObserver<CourseBean.CourseListResult> hro = new HttpRxObserver<CourseBean.CourseListResult>() {
             @Override
             protected void onStart(Disposable d) {
-                if (mView != null)
-                    mView.loading("");
+                // mView.loading("");
             }
 
             @Override
@@ -124,8 +123,7 @@ public class CoursePresenter extends BasePresenter<CourseView> {
                 .subscribe(new HttpRxObserver<BannerBean.BannerListResult>() {
                     @Override
                     protected void onStart(Disposable d) {
-                        if (mView != null)
-                            mView.loading("");
+                        // mView.loading("");
                     }
 
                     @Override

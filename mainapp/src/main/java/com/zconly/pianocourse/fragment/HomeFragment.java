@@ -11,7 +11,7 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.CourseListActivity;
-import com.zconly.pianocourse.activity.WebViewActivity;
+import com.zconly.pianocourse.activity.XiaoeActivity;
 import com.zconly.pianocourse.adapter.CourseListAdapter;
 import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.base.Constants;
@@ -126,7 +126,7 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
         titleData.setTitle("直播课");
         titleData.setCover(response.getCover());
         titleData.setUrl(response.getUrl());
-        titleData.setViewType(CourseBean.TITLE);
+        titleData.setViewType(CourseBean.LIVE_TITLE);
 
         liveBean = new CourseBean();
         liveBean.setCover(response.getCover());
@@ -182,10 +182,10 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
                 case R.id.header_course_tv0:
                     CourseListActivity.start(mContext, Constants.CATEGORY_PARENTS_COURSE);
                     break;
-                case R.id.header_course_tv1:
+                case R.id.header_course_tv1: // 直播课
                     if (liveBean == null)
                         break;
-                    WebViewActivity.start(mContext, liveBean.getTitle(), liveBean.getUrl());
+                    XiaoeActivity.start(mContext, liveBean.getUrl());
                     break;
                 case R.id.header_course_tv2:
 

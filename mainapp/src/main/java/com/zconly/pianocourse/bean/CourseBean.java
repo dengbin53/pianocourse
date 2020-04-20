@@ -18,6 +18,7 @@ public class CourseBean extends BaseBean implements MultiItemEntity {
     public static final int TITLE = 1;
     public static final int ITEM = 0;
     public static final int LIVE = 22;
+    public static final int LIVE_TITLE = 23;
 
     private long id;
     private String teacher;

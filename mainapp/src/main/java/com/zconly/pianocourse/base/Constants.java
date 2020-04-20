@@ -2,6 +2,8 @@ package com.zconly.pianocourse.base;
 
 import com.zconly.pianocourse.bean.UserBean;
 
+import java.security.PublicKey;
+
 /**
  * @Description: 静态常量
  * @Author: dengbin
@@ -50,5 +52,8 @@ public class Constants {
     public static final int CATEGORY_FAVORITE_COURSE = 0x100; // 收藏的课程
 
     public static final String BAI_DU_AK = "958ec87f47f8455281435033c76eacfe"; // 邓斌
+
+    public static final String XIAO_E_CLIENT_ID = "JC68kYJYpYMD";
+    public static final String XIAO_E_APP_ID = "appoxlmAiwS3515";
 
 }

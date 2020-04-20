@@ -221,7 +221,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
                 signUp();
                 break;
             case R.id.help:
-                ActionUtil.startAct(mContext, ActContactCS.class);
+                ActionUtil.startAct(mContext, ContactCSActivity.class);
                 break;
         }
     }

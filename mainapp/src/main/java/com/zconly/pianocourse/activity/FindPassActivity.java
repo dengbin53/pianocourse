@@ -115,7 +115,7 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
                 doFindPass();
                 break;
             case R.id.help:
-                ActionUtil.startAct(mContext, ActContactCS.class);
+                ActionUtil.startAct(mContext, ContactCSActivity.class);
                 break;
         }
     }

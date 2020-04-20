@@ -13,7 +13,7 @@ import com.zconly.pianocourse.widget.TitleView;
 
 import butterknife.OnClick;
 
-public class ActContactCS extends BaseMvpActivity {
+public class ContactCSActivity extends BaseMvpActivity {
 
     @OnClick({R.id.call, R.id.chat})
     public void onClick(View v) {
@@ -22,7 +22,7 @@ public class ActContactCS extends BaseMvpActivity {
                 ActionUtil.call(mContext, Constants.CS_CALL);
                 break;
             case R.id.chat:
-                if (SysConfigTool.isLogin()) {
+                if (SysConfigTool.isLogin(mContext, false)) {
                     // ActionUtil.startChat(mContext, Constants.CS_ACCOUNT + "");
                 } else {
                     // DialogLogin dl = new DialogLogin(this);
