@@ -20,78 +20,37 @@
     </style>
 
     <!-- dialog alpha动画 -->
-    <style name="dialogAnimationAlpha" parent="@android:style/Animation.Dialog">
+    <style name="dialogAnimationAlpha" parent="MvpBaseDialogTheme">
         <item name="android:windowEnterAnimation">@anim/dialog_enter_alpha</item>
         <item name="android:windowExitAnimation">@anim/dialog_exit_alpha</item>
     </style>
 
     <!-- dialog移动动画 -->
-    <style name="dialogAnimationTranslate" parent="@android:style/Animation.Dialog">
+    <style name="dialogAnimationTranslate" parent="MvpBaseDialogTheme">
         <item name="android:windowEnterAnimation">@anim/dialog_enter_translate</item>
         <item name="android:windowExitAnimation">@anim/dialog_exit_translate</item>
     </style>
 
     <!-- dialog缩放动画 -->
-    <style name="dialogAnimationScale" parent="@android:style/Animation.Dialog">
+    <style name="dialogAnimationScale" parent="MvpBaseDialogTheme">
         <item name="android:windowEnterAnimation">@anim/dialog_enter_scale</item>
         <item name="android:windowExitAnimation">@anim/dialog_exit_scale</item>
     </style>
 
-    <style name="updateDialogStyle" parent="android:Theme.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <!-- 对话框是否有遮盖 -->
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
-
     <!-- 移动dialog样式 -->
-    <style name="dialog_translate" parent="@android:style/Theme.Holo.Light">
+    <style name="dialog_translate" parent="MvpBaseDialogTheme">
         <!-- 显示动画 -->
         <item name="android:windowAnimationStyle">@style/dialogAnimationTranslate</item>
-        <!-- 边框 -->
-        <item name="android:windowFrame">@null</item>
-        <!-- 半透明 -->
-        <item name="android:windowIsTranslucent">true</item>
-        <!-- 无标题 -->
-        <item name="android:windowNoTitle">true</item>
-        <!-- 模糊 -->
-        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <!-- 缩放dialog样式 -->
-    <style name="dialog_sacle" parent="@android:style/Theme.Holo.Light.Dialog">
-
-        <!-- 显示动画 -->
+    <style name="dialog_sacle" parent="MvpBaseDialogTheme">
         <item name="android:windowAnimationStyle">@style/dialogAnimationScale</item>
-        <!-- 边框 -->
-        <item name="android:windowFrame">@null</item>
-        <!-- 半透明 -->
-        <item name="android:windowIsTranslucent">true</item>
-        <!-- 无标题 -->
-        <item name="android:windowNoTitle">true</item>
-        <!-- 背景透明   去掉背景色边框也就去掉了 -->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <!-- 模糊 -->
-        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <!-- 淡入淡出 -->
-    <style name="dialog_alpha" parent="@android:style/Theme.Holo.Light">
-        <!-- 显示动画 -->
+    <style name="dialog_alpha" parent="MvpBaseDialogTheme">
         <item name="android:windowAnimationStyle">@style/dialogAnimationAlpha</item>
-        <!-- 边框 -->
-        <item name="android:windowFrame">@null</item>
-        <!-- 半透明 -->
-        <item name="android:windowIsTranslucent">true</item>
-        <!-- 无标题 -->
-        <item name="android:windowNoTitle">true</item>
-        <!-- 模糊 -->
-        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <!--提交按钮-->

@@ -9,9 +9,12 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zconly.pianocourse.R;
+import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.util.DataUtil;
+import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.ImgLoader;
+import com.zconly.pianocourse.util.ViewUtil;
 import com.zconly.pianocourse.widget.MKeyValueView;
 
 import butterknife.BindView;
@@ -57,6 +60,11 @@ public class CourseHolder extends BaseViewHolder {
     @BindView(R.id.item_list_live_iv)
     ImageView liveIv;
 
+    // banner
+    @Nullable
+    @BindView(R.id.item_list_banner_iv)
+    ImageView bannerIv;
+
     public CourseHolder(View view) {
         super(view);
         ButterKnife.bind(this, view);
@@ -86,7 +94,17 @@ public class CourseHolder extends BaseViewHolder {
                     statusTv.setText("");
                 break;
             case CourseBean.LIVE:
+                if (liveIv == null)
+                    break;
+                liveIv.getLayoutParams().height = DeviceUtils.dp2px(104f);
                 ImgLoader.showImg(DataUtil.getImgUrl(item.getCover()), liveIv);
+                break;
+            case CourseBean.BANNER:
+                if (bannerIv == null)
+                    break;
+                int h = DeviceUtils.getScreenWidth() - DeviceUtils.dp2px(16f);
+                bannerIv.getLayoutParams().height = ViewUtil.getBannerHeight(h, Constants.BANNER_ASPECT_RATIO_0);
+                ImgLoader.showImgRound(DataUtil.getImgUrl(item.getCover()), bannerIv);
                 break;
             default:
                 break;

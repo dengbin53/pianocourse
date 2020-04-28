@@ -2,13 +2,18 @@
 <resources>
     <dimen name="dp_10">10dp</dimen>
     <string name="app_name">mvplib</string>
-    <style name="MvpBaseDialogTheme" parent="android:Theme.Holo.Light.Dialog">
+    <style name="MvpBaseDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
+        <!-- 半透明 -->
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:inAnimation">@null</item>
+        <!-- 模糊 -->
         <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
 </resources>

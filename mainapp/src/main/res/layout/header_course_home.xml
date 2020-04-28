@@ -13,6 +13,7 @@
         app:canLoop="true" />
 
     <LinearLayout
+        android:id="@+id/header_course_entrance_ll"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/color_white"
@@ -50,7 +51,8 @@
             android:drawableTop="@mipmap/ic_lianqinla"
             android:drawablePadding="@dimen/space_half"
             android:gravity="center"
-            android:text="练琴啦" />
+            android:text="练琴啦"
+            android:visibility="gone" />
 
     </LinearLayout>
 

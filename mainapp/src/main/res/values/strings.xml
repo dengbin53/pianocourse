@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string name="app_name">PianoCourse</string>
+    <string name="app_name">着调</string>
     <!--titles begin-->
     <string name="title_mine">我的</string>
-    <string name="title_discovery">发现</string>
-    <string name="title_message">消息</string>
+    <string name="title_classroom">讲堂</string>
+    <string name="title_recommend">推荐</string>
+    <string name="title_notice">通知公告</string>
+    <string name="title_qinfang">琴房</string>
     <string name="title_cs">客服</string>
     <string name="title_user_info_edit">个人资料编辑</string>
     <string name="title_guide">顾问详情</string>
@@ -94,7 +96,7 @@
     <string name="key_deposit_bank">开户行</string>
     <string name="key_my_followed_guide">我的关注</string>
     <string name="key_my_order">我的订单</string>
-    <string name="key_my_favorite">我的收藏</string>
+    <string name="key_my_favorite">收藏</string>
     <string name="key_feedback">意见反馈</string>
     <string name="key_setting">设置</string>
     <string name="key_nickname">昵称</string>
@@ -330,6 +332,5 @@
     <string name="download_pdf">下载 PDF</string>
     <string name="toast_connect_failuer">网络不可用</string>
     <string name="toast_code_send_success">验证码发送成功</string>
-    <string name="tab_home">胤悦学院</string>
 
 </resources>

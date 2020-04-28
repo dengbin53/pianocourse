@@ -6,6 +6,7 @@ import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.HomePageBean;
 import com.zconly.pianocourse.bean.VideoBean;
+import com.zconly.pianocourse.bean.VideoPackBean;
 
 /**
  * @Description: java类作用描述
@@ -15,18 +16,7 @@ import com.zconly.pianocourse.bean.VideoBean;
  * @UpdateDate: 2020/3/30 20:26
  * @UpdateRemark: 更新说明
  */
-public interface CourseView extends MvpView {
+public interface CourseDetailView extends CourseView {
 
-    void getCourseListSuccess(CourseBean.CourseListResult response);
-
-    void getVideoListSuccess(VideoBean.VideoListResult response);
-
-    void getBannerListSuccess(BannerBean.BannerListResult response);
-
-    void getCommentSuccess(CommentBean.CommentListResult response);
-
-    void addCommentSuccess(CommentBean.CommentResult response);
-
-    void getHomePageSuccess(HomePageBean.HomePageResult response);
-
+    void getCourseVideoPack(VideoPackBean.VideoPackResult response);
 }

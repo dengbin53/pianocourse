@@ -11,6 +11,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zconly.pianocourse.R;
+import com.zconly.pianocourse.activity.VideoDetailActivity;
 import com.zconly.pianocourse.adapter.VideoListAdapter;
 import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.base.Constants;
@@ -41,7 +42,7 @@ public class VideoListFragment extends BaseMvpFragment<FavoritePresenter> implem
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private VideoListAdapter mAdapter;
+    private VideoListAdapter<VideoBean> mAdapter;
     private int category;
     private int page;
 
@@ -76,7 +77,11 @@ public class VideoListFragment extends BaseMvpFragment<FavoritePresenter> implem
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
                 false));
-        mRecyclerView.setAdapter(mAdapter = new VideoListAdapter(null, null));
+        mRecyclerView.setAdapter(mAdapter = new VideoListAdapter<>(null));
+        mAdapter.setOnItemClickListener((adapter, view1, position) -> {
+            VideoBean b = mAdapter.getItem(position);
+            VideoDetailActivity.start(mContext, b, null);
+        });
     }
 
     private void getData() {

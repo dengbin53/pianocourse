@@ -15,7 +15,7 @@ import com.zconly.pianocourse.activity.XiaoeActivity;
 import com.zconly.pianocourse.adapter.viewholder.CourseHolder;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.CourseBean;
-import com.zconly.pianocourse.util.SysConfigTool;
+import com.zconly.pianocourse.bean.HomePageBean;
 
 import java.util.List;
 
@@ -36,6 +36,7 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<CourseBean, Cou
         addItemType(CourseBean.LIVE_TITLE, R.layout.item_list_title);
         addItemType(CourseBean.ITEM, R.layout.item_list_course);
         addItemType(CourseBean.LIVE, R.layout.item_list_live);
+        addItemType(CourseBean.BANNER, R.layout.item_list_course_banner);
 
         setOnItemClickListener(this);
     }
@@ -52,9 +53,19 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<CourseBean, Cou
         if (bean == null)
             return;
         if (bean.getItemType() == CourseBean.ITEM) {
-            CourseDetailActivity.start(mContext, bean);
+            if (bean.getType() == HomePageBean.RecommendBean.TYPE_RECOMMEND_COURSE) {
+                CourseDetailActivity.start(mContext, bean);
+            } else {
+                XiaoeActivity.start(mContext, bean.getUrl());
+            }
         } else if (bean.getItemType() == CourseBean.LIVE || bean.getItemType() == CourseBean.LIVE_TITLE) {
-            XiaoeActivity.start(mContext, bean.getUrl());
+            if (bean.getType() == HomePageBean.RecommendBean.TYPE_RECOMMEND_COURSE) {
+                CourseDetailActivity.start(mContext, bean);
+            } else {
+                XiaoeActivity.start(mContext, bean.getUrl());
+            }
+        } else if (bean.getItemType() == CourseBean.BANNER) {
+
         } else {
             if (TextUtils.isEmpty(bean.getUrl())) {
                 CourseListActivity.start(mContext, bean.getViewType());

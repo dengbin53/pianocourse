@@ -318,4 +318,5 @@ public class StringUtils {
     public static String makeSafe(String s) {
         return (s == null) ? "" : s;
     }
+
 }

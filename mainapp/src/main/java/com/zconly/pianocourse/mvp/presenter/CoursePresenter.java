@@ -16,10 +16,12 @@ import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
-import com.zconly.pianocourse.bean.LiveBean;
+import com.zconly.pianocourse.bean.HomePageBean;
 import com.zconly.pianocourse.bean.VideoBean;
+import com.zconly.pianocourse.bean.VideoPackBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.service.H5Service;
+import com.zconly.pianocourse.mvp.view.CourseDetailView;
 import com.zconly.pianocourse.mvp.view.CourseView;
 
 import java.util.HashMap;
@@ -62,7 +64,7 @@ public class CoursePresenter extends BasePresenter<CourseView> {
         HttpRxObserver<CourseBean.CourseListResult> hro = new HttpRxObserver<CourseBean.CourseListResult>() {
             @Override
             protected void onStart(Disposable d) {
-                // mView.loading("");
+                mView.loading("");
             }
 
             @Override
@@ -117,10 +119,67 @@ public class CoursePresenter extends BasePresenter<CourseView> {
                 });
     }
 
+    public void getCourseVideoPack(long id) {
+        Map<String, String> params = new HashMap<>();
+        params.put("lesson_id", id + "");
+        Observable<VideoPackBean.VideoPackResult> o = RetrofitUtils.create(ApiService.class).getCourseVideoPack(params);
+        HttpRxObservable.getObservable(o, (LifecycleProvider<ActivityEvent>) mView)
+                .subscribe(new HttpRxObserver<VideoPackBean.VideoPackResult>() {
+                    @Override
+                    protected void onStart(Disposable d) {
+                        if (mView != null)
+                            mView.loading("");
+                    }
+
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
+
+                    @Override
+                    protected void onSuccess(VideoPackBean.VideoPackResult response) {
+                        if (mView instanceof CourseDetailView) {
+                            mView.dismissLoading();
+                            ((CourseDetailView) mView).getCourseVideoPack(response);
+                        }
+                    }
+                });
+    }
+
+    public void getVideopackVideo(long id) {
+        Map<String, String> params = new HashMap<>();
+        params.put("videoPack_id", id + "");
+        Observable<VideoBean.VideoListResult> o = RetrofitUtils.create(ApiService.class).getVideopackVideo(params);
+        HttpRxObservable.getObservable(o, (LifecycleProvider<ActivityEvent>) mView)
+                .subscribe(new HttpRxObserver<VideoBean.VideoListResult>() {
+                    @Override
+                    protected void onStart(Disposable d) {
+                        if (mView != null)
+                            mView.loading("");
+                    }
+
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
+
+                    @Override
+                    protected void onSuccess(VideoBean.VideoListResult response) {
+                        if (mView instanceof CourseView) {
+                            mView.dismissLoading();
+                            mView.getVideoListSuccess(response);
+                        }
+                    }
+                });
+    }
+
     public void getBanner() {
         Observable<BannerBean.BannerListResult> o = RetrofitUtils.create(ApiService.class).getBanner();
         HttpRxObservable.getObservableFragment(o, (LifecycleProvider<FragmentEvent>) mView)
                 .subscribe(new HttpRxObserver<BannerBean.BannerListResult>() {
+
                     @Override
                     protected void onStart(Disposable d) {
                         // mView.loading("");
@@ -142,15 +201,10 @@ public class CoursePresenter extends BasePresenter<CourseView> {
                 });
     }
 
-    public void getLiveData() {
-        Observable<LiveBean> o = RetrofitUtils.createH5(H5Service.class).getLiveData();
+    public void getHomePageJson() {
+        Observable<HomePageBean.HomePageResult> o = RetrofitUtils.createH5(H5Service.class).getHomePageJson();
         HttpRxObservable.getObservableFragment(o, (LifecycleProvider<FragmentEvent>) mView)
-                .subscribe(new HttpRxObserver<LiveBean>() {
-                    @Override
-                    protected void onStart(Disposable d) {
-                        if (mView != null)
-                            mView.loading("");
-                    }
+                .subscribe(new HttpRxObserver<HomePageBean.HomePageResult>() {
 
                     @Override
                     protected void onError(ApiException e) {
@@ -159,10 +213,10 @@ public class CoursePresenter extends BasePresenter<CourseView> {
                     }
 
                     @Override
-                    protected void onSuccess(LiveBean response) {
+                    protected void onSuccess(HomePageBean.HomePageResult response) {
                         if (mView != null) {
                             mView.dismissLoading();
-                            mView.getLiveDataSuccess(response);
+                            mView.getHomePageSuccess(response);
                         }
                     }
                 });

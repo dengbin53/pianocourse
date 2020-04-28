@@ -38,9 +38,19 @@ public class DataUtil {
     }
 
     public static String getImgUrl(String serverUrl) {
-        if (TextUtils.isEmpty(serverUrl) || serverUrl.startsWith("http"))
+        if (TextUtils.isEmpty(serverUrl) || serverUrl.toLowerCase().startsWith("http"))
             return serverUrl;
         return H5Service.FILE_HOST + serverUrl;
+    }
+
+    public static String getCategoryBannerImg(int category) {
+        if (category == Constants.CATEGORY_PARENTS_COURSE)
+            return H5Service.IMG_COURSE_PARENT_BANNER;
+        if (category == Constants.CATEGORY_TEACHER_COURSE)
+            return H5Service.IMG_COURSE_TEACHER_BANNER;
+        if (category == Constants.CATEGORY_OTHER_COURSE)
+            return H5Service.IMG_COURSE_TRACK_BANNER;
+        return null;
     }
 
     public static String getCategory(int category) {

@@ -46,6 +46,9 @@ public class Constants {
     public static final int TYPE_ROLE_STUDENT = 2; // 学生
     public static final int TYPE_ROLE_TEACHER = 3; // 老师
 
+    public static final int VIEW_TYPE_PACK = 0; // 视频包
+    public static final int VIEW_TYPE_VIDEO = 1; // 视频
+
     public static final int CATEGORY_PARENTS_COURSE = 0x0; // 家长课
     public static final int CATEGORY_TEACHER_COURSE = 0x1; // 老师课
     public static final int CATEGORY_OTHER_COURSE = 0x2; // 曲目精讲

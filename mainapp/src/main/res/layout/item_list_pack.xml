@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_white_border_bottom">
+
+    <ImageView
+        android:id="@+id/item_pack_iv"
+        android:layout_width="@dimen/avatar_large"
+        android:layout_height="@dimen/avatar_large"
+        android:layout_margin="@dimen/space_normal"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/item_pack_title_tv"
+        style="@style/text_normal_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_pack_iv"
+        android:layout_toEndOf="@id/item_pack_iv"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/item_pack_teacher_tv"
+        style="@style/text_small_gray_dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_pack_title_tv"
+        android:layout_toEndOf="@id/item_pack_iv"
+        android:ellipsize="end"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/item_pack_count_tv"
+        style="@style/text_smaller_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/item_pack_iv"
+        android:layout_toEndOf="@id/item_pack_iv"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/item_pack_btn"
+        style="@style/text_smaller_white"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@id/item_pack_iv"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/space_normal"
+        android:background="@drawable/shape_corner_green"
+        android:gravity="center"
+        android:paddingStart="@dimen/space_half"
+        android:paddingEnd="@dimen/space_half" />
+
+    <TextView
+        android:id="@+id/item_pack_video_title_tv"
+        style="@style/text_normal_black"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_below="@id/item_pack_iv"
+        android:background="@color/color_bg_default"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/space_normal"
+        android:text="课程列表"
+        android:visibility="gone" />
+
+</RelativeLayout>

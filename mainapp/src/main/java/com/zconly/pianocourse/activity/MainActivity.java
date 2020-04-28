@@ -13,9 +13,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.mvp.base.MvpPresenter;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
+import com.zconly.pianocourse.fragment.ClassroomFragment;
 import com.zconly.pianocourse.fragment.HomeFragment;
 import com.zconly.pianocourse.fragment.MineFragment;
-import com.zconly.pianocourse.fragment.NoticeFragment;
+import com.zconly.pianocourse.fragment.QinfangFragment;
 import com.zconly.pianocourse.util.ToastUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -30,6 +31,10 @@ import butterknife.BindView;
  * @UpdateUser: dengbin
  * @UpdateDate: 2020/3/18 20:35
  * @UpdateRemark: 更新说明
+ * <p>
+ * Course  课程(课)
+ * SectionPack 章节包（视频包）
+ * Section 章节(视频)
  */
 public class MainActivity extends BaseMvpActivity {
 
@@ -38,7 +43,7 @@ public class MainActivity extends BaseMvpActivity {
     @BindView(R.id.main_content_fl)
     FrameLayout contentFl;
 
-    private Fragment[] fragments = new Fragment[3];
+    private Fragment[] fragments = new Fragment[4];
     private Fragment mContent;
     private long backPressTime;
 
@@ -82,12 +87,14 @@ public class MainActivity extends BaseMvpActivity {
     @Override
     protected boolean initView() {
         fragments[0] = new HomeFragment();
-        fragments[1] = new NoticeFragment();
-        fragments[2] = new MineFragment();
+        fragments[1] = new ClassroomFragment();
+        fragments[2] = new QinfangFragment();
+        fragments[3] = new MineFragment();
         switchContent(fragments[0]);
 
         String[] tabs = getResources().getStringArray(R.array.tab_name_array);
-        int[] icon = new int[]{R.drawable.selector_tab_home, R.drawable.selector_tab_msg, R.drawable.selector_tab_mine};
+        int[] icon = new int[]{R.drawable.selector_tab_home, R.drawable.selector_tab_classroom,
+                R.drawable.selector_tab_qinfang, R.drawable.selector_tab_mine};
         for (int i = 0; i < tabs.length; i++) {
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setCustomView(R.layout.view_main_tab);

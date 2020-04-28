@@ -1,5 +1,9 @@
 package com.zconly.pianocourse.bean;
 
+import androidx.annotation.Nullable;
+
+import com.zconly.pianocourse.base.Constants;
+
 import java.util.List;
 
 /**
@@ -155,6 +159,16 @@ public class VideoBean extends BaseBean {
 
     public void setLiked(int liked) {
         this.liked = liked;
+    }
+
+    @Override
+    public int getItemType() {
+        return Constants.VIEW_TYPE_VIDEO;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return obj instanceof VideoBean && ((VideoBean) obj).getId() == getId();
     }
 
     public static class VideoListResult extends BaseBean {

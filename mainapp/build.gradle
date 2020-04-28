@@ -71,7 +71,7 @@ android {
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            manifestPlaceholders = [UMENG_APPKEY: "5e8a06ab978eea071c37c204"] // 邓斌
+            manifestPlaceholders = [UMENG_APPKEY: "5ea41b1f167eddfaa3000069"]
 
             // Umeng Message Secret c0f96d72b1c0ddec2449b79129a2c74e
             // App Master Secret x19vbfoeqjdfkwym15hw0p5vw74tmngq

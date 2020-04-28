@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.mvp.base.MvpPresenter;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.FavoriteActivity;
+import com.zconly.pianocourse.activity.NoticeActivity;
 import com.zconly.pianocourse.activity.SignInActivity;
 import com.zconly.pianocourse.activity.mine.FeedbackActivity;
 import com.zconly.pianocourse.activity.mine.SettingActivity;
@@ -48,8 +49,7 @@ public class MineFragment extends BaseMvpFragment {
 
     private UserBean user;
 
-    @OnClick({R.id.mine_user_rv, R.id.favorite, R.id.feedback, R.id.followed_guide, R.id.order, R.id.setting,
-            R.id.empty_login_tv})
+    @OnClick({R.id.mine_user_rv, R.id.favorite, R.id.feedback, R.id.setting, R.id.notice_kv, R.id.empty_login_tv})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mine_user_rv:
@@ -58,12 +58,11 @@ public class MineFragment extends BaseMvpFragment {
             case R.id.favorite: // 收藏
                 FavoriteActivity.start(mContext, 0);
                 break;
+            case R.id.notice_kv: // 通知
+                NoticeActivity.start(mContext);
+                break;
             case R.id.feedback:
                 FeedbackActivity.start(mContext);
-                break;
-            case R.id.followed_guide:
-                break;
-            case R.id.order:
                 break;
             case R.id.setting:
                 SettingActivity.start(mContext);

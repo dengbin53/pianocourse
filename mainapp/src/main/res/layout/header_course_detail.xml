@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/header_course_bg_iv"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:foreground="@color/color_bg_black_10"
+        android:scaleType="fitXY" />
 
     <ImageView
         android:id="@+id/header_course_iv"
-        android:layout_width="match_parent"
-        android:layout_height="184dp"
-        android:scaleType="centerCrop" />
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_normal"
+        android:background="@drawable/shape_corner_tra_border_white"
+        android:padding="@dimen/divider"
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/header_course_title_tv"
-        style="@style/text_normal_black"
+        style="@style/text_normal_white"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:background="@color/color_white"
-        android:gravity="bottom"
-        android:paddingStart="@dimen/space_normal"
-        android:paddingEnd="@dimen/space_normal" />
-
-    <TextView
-        android:id="@+id/header_course_teacher_tv"
-        style="@style/text_small_black"
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:background="@color/color_white"
+        android:layout_alignTop="@id/header_course_iv"
+        android:layout_toEndOf="@id/header_course_iv"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/space_normal"
         android:paddingEnd="@dimen/space_normal" />
 
     <TextView
         android:id="@+id/header_course_desc_tv"
-        style="@style/text_small_gray"
+        style="@style/text_small_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_white"
+        android:layout_below="@id/header_course_title_tv"
+        android:layout_toEndOf="@id/header_course_iv"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:minHeight="40dp"
@@ -45,7 +47,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:background="@color/color_white"
+        android:layout_alignBottom="@id/header_course_iv"
+        android:layout_toEndOf="@id/header_course_iv"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="@dimen/space_normal"
@@ -54,7 +57,7 @@
 
         <TextView
             android:id="@+id/header_course_like_tv"
-            style="@style/text_small_gray"
+            style="@style/text_smaller_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/selector_like"
@@ -63,7 +66,7 @@
 
         <TextView
             android:id="@+id/header_course_favorite_tv"
-            style="@style/text_small_gray"
+            style="@style/text_smaller_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_normal"
@@ -73,12 +76,4 @@
 
     </LinearLayout>
 
-    <TextView
-        style="@style/text_normal_black"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height_small"
-        android:gravity="bottom"
-        android:paddingStart="@dimen/space_normal"
-        android:text="目录" />
-
-</LinearLayout>
+</RelativeLayout>

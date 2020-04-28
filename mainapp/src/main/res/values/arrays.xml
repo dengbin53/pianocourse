@@ -2,8 +2,9 @@
 <resources>
 
     <string-array name="tab_name_array">
-        <item>胤悦学院</item>
-        <item>消息</item>
+        <item>推荐</item>
+        <item>讲堂</item>
+        <item>琴房</item>
         <item>我的</item>
     </string-array>
 

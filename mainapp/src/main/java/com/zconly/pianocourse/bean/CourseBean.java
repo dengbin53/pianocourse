@@ -1,24 +1,23 @@
 package com.zconly.pianocourse.bean;
 
 
-import com.chad.library.adapter.base.entity.MultiItemEntity;
-
 import java.util.List;
 
 /**
- * @Description: java类作用描述
+ * @Description: 课程对象
  * @Author: dengbin
  * @CreateDate: 2020/3/30 21:50
  * @UpdateUser: dengbin
  * @UpdateDate: 2020/3/30 21:50
  * @UpdateRemark: 更新说明
  */
-public class CourseBean extends BaseBean implements MultiItemEntity {
+public class CourseBean extends BaseBean {
 
     public static final int TITLE = 1;
     public static final int ITEM = 0;
     public static final int LIVE = 22;
     public static final int LIVE_TITLE = 23;
+    public static final int BANNER = 24;
 
     private long id;
     private String teacher;
@@ -38,8 +37,8 @@ public class CourseBean extends BaseBean implements MultiItemEntity {
     private int favorited;
     private int liked;
 
-    private int viewType;
     private String url;
+    private int type;
 
     public CourseBean() {
 
@@ -54,6 +53,14 @@ public class CourseBean extends BaseBean implements MultiItemEntity {
         return getViewType();
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -61,15 +68,7 @@ public class CourseBean extends BaseBean implements MultiItemEntity {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public int getViewType() {
-        return viewType;
-    }
-
-    public void setViewType(int viewType) {
-        this.viewType = viewType;
-    }
-
+    
     public long getId() {
         return id;
     }

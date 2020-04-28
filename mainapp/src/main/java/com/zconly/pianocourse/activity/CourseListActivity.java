@@ -44,7 +44,7 @@ public class CourseListActivity extends BaseMvpActivity {
 
     @Override
     protected boolean initView() {
-        ((TitleView) mTitleView).setTitle("大师课");
+        ((TitleView) mTitleView).setTitle(getString(R.string.title_classroom));
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(CourseListFragment.getInstance(Constants.CATEGORY_PARENTS_COURSE));
@@ -57,6 +57,7 @@ public class CourseListActivity extends BaseMvpActivity {
 
         mViewPager.setAdapter(new BaseFragmentPagerAdapter(getSupportFragmentManager(), fragments, titles));
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(2);
 
         return true;
     }

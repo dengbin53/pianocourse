@@ -11,7 +11,7 @@
         android:layout_height="@dimen/title_height"
         android:background="@drawable/shape_white_border_bottom"
         android:gravity="center"
-        android:text="@string/title_message" />
+        android:text="@string/title_classroom" />
 
     <include layout="@layout/view_refresh_recycler" />
 

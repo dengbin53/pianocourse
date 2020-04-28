@@ -31,7 +31,7 @@ import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
-import com.zconly.pianocourse.bean.LiveBean;
+import com.zconly.pianocourse.bean.HomePageBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
@@ -207,11 +207,6 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
     }
 
     @Override
-    public void getLiveDataSuccess(LiveBean response) {
-
-    }
-
-    @Override
     public void getCommentSuccess(CommentBean.CommentListResult response) {
         if (response.getData() == null)
             return;
@@ -230,6 +225,11 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
         mAdapter.addData(0, response.getData());
         mHeader.addCommentCount(1);
         resetCommentEt(getString(R.string.hint_comment));
+    }
+
+    @Override
+    public void getHomePageSuccess(HomePageBean.HomePageResult response) {
+
     }
 
     @Override

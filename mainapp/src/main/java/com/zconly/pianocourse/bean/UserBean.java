@@ -30,10 +30,6 @@ public class UserBean extends BaseBean {
     private String token;
     private int inContacts;                         // 是否在通讯录
 
-    // 本地显示使用
-    private int viewType;
-
-
     public String getWx_avatar() {
         return wx_avatar;
     }

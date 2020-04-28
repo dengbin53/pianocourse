@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  */
 public abstract class MvpDialog extends RxDialogFragment implements MvpView {
 
-    private static final float DEFAULT_ALPHA = 0.64f;
+    private static final float DEFAULT_ALPHA = 0.48f;
     private int gravity = 0;
     private int alpha;
     private int y;

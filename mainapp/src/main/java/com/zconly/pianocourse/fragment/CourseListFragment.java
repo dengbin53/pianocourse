@@ -20,7 +20,7 @@ import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
-import com.zconly.pianocourse.bean.LiveBean;
+import com.zconly.pianocourse.bean.HomePageBean;
 import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
 import com.zconly.pianocourse.mvp.presenter.FavoritePresenter;
@@ -124,9 +124,15 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
     public void getCourseListSuccess(CourseBean.CourseListResult response) {
         if (response.getData() == null)
             return;
+        isLoadDataCompleted = true;
         List<CourseBean> data = response.getData().getData();
         if (page == 0) {
             mAdapter.setNewData(data);
+
+            CourseBean courseBean = new CourseBean();
+            courseBean.setCover(DataUtil.getCategoryBannerImg(category));
+            courseBean.setViewType(CourseBean.BANNER);
+            mAdapter.addData(0, courseBean);
         } else {
             mAdapter.addData(data);
         }
@@ -145,17 +151,17 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
     }
 
     @Override
-    public void getLiveDataSuccess(LiveBean response) {
-
-    }
-
-    @Override
     public void getCommentSuccess(CommentBean.CommentListResult response) {
 
     }
 
     @Override
     public void addCommentSuccess(CommentBean.CommentResult response) {
+
+    }
+
+    @Override
+    public void getHomePageSuccess(HomePageBean.HomePageResult response) {
 
     }
 

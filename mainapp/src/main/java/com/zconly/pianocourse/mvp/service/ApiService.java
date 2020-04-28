@@ -11,6 +11,7 @@ import com.zconly.pianocourse.bean.TokenBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.bean.UserDataBean;
 import com.zconly.pianocourse.bean.VideoBean;
+import com.zconly.pianocourse.bean.VideoPackBean;
 import com.zconly.pianocourse.bean.XiaoeTokenBean;
 
 import java.util.Map;
@@ -74,6 +75,14 @@ public interface ApiService {
     // 课程列表
     @POST("app/lesson/list")
     Observable<CourseBean.CourseListResult> getCourseList(@Body Map<String, Object> params);
+
+    // 视频包 lesson_id
+    @GET("app/lesson-videopack/list")
+    Observable<VideoPackBean.VideoPackResult> getCourseVideoPack(@QueryMap Map<String, String> params);
+
+    // 视频包下的视频 videoPack_id
+    @GET("app/lesson-videopack-video/list")
+    Observable<VideoBean.VideoListResult> getVideopackVideo(@QueryMap Map<String, String> params);
 
     // 课程内视频列表
     @GET("app/lesson-video/list")

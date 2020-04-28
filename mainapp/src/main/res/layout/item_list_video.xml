@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:layout_marginStart="@dimen/space_normal"
-    android:layout_marginTop="@dimen/space_normal"
+    android:layout_marginBottom="@dimen/space_normal"
     android:layout_marginEnd="@dimen/space_normal"
     android:background="@drawable/shape_corner_white"
     android:elevation="1dp"

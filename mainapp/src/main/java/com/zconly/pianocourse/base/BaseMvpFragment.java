@@ -48,9 +48,9 @@ public abstract class BaseMvpFragment<P extends MvpPresenter> extends MvpFragmen
     @Override
     public void onError(ApiException ae) {
         super.onError(ae);
+        dismissLoading();
         if (ae != null)
             ToastUtil.toast(ae.getMsg());
-        dismissLoading();
     }
 
     @Override

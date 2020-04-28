@@ -1,5 +1,6 @@
 package com.zconly.pianocourse.bean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.mvp.base.MvpModel;
 import com.zconly.pianocourse.base.ErrorCode;
 
@@ -11,7 +12,7 @@ import com.zconly.pianocourse.base.ErrorCode;
  * @UpdateDate: 2020/3/23 20:13
  * @UpdateRemark: 更新说明
  */
-public class BaseBean extends MvpModel {
+public class BaseBean extends MvpModel implements MultiItemEntity {
 
     private String msg;
     private int code;
@@ -19,6 +20,16 @@ public class BaseBean extends MvpModel {
     private int pageSize;
     private int total;
     private int totalPage;
+
+    private int viewType;
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
 
     public int getCurrentPage() {
         return currentPage;
@@ -73,5 +84,10 @@ public class BaseBean extends MvpModel {
     @Override
     public int getCode() {
         return code;
+    }
+
+    @Override
+    public int getItemType() {
+        return getViewType();
     }
 }

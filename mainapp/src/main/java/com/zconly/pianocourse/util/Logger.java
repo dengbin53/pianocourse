@@ -24,14 +24,27 @@ public class Logger {
 
     public static void i(String msg) {
         if (debugFlag)
-            Log.i(LOG_TAG, msg);
+            i(LOG_TAG, msg);
     }
 
     public static void i(String key, String msg) {
-        if (debugFlag)
+        if (!debugFlag)
+            return;
+        int segmentSize = 3 * 1024;
+        int length = msg.length();
+        if (length <= segmentSize) {// 长度小于等于限制直接打印
             Log.i(key, msg);
+            return;
+        }
+        for (int j = 0; j < 12; j++) {
+            int end = segmentSize * (j + 1);
+            if (length < end) {
+                Log.i(key, msg.substring(segmentSize * j, msg.length() - 1));
+                return;
+            }
+            Log.i(key, msg.substring(segmentSize * j, end));
+        }
     }
-
 
     public static void d(String msg) {
         if (debugFlag)

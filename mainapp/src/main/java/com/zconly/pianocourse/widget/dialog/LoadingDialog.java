@@ -65,7 +65,7 @@ public class LoadingDialog extends MvpDialog {
 
     @Override
     protected int getStyle() {
-        return R.style.updateDialogStyle;
+        return 0;
     }
 
     public void setShowMsg(String msg) {

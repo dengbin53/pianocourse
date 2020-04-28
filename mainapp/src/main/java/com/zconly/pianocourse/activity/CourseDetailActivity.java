@@ -14,22 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.adapter.VideoListAdapter;
-import com.zconly.pianocourse.base.BaseMvpActivity;
+import com.zconly.pianocourse.base.BaseCourseActivity;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.ExtraConstants;
-import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BaseBean;
-import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
-import com.zconly.pianocourse.bean.LiveBean;
 import com.zconly.pianocourse.bean.VideoBean;
+import com.zconly.pianocourse.bean.VideoPackBean;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
 import com.zconly.pianocourse.mvp.presenter.FavoritePresenter;
 import com.zconly.pianocourse.mvp.view.AbstractFavoriteView;
-import com.zconly.pianocourse.mvp.view.CourseView;
+import com.zconly.pianocourse.mvp.view.CourseDetailView;
 import com.zconly.pianocourse.util.ArrayUtil;
 import com.zconly.pianocourse.util.DataUtil;
+import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.ImgLoader;
+import com.zconly.pianocourse.util.ViewUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +43,7 @@ import butterknife.OnClick;
  * @UpdateDate: 2020/3/31 16:59
  * @UpdateRemark: 更新说明
  */
-public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> implements CourseView {
+public class CourseDetailActivity extends BaseCourseActivity implements CourseDetailView {
 
     @BindView(R.id.smart_refresh_layout)
     SmartRefreshLayout mSmartRefreshLayout;
@@ -53,11 +53,57 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
     private CourseBean courseBean;
     private VideoListAdapter mAdapter;
     private MHeader mHeader;
+    private int position;
 
     public static void start(Context context, CourseBean bean) {
         Intent intent = new Intent(context, CourseDetailActivity.class);
         intent.putExtra(ExtraConstants.EXTRA_DATA, bean);
         context.startActivity(intent);
+    }
+
+    private void getCourseData() {
+        mPresenter.getCourseList(0, courseBean.getId() + "", null);
+    }
+
+    @Override
+    protected boolean initView() {
+        courseBean = (CourseBean) getIntent().getSerializableExtra(ExtraConstants.EXTRA_DATA);
+        if (courseBean == null) {
+            finish();
+            return false;
+        }
+        mTitleView.setTitle(courseBean.getTitle());
+        mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> getCourseData());
+        mSmartRefreshLayout.setEnableLoadMore(false);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
+                false));
+        mRecyclerView.setAdapter(mAdapter = new VideoListAdapter<>(null));
+        View view = LayoutInflater.from(mContext).inflate(R.layout.header_course_detail, mRecyclerView,
+                false);
+        mHeader = new MHeader(view);
+        mAdapter.addHeaderView(view);
+        mAdapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.footer_space, mRecyclerView,
+                false));
+        mAdapter.setOnItemChildClickListener((adapter, view1, pos) -> {
+            position = pos;
+            Object obj = mAdapter.getItem(position);
+            if (!(obj instanceof VideoPackBean))
+                return;
+            if (((VideoPackBean) obj).isOpened()) {
+                mAdapter.closePack(position);
+            } else if (!mAdapter.openPack(position, ((VideoPackBean) obj).getVideoBeans())) {
+                mPresenter.getVideopackVideo(((VideoPackBean) obj).getId());
+            }
+        });
+        mAdapter.setOnItemClickListener((adapter, view1, position) -> {
+            Object b = mAdapter.getItem(position);
+            if (!(b instanceof VideoBean))
+                return;
+            VideoDetailActivity.start(mContext, (VideoBean) b, courseBean);
+        });
+        ViewUtil.cancelRecyclerViewAnim(mRecyclerView);
+        return true;
     }
 
     @Override
@@ -66,33 +112,11 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
     }
 
     @Override
-    protected boolean initView() {
-        mTitleView.setTitle("大师课目录");
-        courseBean = (CourseBean) getIntent().getSerializableExtra(ExtraConstants.EXTRA_DATA);
-        mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> getCourseData());
-        mSmartRefreshLayout.setEnableLoadMore(false);
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
-                false));
-        mRecyclerView.setAdapter(mAdapter = new VideoListAdapter(null, pos -> courseBean));
-        View view = LayoutInflater.from(mContext).inflate(R.layout.header_course_detail, mRecyclerView,
-                false);
-        mHeader = new MHeader(view);
-        mAdapter.addHeaderView(view);
-
-        return true;
-    }
-
-    private void getCourseData() {
-        mPresenter.getCourseList(0, courseBean.getId() + "", null);
-    }
-
-    @Override
     protected void initData() {
         mHeader.setData();
         if (TextUtils.isEmpty(courseBean.getTitle()))
             getCourseData();
-        mPresenter.getVideoList(courseBean.getId());
+        mPresenter.getCourseVideoPack(courseBean.getId());
     }
 
     @Override
@@ -119,28 +143,16 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
     }
 
     @Override
-    public void getVideoListSuccess(VideoBean.VideoListResult response) {
+    public void getCourseVideoPack(VideoPackBean.VideoPackResult response) {
         mAdapter.setNewData(response.getData());
     }
 
     @Override
-    public void getBannerListSuccess(BannerBean.BannerListResult response) {
-
-    }
-
-    @Override
-    public void getLiveDataSuccess(LiveBean response) {
-
-    }
-
-    @Override
-    public void getCommentSuccess(CommentBean.CommentListResult response) {
-
-    }
-
-    @Override
-    public void addCommentSuccess(CommentBean.CommentResult response) {
-
+    public void getVideoListSuccess(VideoBean.VideoListResult response) {
+        Object obj = mAdapter.getItem(position);
+        if (!(obj instanceof VideoPackBean))
+            return;
+        mAdapter.openPack(position, response.getData());
     }
 
     class MHeader extends AbstractFavoriteView {
@@ -149,8 +161,8 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
         ImageView imageView;
         @BindView(R.id.header_course_title_tv)
         TextView titleTv;
-        @BindView(R.id.header_course_teacher_tv)
-        TextView teacherTv;
+        @BindView(R.id.header_course_bg_iv)
+        ImageView bgIv;
         @BindView(R.id.header_course_desc_tv)
         TextView descTv;
         @BindView(R.id.header_course_like_tv)
@@ -198,9 +210,11 @@ public class CourseDetailActivity extends BaseMvpActivity<CoursePresenter> imple
         }
 
         public void setData() {
-            ImgLoader.showImg(DataUtil.getImgUrl(courseBean.getCover()), imageView);
+            ImgLoader.showImg(DataUtil.getImgUrl(courseBean.getCover()), bgIv);
+            ImgLoader.showImgRound(DataUtil.getImgUrl(courseBean.getCover_small()), imageView, DeviceUtils.dp2px(4f),
+                    DeviceUtils.dp2px(128f));
             titleTv.setText(courseBean.getTitle());
-            teacherTv.setText(courseBean.getTeacher());
+            // teacherTv.setText(courseBean.getTeacher());
             descTv.setText(courseBean.getDescription());
 
             setLike();

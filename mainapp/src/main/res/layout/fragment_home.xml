@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/view_title_tv"
+        style="@style/text_larger_black"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@drawable/shape_white_border_bottom"
+        android:gravity="center"
+        android:text="@string/title_recommend" />
+
+    <include layout="@layout/view_refresh_recycler" />
+
+</LinearLayout>

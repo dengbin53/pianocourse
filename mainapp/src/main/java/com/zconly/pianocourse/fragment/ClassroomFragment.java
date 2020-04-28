@@ -35,14 +35,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @Description: 首页
+ * @Description: 讲堂
  * @Author: dengbin
- * @CreateDate: 2020/3/18 21:03
+ * @CreateDate: 2020/4/26 21:03
  * @UpdateUser: dengbin
- * @UpdateDate: 2020/3/18 21:03
+ * @UpdateDate: 2020/4/26 21:03
  * @UpdateRemark: 更新说明
  */
-public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements CourseView {
+public class ClassroomFragment extends BaseMvpFragment<CoursePresenter> implements CourseView {
 
     @BindView(R.id.smart_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
@@ -80,7 +80,7 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
 
     @Override
     protected int getContentView() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_classroom;
     }
 
     @Override
@@ -115,11 +115,11 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
 
     @Override
     public void getHomePageSuccess(HomePageBean.HomePageResult response) {
-        HomePageBean tuijianBean = response.getTuijian();
-        if (tuijianBean == null)
+        HomePageBean jiangTang = response.getJiangtang();
+        if (jiangTang == null)
             return;
         List<CourseBean> data = new ArrayList<>();
-        liveBean = tuijianBean.getLive();
+        liveBean = jiangTang.getLive();
         if (liveBean != null) {
             CourseBean cData = new CourseBean();
             cData.setTitle("直播课");
@@ -136,7 +136,7 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
 
         mAdapter.setNewData(data);
 
-        List<HomePageBean.RecommendBean> recommendBean = tuijianBean.getRecommend();
+        List<HomePageBean.RecommendBean> recommendBean = jiangTang.getRecommend();
         if (ArrayUtil.isEmpty(recommendBean))
             return;
         data = new ArrayList<>();
@@ -145,7 +145,6 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
         cData.setCategory(Constants.CATEGORY_PARENTS_COURSE);
         cData.setViewType(CourseBean.TITLE);
         data.add(cData);
-
         for (HomePageBean.RecommendBean bean : recommendBean) {
             CourseBean courseBean = bean.getLesson();
             if (courseBean == null)
@@ -178,8 +177,6 @@ public class HomeFragment extends BaseMvpFragment<CoursePresenter> implements Co
 
         MHeader(View view) {
             ButterKnife.bind(this, view);
-
-            entranceLl.setVisibility(View.GONE);
         }
 
         @SingleClick

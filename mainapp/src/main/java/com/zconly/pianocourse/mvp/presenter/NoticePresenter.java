@@ -4,9 +4,9 @@ import com.mvp.exception.ApiException;
 import com.mvp.observer.HttpRxObservable;
 import com.mvp.observer.HttpRxObserver;
 import com.mvp.utils.RetrofitUtils;
+import com.zconly.pianocourse.activity.NoticeActivity;
 import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.bean.NoticeBean;
-import com.zconly.pianocourse.fragment.NoticeFragment;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.view.NoticeView;
 
@@ -33,7 +33,7 @@ public class NoticePresenter extends BasePresenter<NoticeView> {
         params.put("currentPage", page + "");
         params.put("pageSize", Constants.PAGE_COUNT + "");
         Observable<NoticeBean.NoticeResult> ob = RetrofitUtils.create(ApiService.class).getNoticeList(params);
-        HttpRxObservable.getObservableFragment(ob, (NoticeFragment) mView).subscribe(
+        HttpRxObservable.getObservable(ob, (NoticeActivity) mView).subscribe(
                 new HttpRxObserver<NoticeBean.NoticeResult>() {
 
                     @Override
