@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 
 import androidx.multidex.MultiDex;
 
@@ -126,7 +126,9 @@ public class MainApplication extends Application {
         SmartRefreshLayout.setDefaultRefreshInitializer((context, layout) -> {
             // 开始设置全局的基本参数（可以被下面的DefaultRefreshHeaderCreator覆盖）
             layout.setReboundDuration(768);
-            layout.setReboundInterpolator(new DecelerateInterpolator());
+            // AnticipateInterpolator
+            layout.setReboundInterpolator(new LinearInterpolator());
+            layout.setReboundDuration(128);
             layout.setFooterHeight(128);
             layout.setDisableContentWhenLoading(false);
             layout.setPrimaryColorsId(R.color.color_white, R.color.color_text_gray_gray_light);

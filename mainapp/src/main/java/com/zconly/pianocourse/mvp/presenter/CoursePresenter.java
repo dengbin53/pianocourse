@@ -62,10 +62,6 @@ public class CoursePresenter extends BasePresenter<CourseView> {
             params.put("t", t);
 
         HttpRxObserver<CourseBean.CourseListResult> hro = new HttpRxObserver<CourseBean.CourseListResult>() {
-            @Override
-            protected void onStart(Disposable d) {
-                mView.loading("");
-            }
 
             @Override
             protected void onError(ApiException e) {
@@ -126,12 +122,6 @@ public class CoursePresenter extends BasePresenter<CourseView> {
         HttpRxObservable.getObservable(o, (LifecycleProvider<ActivityEvent>) mView)
                 .subscribe(new HttpRxObserver<VideoPackBean.VideoPackResult>() {
                     @Override
-                    protected void onStart(Disposable d) {
-                        if (mView != null)
-                            mView.loading("");
-                    }
-
-                    @Override
                     protected void onError(ApiException e) {
                         if (mView != null)
                             mView.onError(e);
@@ -141,12 +131,13 @@ public class CoursePresenter extends BasePresenter<CourseView> {
                     protected void onSuccess(VideoPackBean.VideoPackResult response) {
                         if (mView instanceof CourseDetailView) {
                             mView.dismissLoading();
-                            ((CourseDetailView) mView).getCourseVideoPack(response);
+                            ((CourseDetailView) mView).getCourseVideoPackSuccess(response);
                         }
                     }
                 });
     }
 
+    // 视频包下的视频
     public void getVideopackVideo(long id) {
         Map<String, String> params = new HashMap<>();
         params.put("videoPack_id", id + "");
@@ -179,11 +170,6 @@ public class CoursePresenter extends BasePresenter<CourseView> {
         Observable<BannerBean.BannerListResult> o = RetrofitUtils.create(ApiService.class).getBanner();
         HttpRxObservable.getObservableFragment(o, (LifecycleProvider<FragmentEvent>) mView)
                 .subscribe(new HttpRxObserver<BannerBean.BannerListResult>() {
-
-                    @Override
-                    protected void onStart(Disposable d) {
-                        // mView.loading("");
-                    }
 
                     @Override
                     protected void onError(ApiException e) {

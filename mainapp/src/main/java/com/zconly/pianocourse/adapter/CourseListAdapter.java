@@ -64,7 +64,7 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<CourseBean, Cou
             } else {
                 XiaoeActivity.start(mContext, bean.getUrl());
             }
-        } else if (bean.getItemType() == CourseBean.BANNER) {
+        } else if (bean.getItemType() == CourseBean.BANNER) { // 大师课-课程列表-上方banner
 
         } else {
             if (TextUtils.isEmpty(bean.getUrl())) {

@@ -5,7 +5,7 @@ import com.zconly.pianocourse.base.Constants;
 import java.util.List;
 
 /**
- * @Description: java类作用描述
+ * @Description: 视频包
  * @Author: dengbin
  * @CreateDate: 2020/4/2 10:54
  * @UpdateUser: dengbin
@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class VideoPackBean extends BaseBean {
 
+    private long id;
     private long lesson_id;
     private String description;
-    private long id;
     private String title;
     private int sort;
     private int video_count;
@@ -34,6 +34,9 @@ public class VideoPackBean extends BaseBean {
 
     public void setVideoBeans(List<VideoBean> videoBeans) {
         this.videoBeans = videoBeans;
+        for (VideoBean bean : this.videoBeans) {
+            bean.setLvp_id(bean.getLvp_id() == 0 ? getId() : bean.getLvp_id());
+        }
     }
 
     public boolean isOpened() {

@@ -75,10 +75,9 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
     private MHeader mHeader;
     private long replyId;
 
-    public static void start(Context context, VideoBean bean, CourseBean courseBean) {
+    public static void start(Context context, VideoBean bean) {
         Intent intent = new Intent(context, VideoDetailActivity.class);
         intent.putExtra(ExtraConstants.EXTRA_DATA, bean);
-        intent.putExtra(ExtraConstants.EXTRA_DATA_COURSE, courseBean);
         context.startActivity(intent);
     }
 
@@ -92,8 +91,7 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
     }
 
     private void getVideoList() {
-        if (mHeader.getVideoCount() <= 0)
-            mPresenter.getVideoList(videoBean.getLesson_id());
+        mPresenter.getVideopackVideo(videoBean.getLvp_id());
     }
 
     @SingleClick
@@ -116,9 +114,8 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
 
     @Override
     protected boolean initView() {
-        mTitleView.setTitle("课程详情");
+        mTitleView.setTitle("课程章节");
         videoBean = (VideoBean) getIntent().getSerializableExtra(ExtraConstants.EXTRA_DATA);
-        courseBean = (CourseBean) getIntent().getSerializableExtra(ExtraConstants.EXTRA_DATA_COURSE);
         if (videoBean == null) {
             finish();
             return false;
@@ -133,7 +130,7 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 0;
                 mHeader.resetCommentCount();
-                initData();
+                getData();
             }
         });
         mSmartRefreshLayout.setEnableLoadMore(false);
@@ -160,17 +157,11 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
 
     @Override
     protected void initData() {
-        if (courseBean == null) {
-            mPresenter.getCourseList(0, videoBean.getLesson_id() + "", null);
-        } else {
-            getData();
-        }
+        mSmartRefreshLayout.autoRefresh();
     }
 
     private void getData() {
-        mHeader.setHeaderData();
-        getVideoList();
-        getCommentList();
+        mPresenter.getCourseList(0, videoBean.getLesson_id() + "", null);
     }
 
     @Override
@@ -193,7 +184,9 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
         if (response.getData() == null || ArrayUtil.isEmpty(response.getData().getData()))
             return;
         courseBean = response.getData().getData().get(0);
-        getData();
+        mHeader.setHeaderData();
+        getVideoList();
+        getCommentList();
     }
 
     @Override
@@ -353,13 +346,13 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
             setLike();
             setFavorite();
 
-            courseRv.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
+            courseRv.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,
                     false));
             courseRv.setAdapter(videoAdapter = new BaseQuickAdapter<VideoBean, BaseViewHolder>(
                     R.layout.item_list_video_h, null) {
                 @Override
                 protected void convert(@NonNull BaseViewHolder helper, VideoBean item) {
-                    ImgLoader.showImgRound(DataUtil.getImgUrl(item.getCover()), helper.getView(R.id.video_iv));
+                    ImgLoader.showImgRound(DataUtil.getImgUrl(item.getCover_small()), helper.getView(R.id.video_iv));
                 }
             });
             videoAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -414,9 +407,6 @@ public class VideoDetailActivity extends BaseMvpActivity<CoursePresenter> implem
             likeTv.setText(videoBean.getLike_count() + Constants.END_LIKE);
         }
 
-        int getVideoCount() {
-            return videoAdapter == null ? 0 : videoAdapter.getItemCount();
-        }
     }
 
 }

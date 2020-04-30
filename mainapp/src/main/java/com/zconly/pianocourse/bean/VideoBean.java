@@ -18,6 +18,7 @@ public class VideoBean extends BaseBean {
 
     private long id;
     private long lesson_id;
+    private long lvp_id;
     private String title;
     private int status;
     private int sort;
@@ -32,6 +33,14 @@ public class VideoBean extends BaseBean {
     private int view_count;
     private int favorited;
     private int liked;
+
+    public long getLvp_id() {
+        return lvp_id;
+    }
+
+    public void setLvp_id(long lvp_id) {
+        this.lvp_id = lvp_id;
+    }
 
     public long getId() {
         return id;

@@ -126,6 +126,7 @@ public class CourseListFragment extends BaseMvpFragment<CoursePresenter> impleme
             return;
         isLoadDataCompleted = true;
         List<CourseBean> data = response.getData().getData();
+
         if (page == 0) {
             mAdapter.setNewData(data);
 

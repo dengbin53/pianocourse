@@ -18,5 +18,5 @@ import com.zconly.pianocourse.bean.VideoPackBean;
  */
 public interface CourseDetailView extends CourseView {
 
-    void getCourseVideoPack(VideoPackBean.VideoPackResult response);
+    void getCourseVideoPackSuccess(VideoPackBean.VideoPackResult response);
 }

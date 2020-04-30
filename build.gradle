@@ -4,7 +4,7 @@ ext {
     MIN_SDK_VERSION = 21
     TARGET_SDK_VERSION = 28
     ANDROID_SUPPORT_VERSION = "1.1.0"
-    BUILD_VERSION_CODE = 1
+    BUILD_VERSION_CODE = 100
     BUILD_VERSION_NAME = "1.0.0"
 
     release_keystore = getRootDir().getPath() + "/docs/pianocourse.jks"
@@ -12,6 +12,7 @@ ext {
     // 依赖库
     compilelibs = [
             "androidx_multidex"     : 'androidx.multidex:multidex:2.0.1',
+            "androidx-palette"      : 'androidx.palette:palette:1.0.0',
             "androidx_appcompat"    : 'androidx.appcompat:appcompat:' + ANDROID_SUPPORT_VERSION,
             "androidx_constraint"   : 'androidx.constraintlayout:constraintlayout:' + ANDROID_SUPPORT_VERSION,
             "androidx_material"     : 'com.google.android.material:material:' + ANDROID_SUPPORT_VERSION,

@@ -91,6 +91,11 @@
     </style>
 
     <style name="text_smaller_white">
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
+
+    <style name="text_smaller_white_gray">
         <item name="android:textColor">@color/color_text_white_gray</item>
         <item name="android:textSize">@dimen/text_smaller</item>
     </style>

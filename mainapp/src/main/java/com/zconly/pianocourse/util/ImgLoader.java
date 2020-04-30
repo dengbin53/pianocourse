@@ -67,13 +67,13 @@ public class ImgLoader {
 
     // 圆角图片（圆角8dp,不限宽高）
     public static void showImgRound(String url, ImageView iv) {
-        showImgRound(url, iv, DeviceUtils.dp2px(8f), 0);
+        showImgRound(url, iv, DeviceUtils.dp2px(4f));
     }
 
     // 圆角图片 round 圆角；rw 限制宽高
-    public static void showImgRound(String url, ImageView iv, int round, int rw) {
+    public static void showImgRound(String url, ImageView iv, int round) {
         doShowImg(getRequestManager(iv.getContext()), url, iv, R.drawable.shape_gray_light, round, null,
-                false, rw, rw, null);
+                false, 0, 0, null);
     }
 
     // 圆角图片 round 圆角 ct 圆角类型
@@ -164,9 +164,16 @@ public class ImgLoader {
         rb.into(ct);
     }
 
-    public static void downloadBitmap(Context context, String url, DownloadImgListener<Bitmap> listener) {
+    public static void downloadBitmap(Context context, String url, int round, DownloadImgListener<Bitmap> listener) {
         RequestBuilder<Bitmap> rb = getRequestManager(context).asBitmap();
         rb = getRequestBuilder(rb, url);
+
+        if (round > 0) { // 圆角图片
+            RoundedCornersTransformation rctf = new RoundedCornersTransformation(round, 0,
+                    RoundedCornersTransformation.CornerType.ALL);
+            rb = rb.transform(rctf).dontAnimate();
+        }
+
         CustomTarget<Bitmap> ct = new CustomTarget<Bitmap>() {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap>
@@ -187,6 +194,10 @@ public class ImgLoader {
             }
         };
         rb.into(ct);
+    }
+
+    public static void downloadBitmap(Context context, String url, DownloadImgListener<Bitmap> listener) {
+        downloadBitmap(context, url, 0, listener);
     }
 
     public static <T> void downloadOnly(String url, DownloadImgListener<T> listener) {

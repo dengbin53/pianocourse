@@ -120,12 +120,13 @@ public class XiaoeActivity extends BaseMvpActivity<XiaoePresenter> implements Xi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        xiaoEWeb.onActivityResult(requestCode, resultCode, data);
+        if (xiaoEWeb != null)
+            xiaoEWeb.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (xiaoEWeb.handlerKeyEvent(keyCode, event))
+        if (xiaoEWeb != null && xiaoEWeb.handlerKeyEvent(keyCode, event))
             return true;
         return super.onKeyDown(keyCode, event);
     }
@@ -133,19 +134,22 @@ public class XiaoeActivity extends BaseMvpActivity<XiaoePresenter> implements Xi
     @Override
     protected void onResume() {
         super.onResume();
-        xiaoEWeb.onResume();
+        if (xiaoEWeb != null)
+            xiaoEWeb.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        xiaoEWeb.onPause();
+        if (xiaoEWeb != null)
+            xiaoEWeb.onPause();
     }
 
     @Override
     protected void onDestroy() {
+        if (xiaoEWeb != null)
+            xiaoEWeb.onDestroy();
         super.onDestroy();
-        xiaoEWeb.onDestroy();
     }
 
     @Override
@@ -155,7 +159,9 @@ public class XiaoeActivity extends BaseMvpActivity<XiaoePresenter> implements Xi
             return;
         XiaoeTokenBean bean = data.getData();
         XEToken token = new XEToken(bean.getToken_key(), bean.getToken_value());
-        xiaoEWeb.sync(token);
-        xiaoEWeb.reload();
+        if (xiaoEWeb != null) {
+            xiaoEWeb.sync(token);
+            xiaoEWeb.reload();
+        }
     }
 }

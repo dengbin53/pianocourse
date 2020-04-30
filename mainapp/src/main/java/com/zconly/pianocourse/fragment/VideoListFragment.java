@@ -1,6 +1,7 @@
 package com.zconly.pianocourse.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -80,8 +81,10 @@ public class VideoListFragment extends BaseMvpFragment<FavoritePresenter> implem
         mRecyclerView.setAdapter(mAdapter = new VideoListAdapter<>(null));
         mAdapter.setOnItemClickListener((adapter, view1, position) -> {
             VideoBean b = mAdapter.getItem(position);
-            VideoDetailActivity.start(mContext, b, null);
+            VideoDetailActivity.start(mContext, b);
         });
+        mAdapter.addHeaderView(LayoutInflater.from(mContext)
+                .inflate(R.layout.view_space_normal, mRecyclerView, false));
     }
 
     private void getData() {

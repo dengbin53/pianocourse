@@ -2,12 +2,13 @@ package com.zconly.pianocourse.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,8 +62,9 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
         context.startActivity(intent);
     }
 
-    private void getCourseData() {
+    private void requestData() {
         mPresenter.getCourseList(0, courseBean.getId() + "", null);
+        mPresenter.getCourseVideoPack(courseBean.getId());
     }
 
     @Override
@@ -73,7 +75,7 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
             return false;
         }
         mTitleView.setTitle(courseBean.getTitle());
-        mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> getCourseData());
+        mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> requestData());
         mSmartRefreshLayout.setEnableLoadMore(false);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
@@ -83,7 +85,7 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
                 false);
         mHeader = new MHeader(view);
         mAdapter.addHeaderView(view);
-        mAdapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.footer_space, mRecyclerView,
+        mAdapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.view_space_large, mRecyclerView,
                 false));
         mAdapter.setOnItemChildClickListener((adapter, view1, pos) -> {
             position = pos;
@@ -100,7 +102,7 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
             Object b = mAdapter.getItem(position);
             if (!(b instanceof VideoBean))
                 return;
-            VideoDetailActivity.start(mContext, (VideoBean) b, courseBean);
+            VideoDetailActivity.start(mContext, (VideoBean) b);
         });
         ViewUtil.cancelRecyclerViewAnim(mRecyclerView);
         return true;
@@ -113,10 +115,7 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
 
     @Override
     protected void initData() {
-        mHeader.setData();
-        if (TextUtils.isEmpty(courseBean.getTitle()))
-            getCourseData();
-        mPresenter.getCourseVideoPack(courseBean.getId());
+        mSmartRefreshLayout.autoRefresh();
     }
 
     @Override
@@ -135,15 +134,21 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
     }
 
     @Override
+    public void dismissLoading() {
+        super.dismissLoading();
+        mSmartRefreshLayout.finishRefresh();
+    }
+
+    @Override
     public void getCourseListSuccess(CourseBean.CourseListResult response) {
         if (response.getData() == null || ArrayUtil.isEmpty(response.getData().getData()))
             return;
         courseBean = response.getData().getData().get(0);
-        initData();
+        mHeader.setData();
     }
 
     @Override
-    public void getCourseVideoPack(VideoPackBean.VideoPackResult response) {
+    public void getCourseVideoPackSuccess(VideoPackBean.VideoPackResult response) {
         mAdapter.setNewData(response.getData());
     }
 
@@ -161,8 +166,6 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
         ImageView imageView;
         @BindView(R.id.header_course_title_tv)
         TextView titleTv;
-        @BindView(R.id.header_course_bg_iv)
-        ImageView bgIv;
         @BindView(R.id.header_course_desc_tv)
         TextView descTv;
         @BindView(R.id.header_course_like_tv)
@@ -170,10 +173,13 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
         @BindView(R.id.header_course_favorite_tv)
         TextView favoriteTv;
 
+        private View mView;
         private FavoritePresenter favoritePresenter;
 
+
         MHeader(View view) {
-            ButterKnife.bind(this, view);
+            mView = view;
+            ButterKnife.bind(this, mView);
         }
 
         @Override
@@ -210,9 +216,24 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
         }
 
         public void setData() {
-            ImgLoader.showImg(DataUtil.getImgUrl(courseBean.getCover()), bgIv);
-            ImgLoader.showImgRound(DataUtil.getImgUrl(courseBean.getCover_small()), imageView, DeviceUtils.dp2px(4f),
-                    DeviceUtils.dp2px(128f));
+            ImgLoader.downloadBitmap(mContext, DataUtil.getImgUrl(courseBean.getCover_small()), DeviceUtils.dp2px(4f),
+                    new ImgLoader.DownloadImgListener<Bitmap>() {
+                        @Override
+                        public void OnDownloadFinish(Bitmap resource) {
+                            imageView.setImageBitmap(resource);
+                            Palette.from(resource).generate(palette -> {
+                                if (palette == null)
+                                    return;
+                                int dc = getResources().getColor(R.color.color_green);
+                                mView.setBackgroundColor(palette.getVibrantColor(dc));
+                            });
+                        }
+
+                        @Override
+                        public void OnDownloadFailed() {
+
+                        }
+                    });
             titleTv.setText(courseBean.getTitle());
             // teacherTv.setText(courseBean.getTeacher());
             descTv.setText(courseBean.getDescription());

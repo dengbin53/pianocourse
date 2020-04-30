@@ -88,13 +88,13 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            manifestPlaceholders = [UMENG_APPKEY: "5e8a06ab978eea071c37c204"]
+            manifestPlaceholders = [UMENG_APPKEY: "5ea41b1f167eddfaa3000069"]
 
             buildConfigField("boolean", "MSB_DEBUG", "false")
             buildConfigField('String', 'UMENG_MESSAGE_SECRET', '"c0f96d72b1c0ddec2449b79129a2c74e"')
 
             buildConfigField('String', 'HOST_API', '"https://musicdata.tech/yuebo/"')
-            buildConfigField('String', 'HOST_H5', '"https://musicdata.tech/yuebo/"')
+            buildConfigField('String', 'HOST_H5', '"https://musicdata.tech/"')
         }
     }
 
@@ -120,6 +120,7 @@ dependencies {
     implementation rootProject.ext.compilelibs['androidx_constraint']
     implementation rootProject.ext.compilelibs['androidx_multidex']
     implementation rootProject.ext.compilelibs['androidx_material']
+    implementation rootProject.ext.compilelibs['androidx-palette']
 
     implementation rootProject.ext.compilelibs['gson']
     implementation rootProject.ext.compilelibs['eventbus']

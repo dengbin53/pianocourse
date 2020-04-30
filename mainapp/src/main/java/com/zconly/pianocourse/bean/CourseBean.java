@@ -38,7 +38,7 @@ public class CourseBean extends BaseBean {
     private int liked;
 
     private String url;
-    private int type;
+    private int type = HomePageBean.RecommendBean.TYPE_RECOMMEND_COURSE;
 
     public CourseBean() {
 
@@ -68,7 +68,7 @@ public class CourseBean extends BaseBean {
     public void setUrl(String url) {
         this.url = url;
     }
-    
+
     public long getId() {
         return id;
     }

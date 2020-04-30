@@ -2,5 +2,5 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/text_small_gray"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_height_small"
+    android:layout_height="@dimen/space_large"
     android:gravity="center" />

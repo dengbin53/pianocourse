@@ -53,10 +53,15 @@ public class ClassroomFragment extends BaseMvpFragment<CoursePresenter> implemen
     private MHeader mHeader;
     private HomePageBean.RecommendBean liveBean;
 
+    private void requestData() {
+        mPresenter.getHomePageJson();
+        mPresenter.getBanner();
+    }
+
     @Override
     protected void initView(View view) {
         mRefreshLayout.setEnableLoadMore(false);
-        mRefreshLayout.setOnRefreshListener(refreshLayout -> initData());
+        mRefreshLayout.setOnRefreshListener(refreshLayout -> requestData());
         mRecyclerView.setLayoutManager(
                 new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter = new CourseListAdapter(null));
@@ -64,13 +69,12 @@ public class ClassroomFragment extends BaseMvpFragment<CoursePresenter> implemen
         View header = getLayoutInflater().inflate(R.layout.header_course_home, mRecyclerView, false);
         mHeader = new MHeader(header);
         mAdapter.addHeaderView(header);
-        mAdapter.addFooterView(getLayoutInflater().inflate(R.layout.footer_space, mRecyclerView, false));
+        mAdapter.addFooterView(getLayoutInflater().inflate(R.layout.view_space_large, mRecyclerView, false));
     }
 
     @Override
     protected void initData() {
-        mPresenter.getHomePageJson();
-        mPresenter.getBanner();
+        mRefreshLayout.autoRefresh();
     }
 
     @Override
@@ -118,6 +122,9 @@ public class ClassroomFragment extends BaseMvpFragment<CoursePresenter> implemen
         HomePageBean jiangTang = response.getJiangtang();
         if (jiangTang == null)
             return;
+
+        isLoadDataCompleted = true;
+
         List<CourseBean> data = new ArrayList<>();
         liveBean = jiangTang.getLive();
         if (liveBean != null) {
@@ -150,6 +157,7 @@ public class ClassroomFragment extends BaseMvpFragment<CoursePresenter> implemen
             if (courseBean == null)
                 continue;
             courseBean.setType(bean.getType());
+            courseBean.setUrl(bean.getUrl());
             data.add(courseBean);
         }
         mAdapter.addData(data);
