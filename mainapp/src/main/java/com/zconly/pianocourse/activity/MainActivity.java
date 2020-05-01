@@ -88,14 +88,13 @@ public class MainActivity extends BaseMvpActivity {
     protected boolean initView() {
         fragments[0] = new HomeFragment();
         fragments[1] = new ClassroomFragment();
-        // fragments[2] = new QinfangFragment();
-        fragments[2] = new MineFragment();
+        fragments[2] = new QinfangFragment();
+        fragments[3] = new MineFragment();
         switchContent(fragments[0]);
 
         String[] tabs = getResources().getStringArray(R.array.tab_name_array);
         int[] icon = new int[]{R.drawable.selector_tab_home, R.drawable.selector_tab_classroom,
-                // R.drawable.selector_tab_qinfang,
-                R.drawable.selector_tab_mine};
+                R.drawable.selector_tab_qinfang, R.drawable.selector_tab_mine};
         for (int i = 0; i < tabs.length; i++) {
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setCustomView(R.layout.view_main_tab);
