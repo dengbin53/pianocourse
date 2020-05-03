@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:layout_alignBottom="@id/banner_iv"
-        android:background="@color/color_bg_black_50"
+        android:background="@color/color_bg_black_30"
         android:gravity="center_vertical"
         android:maxLines="1"
         android:paddingStart="@dimen/space_normal"

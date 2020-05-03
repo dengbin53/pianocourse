@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/space_normal">
+
+    <ImageView
+        android:id="@+id/header_book_iv"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:foreground="@drawable/shape_corner_tra_border_white"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/header_book_title_tv"
+        style="@style/text_normal_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/header_book_iv"
+        android:layout_toEndOf="@id/header_book_iv"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/space_normal"
+        android:paddingEnd="@dimen/space_normal" />
+
+    <TextView
+        android:id="@+id/header_book_author_tv"
+        style="@style/text_smaller_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_book_title_tv"
+        android:layout_marginTop="@dimen/space_normal"
+        android:layout_toEndOf="@id/header_book_iv"
+        android:drawableStart="@mipmap/ic_author_small"
+        android:drawablePadding="@dimen/drawable_padding"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/space_normal"
+        android:paddingEnd="@dimen/space_normal" />
+
+    <TextView
+        android:id="@+id/header_book_desc_tv"
+        style="@style/text_small_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_book_author_tv"
+        android:layout_marginTop="@dimen/space_large"
+        android:layout_toEndOf="@id/header_book_iv"
+        android:ellipsize="end"
+        android:paddingStart="@dimen/space_normal"
+        android:paddingEnd="@dimen/space_normal" />
+
+</RelativeLayout>

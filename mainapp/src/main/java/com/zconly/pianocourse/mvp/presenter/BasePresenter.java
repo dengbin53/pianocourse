@@ -10,13 +10,18 @@ import com.mvp.observer.HttpRxObserver;
 import com.mvp.observer.UploadObserver;
 import com.mvp.utils.NetworkUtils;
 import com.mvp.utils.RetrofitUtils;
+import com.trello.rxlifecycle2.LifecycleProvider;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.base.MainApplication;
+import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
+import com.zconly.pianocourse.mvp.view.BaseView;
 import com.zconly.pianocourse.mvp.view.UploadView;
 import com.zconly.pianocourse.mvp.view.UserView;
 import com.zconly.pianocourse.util.FileUtils;
@@ -171,4 +176,27 @@ public class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
         }
     }
 
+    public void getBanner() {
+        Observable<BannerBean.BannerListResult> o = RetrofitUtils.create(ApiService.class).getBanner();
+        HttpRxObserver<BannerBean.BannerListResult> hro = new HttpRxObserver<BannerBean.BannerListResult>() {
+
+            @Override
+            protected void onError(ApiException e) {
+                if (mView != null)
+                    mView.onError(e);
+            }
+
+            @Override
+            protected void onSuccess(BannerBean.BannerListResult response) {
+                if (mView instanceof BaseView) {
+                    mView.dismissLoading();
+                    ((BaseView) mView).getBannerListSuccess(response);
+                }
+            }
+        };
+        if (mView instanceof BaseMvpFragment)
+            HttpRxObservable.getObservableFragment(o, (LifecycleProvider<FragmentEvent>) mView).subscribe(hro);
+        else
+            HttpRxObservable.getObservable(o, (LifecycleProvider<ActivityEvent>) mView).subscribe(hro);
+    }
 }

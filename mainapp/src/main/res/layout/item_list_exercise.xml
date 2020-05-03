@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_list_exercise"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_white_border_bottom"
+    android:padding="@dimen/space_normal">
+
+    <ImageView
+        android:id="@+id/item_list_exercise_iv"
+        android:layout_width="@dimen/avatar_large"
+        android:layout_height="@dimen/avatar_large"
+        android:layout_marginEnd="@dimen/space_normal"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/item_list_exercise_title_tv"
+        style="@style/text_small_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/item_list_exercise_iv"
+        android:gravity="center_vertical"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/item_list_exercise_author_tv"
+        style="@style/text_smaller_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_list_exercise_title_tv"
+        android:layout_marginTop="@dimen/space_normal"
+        android:layout_toEndOf="@id/item_list_exercise_iv"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/item_list_exercise_time_tv"
+        style="@style/text_smaller_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/item_list_exercise_iv"
+        android:layout_toEndOf="@id/item_list_exercise_iv"
+        android:gravity="center_vertical" />
+
+</RelativeLayout>

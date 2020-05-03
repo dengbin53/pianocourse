@@ -13,6 +13,83 @@
         android:gravity="center"
         android:text="@string/title_qinfang" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_smaller"
+        android:background="@drawable/shape_white_border_bottom">
+
+        <TextView
+            android:id="@+id/classroom_default_tv"
+            style="@style/text_small_white"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_red_border_bottom"
+            android:drawableStart="@mipmap/ic_lianqinla"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center"
+            android:paddingStart="@dimen/space_normal"
+            android:paddingEnd="@dimen/space_normal"
+            android:text="练琴啦" />
+
+        <TextView
+            android:id="@+id/classroom_level_0"
+            style="@style/text_small_black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/classroom_default_tv"
+            android:gravity="center"
+            android:paddingStart="@dimen/space_large"
+            android:paddingEnd="@dimen/space_normal"
+            android:text="初级" />
+
+        <TextView
+            android:id="@+id/classroom_level_1"
+            style="@style/text_small_black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/classroom_level_0"
+            android:gravity="center"
+            android:paddingStart="@dimen/space_normal"
+            android:paddingEnd="@dimen/space_normal"
+            android:text="中级" />
+
+        <TextView
+            android:id="@+id/classroom_level_2"
+            style="@style/text_small_black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/classroom_level_1"
+            android:gravity="center"
+            android:paddingStart="@dimen/space_normal"
+            android:paddingEnd="@dimen/space_normal"
+            android:text="高级" />
+
+        <TextView
+            android:id="@+id/classroom_level_3"
+            style="@style/text_small_black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/classroom_level_2"
+            android:gravity="center"
+            android:paddingStart="@dimen/space_normal"
+            android:paddingEnd="@dimen/space_normal"
+            android:text="准专业" />
+
+        <TextView
+            android:id="@+id/classroom_my_sheet_tv"
+            style="@style/text_small_black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:drawableStart="@mipmap/ic_star_red"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center"
+            android:paddingStart="@dimen/space_normal"
+            android:paddingEnd="@dimen/space_normal"
+            android:text="我的演奏" />
+
+    </RelativeLayout>
+
     <include layout="@layout/view_refresh_recycler" />
 
 </LinearLayout>

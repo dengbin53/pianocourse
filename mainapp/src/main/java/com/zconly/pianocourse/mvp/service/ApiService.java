@@ -2,11 +2,14 @@ package com.zconly.pianocourse.mvp.service;
 
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.BookBean;
 import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
+import com.zconly.pianocourse.bean.ExerciseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.NoticeBean;
+import com.zconly.pianocourse.bean.SheetBean;
 import com.zconly.pianocourse.bean.TokenBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.bean.UserDataBean;
@@ -26,7 +29,7 @@ import retrofit2.http.Part;
 import retrofit2.http.QueryMap;
 
 /**
- * @Description: host
+ * @Description: API
  * @Author: dengbin
  * @CreateDate: 2020/3/18 14:35
  * @UpdateUser: dengbin
@@ -104,6 +107,17 @@ public interface ApiService {
     @POST("app/lesson-video-favorite/add")
     Observable<BaseBean> favorite(@Body Map<String, Object> params);
 
+    @POST("app/book/list")
+    Observable<BookBean.BookListResult> getBookList(@Body Map<String, Object> params);
+
+    // 课程下的单曲
+    @POST("app/sheet/list")
+    Observable<SheetBean.SheetListResult> getSheetList(@Body Map<String, Object> params);
+
+    // 学生练习列表
+    @POST("app/user/exercise/list")
+    Observable<ExerciseBean.ExerciseListResult> getExerciseList(@Body Map<String, Object> params);
+
     // 点赞视频
     @GET("app/lesson-video-like/add")
     Observable<BaseBean> like(@QueryMap Map<String, Object> params);
@@ -116,7 +130,6 @@ public interface ApiService {
     @GET("app/lesson-video-watch/add")
     Observable<BaseBean> addVideoWatch(@QueryMap Map<String, Object> params);
 
-    //
     @GET("app/system-ext/login")
     Observable<XiaoeTokenBean.XiaoeTokenResult> xiaoeLogin();
 

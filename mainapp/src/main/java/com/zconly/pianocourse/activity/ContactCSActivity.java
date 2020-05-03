@@ -5,7 +5,7 @@ import android.view.View;
 import com.mvp.base.MvpPresenter;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.base.RequestCode;
 import com.zconly.pianocourse.util.ActionUtil;
 import com.zconly.pianocourse.util.SysConfigTool;

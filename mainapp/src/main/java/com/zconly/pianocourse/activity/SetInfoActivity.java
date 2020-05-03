@@ -13,7 +13,7 @@ import android.widget.PopupMenu;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.base.RequestCode;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.base.callback.MClickCallback;
@@ -25,7 +25,7 @@ import com.zconly.pianocourse.mvp.presenter.SetInfoPresenter;
 import com.zconly.pianocourse.mvp.view.SetInfoView;
 import com.zconly.pianocourse.util.ActionUtil;
 import com.zconly.pianocourse.util.CropType;
-import com.zconly.pianocourse.util.DateTool;
+import com.zconly.pianocourse.util.DateUtils;
 import com.zconly.pianocourse.util.FileUtils;
 import com.zconly.pianocourse.util.ImageUtil;
 import com.zconly.pianocourse.util.ImgLoader;
@@ -168,7 +168,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
 
             ca.set(mYear, mMonth, mDay);
             long time = ca.getTimeInMillis();
-            pianoTimeView.setValue(DateTool.formatYMD(time));
+            pianoTimeView.setValue(DateUtils.formatYMD(time));
             pianoTime = time;
         }, mYear, mMonth, mDay);
         dialog.show();
@@ -189,7 +189,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
 
             ca.set(mYear, mMonth, mDay);
             long time = ca.getTimeInMillis();
-            birthView.setValue(DateTool.formatYMD(time));
+            birthView.setValue(DateUtils.formatYMD(time));
             pianoTime = time;
         }, mYear, mMonth, mDay);
         dialog.show();

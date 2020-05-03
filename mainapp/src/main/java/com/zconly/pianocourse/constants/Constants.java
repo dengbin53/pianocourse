@@ -1,8 +1,6 @@
-package com.zconly.pianocourse.base;
+package com.zconly.pianocourse.constants;
 
 import com.zconly.pianocourse.bean.UserBean;
-
-import java.security.PublicKey;
 
 /**
  * @Description: 静态常量
@@ -26,13 +24,10 @@ public class Constants {
     public static final int TYPE_FAVORITE_VIDEO = 1;
 
     public static final int TYPE_BANNER_COURSE = 0;
-    public static final int TYPE_BANNER_WEB = 1;
 
     public static final float BANNER_ASPECT_RATIO_0 = 16f / 9f;
     public static final float VIDEO_ASPECT_RATIO = 16f / 9f;
 
-    // 一天的毫秒数
-    public static final long DAY_OF_MILLIS = 60000 * 60 * 24;
     // 文件类型
     public static final int TYPE_FILE_IMAGE = 0;
     public static final int TYPE_FILE_VIDEO = 1;

@@ -14,13 +14,13 @@ import com.zconly.pianocourse.activity.CourseListActivity;
 import com.zconly.pianocourse.activity.XiaoeActivity;
 import com.zconly.pianocourse.adapter.CourseListAdapter;
 import com.zconly.pianocourse.base.BaseMvpFragment;
-import com.zconly.pianocourse.base.Constants;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.HomePageBean;
 import com.zconly.pianocourse.bean.VideoBean;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
 import com.zconly.pianocourse.mvp.view.CourseView;
 import com.zconly.pianocourse.util.ArrayUtil;
@@ -58,6 +58,14 @@ public class ClassroomFragment extends BaseMvpFragment<CoursePresenter> implemen
         mPresenter.getBanner();
     }
 
+    private void addHeaderView() {
+        if (mHeader != null)
+            return;
+        View header = getLayoutInflater().inflate(R.layout.header_course_home, mRecyclerView, false);
+        mHeader = new MHeader(header);
+        mAdapter.addHeaderView(header);
+    }
+
     @Override
     protected void initView(View view) {
         mRefreshLayout.setEnableLoadMore(false);
@@ -66,10 +74,8 @@ public class ClassroomFragment extends BaseMvpFragment<CoursePresenter> implemen
                 new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter = new CourseListAdapter(null));
 
-        View header = getLayoutInflater().inflate(R.layout.header_course_home, mRecyclerView, false);
-        mHeader = new MHeader(header);
-        mAdapter.addHeaderView(header);
-        mAdapter.addFooterView(getLayoutInflater().inflate(R.layout.view_space_large, mRecyclerView, false));
+        mAdapter.addFooterView(getLayoutInflater().inflate(R.layout.view_space_large, mRecyclerView,
+                false));
     }
 
     @Override
@@ -99,6 +105,7 @@ public class ClassroomFragment extends BaseMvpFragment<CoursePresenter> implemen
 
     @Override
     public void getBannerListSuccess(BannerBean.BannerListResult response) {
+        addHeaderView();
         mHeader.updateBanner(response.getData());
     }
 

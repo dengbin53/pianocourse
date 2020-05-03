@@ -1,7 +1,7 @@
 package com.zconly.pianocourse.mvp;
 
 import com.mvp.interceptor.ParamsInterceptor;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.SysConfigTool;
 

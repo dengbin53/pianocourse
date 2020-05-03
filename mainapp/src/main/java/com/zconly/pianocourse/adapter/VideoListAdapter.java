@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zconly.pianocourse.R;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.bean.VideoPackBean;
@@ -17,7 +17,6 @@ import com.zconly.pianocourse.util.DataUtil;
 import com.zconly.pianocourse.util.DateUtils;
 import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.ImgLoader;
-import com.zconly.pianocourse.util.StringUtils;
 
 import java.util.List;
 

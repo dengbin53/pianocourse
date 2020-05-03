@@ -28,7 +28,7 @@ import com.zconly.pianocourse.mvp.presenter.BasePresenter;
 import com.zconly.pianocourse.mvp.view.EditInfoView;
 import com.zconly.pianocourse.util.CropType;
 import com.zconly.pianocourse.util.DataUtil;
-import com.zconly.pianocourse.util.DateTool;
+import com.zconly.pianocourse.util.DateUtils;
 import com.zconly.pianocourse.util.FileUtils;
 import com.zconly.pianocourse.util.ImageUtil;
 import com.zconly.pianocourse.util.ImgLoader;
@@ -153,7 +153,7 @@ public class UserInfoEditActivity extends BaseMvpActivity<BasePresenter<EditInfo
 
             ca.set(mYear, mMonth, mDay);
             long time = ca.getTimeInMillis();
-            pianoTimeView.setValue(DateTool.formatYMD(time));
+            pianoTimeView.setValue(DateUtils.formatYMD(time));
             modifyInfo("duration", time + "");
         }, mYear, mMonth, mDay);
         dialog.show();
@@ -183,7 +183,7 @@ public class UserInfoEditActivity extends BaseMvpActivity<BasePresenter<EditInfo
 
     private void showDatePickerDialog() {
         final Calendar ca = Calendar.getInstance();
-        ca.setTimeInMillis(user.getBirthday() == 0 ? DateTool.getCurrentTime() : user.getBirthday());
+        ca.setTimeInMillis(user.getBirthday() == 0 ? DateUtils.getCurrentTime() : user.getBirthday());
 
         mYear = ca.get(Calendar.YEAR);
         mMonth = ca.get(Calendar.MONTH);
@@ -197,7 +197,7 @@ public class UserInfoEditActivity extends BaseMvpActivity<BasePresenter<EditInfo
             ca.set(mYear, mMonth, mDay);
             long time = ca.getTimeInMillis();
             user.setBirthday(time);
-            birthView.setValue(DateTool.formatYMD(time));
+            birthView.setValue(DateUtils.formatYMD(time));
             modifyInfo("birthday", time + "");
         }, mYear, mMonth, mDay);
         dialog.show();
@@ -262,9 +262,9 @@ public class UserInfoEditActivity extends BaseMvpActivity<BasePresenter<EditInfo
         ImgLoader.showAvatar(DataUtil.getImgUrl(user.getAvatar()), avatarView);
         nicknameView.setValue(user.getNickname());
         sexView.setValue(DataUtil.getSexString(user.getSex()));
-        birthView.setValue(DateTool.formatYMD(user.getBirthday()));
+        birthView.setValue(DateUtils.formatYMD(user.getBirthday()));
         signatureView.setValue(user.getSignature());
-        pianoTimeView.setValue(DateTool.formatYMD(user.getBirthday()));
+        pianoTimeView.setValue(DateUtils.formatYMD(user.getBirthday()));
         pianoLevelView.setValue(user.getExamlevel() + "级");
     }
 

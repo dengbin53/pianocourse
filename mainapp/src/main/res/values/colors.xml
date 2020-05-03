@@ -3,9 +3,10 @@
 
     <color name="color_tra">#00000000</color>
     <color name="color_white">#FFFFFF</color>
-    <color name="color_red">#CE2B66</color>
-    <color name="color_red_60">#99CE2B66</color>
-    <color name="color_red_30">#4DCE2B66</color>
+    <color name="color_red">#FF6565</color>
+    <!--    <color name="color_red">#CE2B66</color>-->
+    <color name="color_red_60">#99FF6565</color>
+    <color name="color_red_30">#4DFF6565</color>
     <color name="color_green">#77BFB8</color>
 
     <color name="color_bg_default">#F8F8F8</color>
@@ -13,6 +14,7 @@
     <color name="color_bg_gray_light">#E9E9E9</color>
     <color name="color_bg_gray_dark">#C9C9C9</color>
     <color name="color_bg_black_50">#90111111</color>
+    <color name="color_bg_black_30">#55111111</color>
     <color name="color_bg_black_10">#20111111</color>
     <color name="color_bg_black">#111111</color>
 

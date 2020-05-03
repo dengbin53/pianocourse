@@ -19,6 +19,15 @@ import java.util.Locale;
 
 public class DateUtils {
 
+    private static Locale locale = Locale.getDefault();
+    // 一天的毫秒数
+    public static final long DAY_OF_MILLIS = 60000 * 60 * 24;
+
+    // 当前时间戳
+    public static long getCurrentTime() {
+        return System.currentTimeMillis();
+    }
+
     // 转成tz格式日期字符串
     public static String trans2TZtime(String timeStr) {
         SimpleDateFormat tzFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CHINA);
@@ -29,6 +38,12 @@ public class DateUtils {
         } catch (Exception e) {
             return tzFormat.format(new Date());
         }
+    }
+
+    public static String formatYMD(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", locale);
+        String birthStr = sdf.format(time);
+        return birthStr;
     }
 
     public static String getTime2M(long time) {

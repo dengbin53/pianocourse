@@ -110,6 +110,11 @@
         <item name="android:textSize">@dimen/text_smaller</item>
     </style>
 
+    <style name="text_smaller_gray_green">
+        <item name="android:textColor">@color/color_text_gray_green</item>
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
+
     <!--常规输入框-->
     <style name="edit_text_common">
         <item name="android:layout_width">match_parent</item>

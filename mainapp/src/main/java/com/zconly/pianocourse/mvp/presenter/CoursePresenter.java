@@ -12,8 +12,7 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.zconly.pianocourse.activity.VideoDetailActivity;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.BaseMvpFragment;
-import com.zconly.pianocourse.base.Constants;
-import com.zconly.pianocourse.bean.BannerBean;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.HomePageBean;
@@ -47,7 +46,7 @@ public class CoursePresenter extends BasePresenter<CourseView> {
     public void getCourseList(int page, String id, String category) {
         Map<String, Object> params = new HashMap<>();
         params.put("currentPage", page + "");
-        params.put("pageSize", Constants.PAGE_COUNT + "");
+        params.put("pageSize", Constants.PAGE_COUNT * 100);
         Map<String, String> t = null;
         if (!TextUtils.isEmpty(id)) {
             t = new HashMap<>();
@@ -161,27 +160,6 @@ public class CoursePresenter extends BasePresenter<CourseView> {
                         if (mView instanceof CourseView) {
                             mView.dismissLoading();
                             mView.getVideoListSuccess(response);
-                        }
-                    }
-                });
-    }
-
-    public void getBanner() {
-        Observable<BannerBean.BannerListResult> o = RetrofitUtils.create(ApiService.class).getBanner();
-        HttpRxObservable.getObservableFragment(o, (LifecycleProvider<FragmentEvent>) mView)
-                .subscribe(new HttpRxObserver<BannerBean.BannerListResult>() {
-
-                    @Override
-                    protected void onError(ApiException e) {
-                        if (mView != null)
-                            mView.onError(e);
-                    }
-
-                    @Override
-                    protected void onSuccess(BannerBean.BannerListResult response) {
-                        if (mView != null) {
-                            mView.dismissLoading();
-                            mView.getBannerListSuccess(response);
                         }
                     }
                 });

@@ -3,7 +3,7 @@ package com.zconly.pianocourse.util;
 import android.text.TextUtils;
 
 import com.zconly.pianocourse.R;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.base.MainApplication;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
@@ -57,6 +57,20 @@ public class DataUtil {
         if (category == Constants.CATEGORY_PARENTS_COURSE) return "家长课";
         if (category == Constants.CATEGORY_TEACHER_COURSE) return "老师课";
         if (category == Constants.CATEGORY_OTHER_COURSE) return "曲目精讲";
+        return null;
+    }
+
+    public static String getSheetLevel(int sheetLevel) {
+        if (sheetLevel == 1) return "一级曲目";
+        if (sheetLevel == 2) return "二级曲目";
+        if (sheetLevel == 3) return "三级曲目";
+        if (sheetLevel == 4) return "四级曲目";
+        if (sheetLevel == 5) return "五级曲目";
+        if (sheetLevel == 6) return "六级曲目";
+        if (sheetLevel == 7) return "七级曲目";
+        if (sheetLevel == 8) return "八级曲目";
+        if (sheetLevel == 9) return "九级曲目";
+        if (sheetLevel == 10) return "十级曲目";
         return null;
     }
 

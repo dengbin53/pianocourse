@@ -10,7 +10,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.baidu.cloud.videoplayer.widget.BDCloudVideoView;
 import com.xiaoe.shop.webcore.core.XiaoEWeb;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.Logger;
 

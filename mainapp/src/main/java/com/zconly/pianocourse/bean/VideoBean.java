@@ -2,7 +2,7 @@ package com.zconly.pianocourse.bean;
 
 import androidx.annotation.Nullable;
 
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 
 import java.util.List;
 

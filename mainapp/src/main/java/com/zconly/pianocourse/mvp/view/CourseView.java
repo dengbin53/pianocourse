@@ -1,7 +1,5 @@
 package com.zconly.pianocourse.mvp.view;
 
-import com.mvp.base.MvpView;
-import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.HomePageBean;
@@ -15,13 +13,11 @@ import com.zconly.pianocourse.bean.VideoBean;
  * @UpdateDate: 2020/3/30 20:26
  * @UpdateRemark: 更新说明
  */
-public interface CourseView extends MvpView {
+public interface CourseView extends BaseView {
 
     void getCourseListSuccess(CourseBean.CourseListResult response);
 
     void getVideoListSuccess(VideoBean.VideoListResult response);
-
-    void getBannerListSuccess(BannerBean.BannerListResult response);
 
     void getCommentSuccess(CommentBean.CommentListResult response);
 

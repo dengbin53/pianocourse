@@ -5,10 +5,10 @@
 
     <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
         android:id="@+id/tab_tv"
-        style="@style/text_smaller_gray_black"
+        style="@style/text_smaller_gray_green"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:drawablePadding="@dimen/drawable_padding"
+        android:drawablePadding="@dimen/drawable_padding_small"
         android:gravity="center" />
 
     <TextView

@@ -1,96 +1,118 @@
 package com.zconly.pianocourse.fragment;
 
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zconly.pianocourse.R;
-import com.zconly.pianocourse.activity.SignInActivity;
+import com.zconly.pianocourse.activity.BookDetailActivity;
+import com.zconly.pianocourse.activity.BookListActivity;
+import com.zconly.pianocourse.activity.ExerciseListActivity;
+import com.zconly.pianocourse.adapter.SheetListAdapter;
 import com.zconly.pianocourse.base.BaseMvpFragment;
-import com.zconly.pianocourse.bean.NoticeBean;
-import com.zconly.pianocourse.event.LogoutEvent;
-import com.zconly.pianocourse.event.SignInEvent;
-import com.zconly.pianocourse.mvp.presenter.NoticePresenter;
-import com.zconly.pianocourse.mvp.view.NoticeView;
-import com.zconly.pianocourse.util.DateUtils;
+import com.zconly.pianocourse.base.SingleClick;
+import com.zconly.pianocourse.bean.BannerBean;
+import com.zconly.pianocourse.bean.BookBean;
+import com.zconly.pianocourse.bean.ExerciseBean;
+import com.zconly.pianocourse.bean.SheetBean;
+import com.zconly.pianocourse.constants.BookLevel;
+import com.zconly.pianocourse.constants.Constants;
+import com.zconly.pianocourse.mvp.presenter.QinfangPresenter;
+import com.zconly.pianocourse.mvp.view.QinfangView;
+import com.zconly.pianocourse.util.DataUtil;
+import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.ImgLoader;
-import com.zconly.pianocourse.util.SysConfigTool;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.zconly.pianocourse.util.ViewUtil;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @Description: 琴房
  * @Author: dengbin
- * @CreateDate: 2020/3/18 21:03
+ * @CreateDate: 2020/4/26 21:03
  * @UpdateUser: dengbin
- * @UpdateDate: 2020/3/18 21:03
+ * @UpdateDate: 2020/4/26 21:03
  * @UpdateRemark: 更新说明
  */
-public class QinfangFragment extends BaseMvpFragment<NoticePresenter> implements NoticeView {
+public class QinfangFragment extends BaseMvpFragment<QinfangPresenter> implements QinfangView {
 
     @BindView(R.id.smart_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private mAdapter mAdapter;
+    private SheetListAdapter mAdapter;
+    private MHeader mHeader;
     private int page;
+    private long bookId = 15;
+
+    private void requestData() {
+        mPresenter.getBookList(0, 0, null, null, null, 0);
+        mPresenter.getBanner();
+    }
+
+    private void addHeaderView() {
+        if (mHeader != null)
+            return;
+        View header = getLayoutInflater().inflate(R.layout.header_qinfang, mRecyclerView, false);
+        mHeader = new MHeader(header);
+        mAdapter.addHeaderView(header);
+    }
+
+    @SingleClick
+    @OnClick({R.id.classroom_level_0, R.id.classroom_level_1, R.id.classroom_level_2, R.id.classroom_level_3,
+            R.id.classroom_my_sheet_tv})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.classroom_level_0:
+                BookListActivity.start(mContext, BookLevel.LEVEL_0);
+                break;
+            case R.id.classroom_level_1:
+                BookListActivity.start(mContext, BookLevel.LEVEL_1);
+                break;
+            case R.id.classroom_level_2:
+                BookListActivity.start(mContext, BookLevel.LEVEL_2);
+                break;
+            case R.id.classroom_level_3:
+                BookListActivity.start(mContext, BookLevel.LEVEL_3);
+                break;
+            case R.id.classroom_my_sheet_tv: // 我的演奏
+                ExerciseListActivity.start(mContext);
+                break;
+        }
+    }
 
     @Override
     protected void initView(View view) {
-        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initData();
-            }
-        });
         mRefreshLayout.setEnableLoadMore(false);
+        mRefreshLayout.setOnRefreshListener(refreshLayout -> requestData());
+        mRecyclerView.setLayoutManager(
+                new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setAdapter(mAdapter = new SheetListAdapter(null));
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,
-                LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(mAdapter = new mAdapter(null));
+        mAdapter.addFooterView(getLayoutInflater().inflate(R.layout.view_space_large, mRecyclerView,
+                false));
     }
 
     @Override
     protected void initData() {
-        if (!SysConfigTool.isLogin(mContext, false)) {
-            View ev = LayoutInflater.from(mContext).inflate(R.layout.view_empty_login, mRecyclerView,
-                    false);
-            ev.findViewById(R.id.empty_login_tv).setOnClickListener(v -> SignInActivity.start(mContext));
-            mAdapter.setEmptyView(ev);
-            mAdapter.setNewData(null);
-            return;
-        }
-        page = 0;
-
-        // mPresenter.getMsg();
-
-        // TODO: 2020/4/27
-        mAdapter.setEmptyView(new View(mContext));
+        mRefreshLayout.autoRefresh();
     }
 
     @Override
     protected boolean isBindEventBus() {
-        return true;
+        return false;
     }
 
     @Override
@@ -99,31 +121,8 @@ public class QinfangFragment extends BaseMvpFragment<NoticePresenter> implements
     }
 
     @Override
-    protected NoticePresenter getPresenter() {
-        return new NoticePresenter(this);
-    }
-
-    @Override
-    public void getNoticeSuccess(NoticeBean.NoticeResult result) {
-        if (result.getData() == null)
-            return;
-        if (page == 0) {
-            mAdapter.setNewData(result.getData().getData());
-        } else {
-            mAdapter.addData(result.getData().getData());
-        }
-        page++;
-        mRefreshLayout.setEnableLoadMore(page < result.getData().getTotalPage());
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(SignInEvent event) {
-        initData();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(LogoutEvent event) {
-        initData();
+    protected QinfangPresenter getPresenter() {
+        return new QinfangPresenter(this);
     }
 
     @Override
@@ -133,18 +132,83 @@ public class QinfangFragment extends BaseMvpFragment<NoticePresenter> implements
         mRefreshLayout.finishLoadMore();
     }
 
-    private static class mAdapter extends BaseQuickAdapter<NoticeBean, BaseViewHolder> {
+    @Override
+    public void getBannerListSuccess(BannerBean.BannerListResult response) {
+        addHeaderView();
+        mHeader.updateBanner(response.getData());
+    }
 
-        mAdapter(@Nullable List<NoticeBean> data) {
-            super(R.layout.item_list_notice, data);
+    @Override
+    public void getBookListSuccess(BookBean.BookListResult response) {
+        if (response.getData() == null)
+            return;
+        addHeaderView();
+        mHeader.updateBook(response.getData().getData());
+        mPresenter.getSheetList(page, 0, bookId);
+    }
+
+    @Override
+    public void getSheetListSuccess(SheetBean.SheetListResult response) {
+        if (response.getData() == null)
+            return;
+        mAdapter.setNewData(response.getData().getData());
+    }
+
+    @Override
+    public void getExerciseListSuccess(ExerciseBean.ExerciseListResult response) {
+
+    }
+
+    static class MHeader {
+
+        @BindView(R.id.home_banner)
+        ConvenientBanner<BannerBean> banner;
+        @BindView(R.id.header_qifang_rv)
+        RecyclerView qinfangRv;
+
+        private final MHeaderAdapter mAdapter;
+
+        MHeader(View view) {
+            ButterKnife.bind(this, view);
+
+            qinfangRv.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL,
+                    false));
+            qinfangRv.setAdapter(mAdapter = new MHeaderAdapter(null));
+        }
+
+        void updateBanner(List<BannerBean> bannerBeans) {
+            int width = DeviceUtils.getScreenWidth();
+            int height = ViewUtil.getBannerHeight(width, Constants.BANNER_ASPECT_RATIO_0);
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) banner.getLayoutParams();
+            lp.width = width;
+            lp.height = height;
+            banner.setLayoutParams(lp);
+
+            ViewUtil.updateBanner(banner, bannerBeans);
+        }
+
+        void updateBook(List<BookBean> books) {
+            mAdapter.setNewData(books);
+        }
+
+    }
+
+    private static class MHeaderAdapter extends BaseQuickAdapter<BookBean, BaseViewHolder> {
+
+        MHeaderAdapter(List<BookBean> data) {
+            super(R.layout.item_list_book_h, data);
+
+            // 跳转书本详情
+            setOnItemClickListener((adapter, view, position)
+                    -> BookDetailActivity.start(mContext, getItem(position)));
         }
 
         @Override
-        protected void convert(@NonNull BaseViewHolder helper, NoticeBean item) {
-            ImgLoader.showAvatar(null, helper.getView(R.id.notice_iv));
-            helper.setText(R.id.notice_name_tv, "消息");
-            helper.setText(R.id.notice_time_tv, DateUtils.getTime2M(item.getC_time()));
-            helper.setText(R.id.notice_content_tv, item.getContent());
+        protected void convert(@NonNull BaseViewHolder helper, BookBean item) {
+            ImgLoader.showImgSmall(DataUtil.getImgUrl(item.getCover()), helper.getView(R.id.item_book_h_iv));
+            helper.setText(R.id.item_book_h_author_tv, item.getAuthor());
+            helper.setText(R.id.item_book_h_name_tv, item.getName());
         }
     }
+
 }

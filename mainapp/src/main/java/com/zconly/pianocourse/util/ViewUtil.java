@@ -16,7 +16,7 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.CourseDetailActivity;
 import com.zconly.pianocourse.activity.WebViewActivity;
 import com.zconly.pianocourse.adapter.viewholder.CommonBannerHolder;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.base.MainApplication;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BaseBean;

@@ -301,6 +301,15 @@
         <activity
             android:name=".activity.NoticeActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BookDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BookListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ExerciseListActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

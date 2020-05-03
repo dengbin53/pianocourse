@@ -14,7 +14,7 @@ import com.zconly.pianocourse.activity.CourseListActivity;
 import com.zconly.pianocourse.activity.XiaoeActivity;
 import com.zconly.pianocourse.adapter.CourseListAdapter;
 import com.zconly.pianocourse.base.BaseMvpFragment;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.CommentBean;

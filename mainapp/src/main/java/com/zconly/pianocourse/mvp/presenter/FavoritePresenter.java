@@ -6,7 +6,7 @@ import com.mvp.observer.HttpRxObserver;
 import com.mvp.utils.RetrofitUtils;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
 import com.zconly.pianocourse.mvp.service.ApiService;

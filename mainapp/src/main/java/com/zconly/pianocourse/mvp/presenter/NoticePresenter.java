@@ -5,7 +5,7 @@ import com.mvp.observer.HttpRxObservable;
 import com.mvp.observer.HttpRxObserver;
 import com.mvp.utils.RetrofitUtils;
 import com.zconly.pianocourse.activity.NoticeActivity;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.bean.NoticeBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.view.NoticeView;

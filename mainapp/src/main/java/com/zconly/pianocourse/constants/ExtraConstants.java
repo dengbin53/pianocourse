@@ -1,4 +1,4 @@
-package com.zconly.pianocourse.base;
+package com.zconly.pianocourse.constants;
 
 /**
  * @Description: intent 传值key

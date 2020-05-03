@@ -3,7 +3,7 @@ package com.zconly.pianocourse.util;
 import android.content.Context;
 
 import com.umeng.analytics.MobclickAgent;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 
 import java.util.HashMap;
 import java.util.Map;

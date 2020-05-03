@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zconly.pianocourse.R;
-import com.zconly.pianocourse.base.Constants;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.util.DataUtil;
 import com.zconly.pianocourse.util.DeviceUtils;
