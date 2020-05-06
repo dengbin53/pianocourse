@@ -23,6 +23,10 @@ public class DateUtils {
     // 一天的毫秒数
     public static final long DAY_OF_MILLIS = 60000 * 60 * 24;
 
+    public static int getYearToNow(long time) {
+        return (int) ((getCurrentTime() - time) * 1d / DAY_OF_MILLIS);
+    }
+
     // 当前时间戳
     public static long getCurrentTime() {
         return System.currentTimeMillis();

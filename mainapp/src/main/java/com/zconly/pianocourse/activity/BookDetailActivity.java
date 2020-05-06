@@ -179,7 +179,7 @@ public class BookDetailActivity extends BaseMvpActivity<QinfangPresenter> implem
                     });
             titleTv.setText(bookBean.getName());
             authorTv.setText(bookBean.getAuthor());
-            descTv.setText("简介：\n" + bookBean.getIntroduction());
+            descTv.setText("简介:\n" + bookBean.getIntroduction());
         }
 
     }

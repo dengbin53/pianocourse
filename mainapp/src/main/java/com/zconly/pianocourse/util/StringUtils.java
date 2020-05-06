@@ -261,8 +261,8 @@ public class StringUtils {
      * 截取字符串
      *
      * @param search       待搜索的字符串
-     * @param start        起始字符串 例如：<title>
-     * @param end          结束字符串 例如：</title>
+     * @param start        起始字符串 例如:<title>
+     * @param end          结束字符串 例如:</title>
      * @param defaultValue
      * @return
      */
@@ -285,8 +285,8 @@ public class StringUtils {
      * 截取字符串
      *
      * @param search 待搜索的字符串
-     * @param start  起始字符串 例如：<title>
-     * @param end    结束字符串 例如：</title>
+     * @param start  起始字符串 例如:<title>
+     * @param end    结束字符串 例如:</title>
      * @return
      */
     public static String substring(String search, String start, String end) {

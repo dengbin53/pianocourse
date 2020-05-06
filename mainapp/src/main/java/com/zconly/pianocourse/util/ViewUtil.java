@@ -58,7 +58,7 @@ public class ViewUtil {
         }
         bannerView.setVisibility(View.VISIBLE);
         bannerView.setPages(creator, bannerData)
-                .setPageIndicator(new int[]{R.drawable.shape_circle_white_30_4, R.drawable.shape_circle_white_4})
+                .setPageIndicator(new int[]{R.drawable.shape_circle_white_30_4, R.drawable.shape_circle_white_4dp})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
                 .startTurning(3000)
                 .setOnItemClickListener(position -> {

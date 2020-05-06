@@ -1,5 +1,7 @@
 package com.mvp.utils;
 
+import androidx.annotation.NonNull;
+
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -79,7 +81,7 @@ public class ProgressResponseBody extends ResponseBody {
             long totalBytesRead = 0L;
 
             @Override
-            public long read(Buffer sink, long byteCount) throws IOException {
+            public long read(@NonNull Buffer sink, long byteCount) throws IOException {
                 long bytesRead = super.read(sink, byteCount);
                 // 增加当前读取的字节数，如果读取完成了bytesRead会返回-1
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;

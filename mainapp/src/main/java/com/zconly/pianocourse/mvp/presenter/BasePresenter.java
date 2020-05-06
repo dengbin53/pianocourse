@@ -5,6 +5,8 @@ import android.net.Uri;
 import com.mvp.base.MvpPresenter;
 import com.mvp.base.MvpView;
 import com.mvp.exception.ApiException;
+import com.mvp.function.HttpErrorResultFunction;
+import com.mvp.interceptor.DownloadInterceptor;
 import com.mvp.observer.HttpRxObservable;
 import com.mvp.observer.HttpRxObserver;
 import com.mvp.observer.UploadObserver;
@@ -20,11 +22,15 @@ import com.zconly.pianocourse.base.MainApplication;
 import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.UserBean;
+import com.zconly.pianocourse.mvp.MDownloadHeaderInterceptor;
 import com.zconly.pianocourse.mvp.service.ApiService;
+import com.zconly.pianocourse.mvp.service.H5Service;
 import com.zconly.pianocourse.mvp.view.BaseView;
+import com.zconly.pianocourse.mvp.view.DownloadView;
 import com.zconly.pianocourse.mvp.view.UploadView;
 import com.zconly.pianocourse.mvp.view.UserView;
 import com.zconly.pianocourse.util.FileUtils;
+import com.zconly.pianocourse.util.Logger;
 import com.zconly.pianocourse.util.ToastUtil;
 
 import java.io.File;
@@ -33,10 +39,14 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
 
 /**
  * @Description: java类作用描述
@@ -102,6 +112,47 @@ public class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
         } else {
             HttpRxObservable.getObservable(ob).subscribe(observer);
         }
+    }
+
+    public void downloadFile(String dir, String subUrl) {
+        if (!isNetConnect()) return;
+        DownloadInterceptor interceptor = new MDownloadHeaderInterceptor((bytesRead, contentLength, done) -> {
+            Logger.e(bytesRead + ";" + contentLength + ";" + done);
+            // ((DownloadView) mView).download();
+        });
+        Retrofit retrofit = RetrofitUtils.getDownloadRetrofitH5(interceptor);
+        Observable<ResponseBody> ob = retrofit.create(H5Service.class).downloadFile(dir, subUrl);
+        Observer<ResponseBody> observer = new Observer<ResponseBody>() {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                if (mView instanceof DownloadView) {
+                    ((DownloadView) mView).downloadSuccess();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.onError(new ApiException(e, 1001));
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+        };
+
+        ob.map(responseBody -> ((DownloadView) mView).download(responseBody))
+                .onErrorResumeNext(new HttpErrorResultFunction())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
     }
 
     public void updateUser(Map<String, String> params) {

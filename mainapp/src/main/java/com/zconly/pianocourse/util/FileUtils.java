@@ -21,6 +21,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+
+import okhttp3.ResponseBody;
 
 public class FileUtils {
     //	private static final String FOLDER_NAME = "/Msb";
@@ -62,6 +65,41 @@ public class FileUtils {
 
     public static boolean checkFile(File f) {
         return f != null && f.exists() && f.canRead() && (f.isDirectory() || (f.isFile() && f.length() > 0));
+    }
+
+    public static boolean saveFile(ResponseBody body, File file) {
+        try {
+            if (!file.getParentFile().exists())
+                file.getParentFile().mkdirs();
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+            try {
+                byte[] fileReader = new byte[2048];
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(file);
+                while (true) {
+                    int read = inputStream.read(fileReader);
+                    if (read == -1) {
+                        break;
+                    }
+                    outputStream.write(fileReader, 0, read);
+                }
+                outputStream.flush();
+
+            } catch (IOException e) {
+                Logger.w(e);
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
+            Logger.w(e);
+        }
+        return true;
     }
 
     private String getStorageDirectory() {
@@ -207,7 +245,7 @@ public class FileUtils {
      * 将字节流存为文件
      *
      * @param bytes
-     * @param fileName 文件地址及文件名。例："/sdcard/a.txt”
+     * @param fileName 文件地址及文件名。例:"/sdcard/a.txt”
      */
     public static void saveFileByBytes(byte[] bytes, String fileName) {
         try {
@@ -223,7 +261,7 @@ public class FileUtils {
     /**
      * 以字节流方式读取文件
      *
-     * @param fileName 文件地址及文件名。例："/sdcard/a.txt”
+     * @param fileName 文件地址及文件名。例:"/sdcard/a.txt”
      */
     public static byte[] loadFile2Bytes(String fileName) {
         FileInputStream inStream = null;

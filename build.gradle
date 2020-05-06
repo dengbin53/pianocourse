@@ -4,7 +4,7 @@ ext {
     MIN_SDK_VERSION = 21
     TARGET_SDK_VERSION = 28
     ANDROID_SUPPORT_VERSION = "1.1.0"
-    BUILD_VERSION_CODE = 101
+    BUILD_VERSION_CODE = 102
     BUILD_VERSION_NAME = "1.0.0"
 
     release_keystore = getRootDir().getPath() + "/docs/pianocourse.jks"
@@ -51,6 +51,7 @@ ext {
             "smartrefresh-header"   : 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0',
             "brvah"                 : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50',
             "xiaoe"                 : 'com.xiaoe.shop:webcore:2.0.1',
+            "audiorecorder"         : 'com.github.zhaolewei:ZlwAudioRecorder:v1.07',
     ]
 }
 

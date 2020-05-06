@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/exercise_report_sc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:overScrollMode="never">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/exercise_avatar_iv"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:background="@color/color_green"
+            android:orientation="vertical"
+            android:paddingTop="24dp"
+            android:paddingBottom="@dimen/space_normal"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/exercise_report_nickname_tv"
+            style="@style/text_small_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_green"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/exercise_report_user_desc_tv"
+            style="@style/text_smaller_white"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:background="@color/color_green"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height_smaller"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_small_black"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/space_normal"
+                android:background="@drawable/shape_white_border_left_red_2dp"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/space_normal"
+                android:text="练习曲目" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height_smaller"
+            android:layout_marginTop="@dimen/space_normal"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_large"
+            android:paddingEnd="@dimen/space_large">
+
+            <TextView
+                android:id="@+id/exercise_report_name_tv"
+                style="@style/text_small_black"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/exercise_report_author_tv"
+                style="@style/text_smaller_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/space_normal"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/exercise_report_desc_tv"
+            style="@style/text_smaller_gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_normal"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/space_large" />
+
+        <View style="@style/style_space_normal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:text="演奏回放"
+            android:textColor="@color/color_blue"
+            android:textSize="@dimen/text_larger"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginStart="@dimen/space_normal"
+            android:layout_marginEnd="@dimen/space_normal"
+            android:background="@drawable/shape_circle_white"
+            android:elevation="4dp"
+            android:padding="@dimen/space_normal">
+
+            <TextView
+                android:id="@+id/exercise_report_time_tv"
+                style="@style/text_smaller_black"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/exercise_report_play_iv"
+                android:layout_width="@dimen/item_height_small"
+                android:layout_height="@dimen/item_height_small"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/selector_play" />
+
+            <SeekBar
+                android:id="@+id/exercise_report_sb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height_small"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/exercise_report_percent_tv"
+                android:layout_toEndOf="@id/exercise_report_play_iv" />
+
+            <TextView
+                android:id="@+id/exercise_report_percent_tv"
+                style="@style/text_small_green"
+                android:layout_width="@dimen/item_height_small"
+                android:layout_height="@dimen/item_height_small"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center" />
+
+        </RelativeLayout>
+
+        <TextView
+            style="@style/text_smaller_gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height_small"
+            android:gravity="center"
+            android:text="点击播放按钮回放录音" />
+
+        <TextView
+            android:id="@+id/exercise_play_name_tv"
+            style="@style/text_larger_black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="@dimen/item_height_small"
+            android:paddingStart="@dimen/space_normal"
+            android:paddingEnd="@dimen/space_normal" />
+
+        <TextView
+            android:id="@+id/exercise_play_author_tv"
+            style="@style/text_small_black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end|center_vertical"
+            android:paddingEnd="@dimen/space_large" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginEnd="@dimen/space_large"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/exercise_cuoyin_tv"
+                style="@style/text_small_black"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/space_large"
+                android:drawableStart="@mipmap/ic_cuoyin"
+                android:drawablePadding="@dimen/drawable_padding"
+                android:gravity="center"
+                android:text="错音" />
+
+            <TextView
+                android:id="@+id/exercise_cuojiezou_tv"
+                style="@style/text_small_black"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableStart="@mipmap/ic_cuojiezou"
+                android:drawablePadding="@dimen/drawable_padding"
+                android:gravity="center"
+                android:text="错节奏" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

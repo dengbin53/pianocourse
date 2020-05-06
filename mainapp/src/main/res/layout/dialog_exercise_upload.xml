@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner_white"
+    android:orientation="vertical"
+    android:padding="@dimen/space_large">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:scaleType="center"
+        android:src="@mipmap/img_exercise_upload" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@drawable/shape_circle_white"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_normal">
+
+        <ImageView
+            android:id="@+id/dialog_exercise_play_tv"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_play" />
+
+        <SeekBar
+            android:id="@+id/dialog_exercise_upload_sb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/dialog_exercise_time_tv"
+            style="@style/text_normal_black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <View style="@style/style_divider_h" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_exercise_retry_tv"
+            style="@style/text_normal_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="再来一次" />
+
+        <View
+            style="@style/style_divider_v"
+            android:layout_marginTop="@dimen/space_normal"
+            android:layout_marginBottom="@dimen/space_normal" />
+
+        <TextView
+            android:id="@+id/dialog_exercise_upload_tv"
+            style="@style/text_normal_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="上传" />
+
+    </LinearLayout>
+
+</LinearLayout>

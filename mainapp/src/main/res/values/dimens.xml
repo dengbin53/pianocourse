@@ -12,7 +12,7 @@
     <dimen name="img_to_text">4dp</dimen>
     <dimen name="tab_height_main">48dp</dimen>
     <dimen name="tab_height">40dp</dimen>
-    
+
     <dimen name="text_larger">18sp</dimen>
     <dimen name="text_large">16sp</dimen>
     <dimen name="text_normal">14sp</dimen>
@@ -26,7 +26,6 @@
 
     <dimen name="drawable_padding">4dp</dimen>
     <dimen name="drawable_padding_small">2dp</dimen>
-    <dimen name="dp40">40dp</dimen>
     <dimen name="space_half">4dp</dimen>
 
 </resources>

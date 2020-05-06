@@ -12,6 +12,7 @@ import com.zconly.pianocourse.bean.FileBean;
  * @UpdateRemark: 更新说明
  */
 public interface UploadView extends MvpView {
+
     void onProgress(int progress);
 
     void uploadSuccess(FileBean response);

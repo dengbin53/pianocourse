@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_mxl">
+
+    <RelativeLayout
+        android:id="@+id/exercise_play_title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <ImageView
+            android:id="@+id/exercise_play_back_iv"
+            android:layout_width="@dimen/item_height"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@mipmap/ic_arrow_left_black" />
+
+        <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
+            android:id="@+id/exercise_play_setting_tv"
+            style="@style/text_smaller_black"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:drawableTop="@mipmap/ic_setting"
+            android:drawablePadding="@dimen/drawable_padding_small"
+            android:gravity="center"
+            android:text="设置" />
+
+        <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
+            android:id="@+id/exercise_play_favorite_tv"
+            style="@style/text_smaller_black"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@id/exercise_play_setting_tv"
+            android:drawableTop="@drawable/selector_favorite"
+            android:drawablePadding="@dimen/drawable_padding_small"
+            android:gravity="center"
+            android:text="收藏曲目" />
+
+        <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
+            android:id="@+id/exercise_play_dashike_tv"
+            style="@style/text_smaller_black"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@id/exercise_play_favorite_tv"
+            android:drawableTop="@mipmap/ic_dashike_2"
+            android:drawablePadding="@dimen/drawable_padding_small"
+            android:gravity="center"
+            android:text="大师课" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/exercise_play_name_tv"
+        style="@style/text_larger_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exercise_play_title_rl"
+        android:gravity="center"
+        android:minHeight="@dimen/item_height_small"
+        android:paddingStart="@dimen/space_normal"
+        android:paddingEnd="@dimen/space_normal" />
+
+    <TextView
+        android:id="@+id/exercise_play_author_tv"
+        style="@style/text_small_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exercise_play_name_tv"
+        android:gravity="end|center_vertical"
+        android:paddingEnd="@dimen/space_large" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exercise_play_author_tv"
+        android:layout_marginTop="@dimen/space_normal"
+        android:overScrollMode="never" />
+
+    <ScrollView
+        android:id="@+id/scrollViewCursor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exercise_play_author_tv"
+        android:layout_marginTop="@dimen/space_normal"
+        android:overScrollMode="never" />
+
+    <TextView
+        android:id="@+id/beatText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
+        android:singleLine="true"
+        android:text="99"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/color_red"
+        android:textSize="128sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
+        android:id="@+id/exercise_play_record_tv"
+        style="@style/text_smaller_black"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/space_normal"
+        android:layout_marginBottom="80dp"
+        android:drawableTop="@drawable/selector_play"
+        android:drawablePadding="@dimen/drawable_padding_small"
+        android:gravity="center"
+        android:text="开始录制" />
+
+    <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
+        android:id="@+id/exercise_play_re_record_tv"
+        style="@style/text_smaller_black"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:layout_toEndOf="@id/exercise_play_record_tv"
+        android:drawableTop="@mipmap/ic_re_record"
+        android:drawablePadding="@dimen/drawable_padding_small"
+        android:gravity="center"
+        android:text="重新录制" />
+
+    <!-- 伴奏 -->
+    <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
+        android:id="@+id/exercise_play_accompany_tv"
+        style="@style/text_smaller_black"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/space_normal"
+        android:layout_marginBottom="80dp"
+        android:drawableTop="@mipmap/ic_accompany"
+        android:drawablePadding="@dimen/drawable_padding_small"
+        android:gravity="center"
+        android:text="伴奏" />
+
+    <!-- 调速 -->
+    <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
+        android:id="@+id/exercise_play_tiaosu_tv"
+        style="@style/text_smaller_black"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:layout_toStartOf="@id/exercise_play_accompany_tv"
+        android:drawableTop="@mipmap/ic_tiaosu"
+        android:drawablePadding="@dimen/drawable_padding_small"
+        android:gravity="center"
+        android:text="调速" />
+
+</RelativeLayout>

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zconly.pianocourse.R;
+import com.zconly.pianocourse.activity.ExerciseReportActivity;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.ExerciseBean;
 import com.zconly.pianocourse.bean.SheetBean;
@@ -48,7 +49,7 @@ public class ExerciseListAdapter extends BaseQuickAdapter<ExerciseBean, BaseView
         ExerciseBean bean = getItem(position);
         if (bean == null)
             return;
-
+        ExerciseReportActivity.start(mContext, bean);
     }
 
 }

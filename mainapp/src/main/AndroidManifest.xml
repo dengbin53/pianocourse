@@ -224,6 +224,8 @@
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
+        <service android:name="com.zlw.main.recorderlib.recorder.RecordService" />
+        
         <provider
             android:name="com.umeng.message.provider.MessageProvider"
             android:authorities="${applicationId}.umeng.message"
@@ -309,6 +311,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ExerciseListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ExerciseReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ExercisePlayActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
     </application>

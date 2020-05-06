@@ -13,13 +13,13 @@ import android.widget.PopupMenu;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
-import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.base.RequestCode;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.base.callback.MClickCallback;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.bean.UserDataBean;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.SetInfoPresenter;
 import com.zconly.pianocourse.mvp.view.SetInfoView;
@@ -81,6 +81,8 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     private int sex;
     private int examLevel;
     private long pianoTime;
+    private long birthTime;
+    private Map<String, String> params;
 
     private MClickCallback clickCallback = new MClickCallback() {
         @Override
@@ -116,8 +118,6 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         }
     };
 
-    private Map<String, String> params;
-
     private void signUp() {
         String nickname = nicknameView.getValue();
         if (TextUtils.isEmpty(nickname.trim())) {
@@ -131,7 +131,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         params.put("examlevel", examLevel + "");
         params.put("duration", pianoTime + "");
         params.put("nickname", nickname);
-        params.put("birthday", pianoTime + "");
+        params.put("birthday", birthTime + "");
         params.put("sex", sex + "");
         params.put("signature", signatureView.getValue());
         params.put("code", code + "");
@@ -190,7 +190,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
             ca.set(mYear, mMonth, mDay);
             long time = ca.getTimeInMillis();
             birthView.setValue(DateUtils.formatYMD(time));
-            pianoTime = time;
+            birthTime = time;
         }, mYear, mMonth, mDay);
         dialog.show();
     }

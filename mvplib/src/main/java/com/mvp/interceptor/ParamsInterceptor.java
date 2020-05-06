@@ -66,7 +66,6 @@ public abstract class ParamsInterceptor implements Interceptor {
     }
 
     private RequestBody method(Request request) {
-        JsonObject jsonObject;
         RequestBody requestBody = request.body();
 
         if (requestBody != null && !(requestBody instanceof FormBody) && !(requestBody instanceof MultipartBody)) {

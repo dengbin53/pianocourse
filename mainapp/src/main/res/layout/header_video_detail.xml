@@ -71,7 +71,7 @@
             android:layout_height="20dp"
             android:layout_alignBottom="@id/header_video_teacher_iv"
             android:layout_alignParentEnd="true"
-            android:drawableStart="@drawable/selector_favorite"
+            android:drawableStart="@drawable/selector_favorite_small"
             android:drawablePadding="@dimen/drawable_padding"
             android:gravity="center_vertical" />
 

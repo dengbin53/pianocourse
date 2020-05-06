@@ -1,7 +1,6 @@
 package com.zconly.pianocourse.widget.dialog;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -24,13 +23,9 @@ public class LoadingDialog extends MvpDialog {
     private TextView tv;
     private String msg = "";
 
+    @SuppressLint("ValidFragment")
     public LoadingDialog() {
 
-    }
-
-    @SuppressLint("ValidFragment")
-    public LoadingDialog(Context context) {
-        setmContext(context);
     }
 
     @Override
@@ -84,7 +79,7 @@ public class LoadingDialog extends MvpDialog {
             return;
         }
         dismissLoadingDialog();
-        mLoadingDialog = new LoadingDialog(context);
+        mLoadingDialog = new LoadingDialog();
         mLoadingDialog.setShowMsg(msg);
         mLoadingDialog.setGravity(Gravity.CENTER);
         mLoadingDialog.show(context.getSupportFragmentManager(), "");

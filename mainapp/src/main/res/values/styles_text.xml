@@ -60,6 +60,11 @@
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
+    <style name="text_small_green">
+        <item name="android:textColor">@color/color_green</item>
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
     <style name="text_small_gray">
         <item name="android:textColor">@color/color_text_gray_gray_light</item>
         <item name="android:textSize">@dimen/text_small</item>

@@ -45,11 +45,7 @@ public abstract class MvpDialog extends RxDialogFragment implements MvpView {
     // 必须传递字段
     public Context mContext;
     private boolean cancelable;
-
-    public MvpDialog setmContext(Context mContext) {
-        this.mContext = mContext;
-        return this;
-    }
+    private boolean canceledOnTouchOutside;
 
     public MvpDialog setGravity(int gravity) {
         this.gravity = gravity;
@@ -64,6 +60,12 @@ public abstract class MvpDialog extends RxDialogFragment implements MvpView {
     public void setCancelable(boolean cancelable) {
         super.setCancelable(cancelable);
         this.cancelable = cancelable;
+    }
+
+    public void setCanceledOnTouchOutside(boolean cancelable) {
+        if (getDialog() != null)
+            getDialog().setCanceledOnTouchOutside(cancelable);
+        this.canceledOnTouchOutside = cancelable;
     }
 
     public MvpDialog setY(int y) {
@@ -82,6 +84,7 @@ public abstract class MvpDialog extends RxDialogFragment implements MvpView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getContext();
         int style = getStyle();
         setStyle(DialogFragment.STYLE_NO_TITLE, style > 0 ? style : R.style.MvpBaseDialogTheme);
     }
@@ -108,14 +111,19 @@ public abstract class MvpDialog extends RxDialogFragment implements MvpView {
             // AnimationUtil.fadeCenter(view);
         }
         setCancelable(cancelable);
+        setCanceledOnTouchOutside(canceledOnTouchOutside);
         initView(savedInstanceState);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        if (getDialog() == null)
+            return;
         //设置宽度铺满全屏
         Window win = getDialog().getWindow();
+        if (win == null)
+            return;
         // 一定要设置Background，如果不设置，window属性设置无效
         win.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
 
@@ -184,9 +192,7 @@ public abstract class MvpDialog extends RxDialogFragment implements MvpView {
     }
 
     @Override
-    public void show(FragmentManager manager, String tag) {
-        if (manager == null)
-            return;
+    public void show(@NonNull FragmentManager manager, String tag) {
         try {
             // 在每个add事务前增加一个remove事务，防止连续的add
             manager.beginTransaction().remove(this).commit();
@@ -206,6 +212,7 @@ public abstract class MvpDialog extends RxDialogFragment implements MvpView {
 
     @Override
     public void dismissLoading() {
+
     }
 
     @Override

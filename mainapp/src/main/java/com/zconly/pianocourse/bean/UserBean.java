@@ -17,7 +17,7 @@ public class UserBean extends BaseBean {
     private int role_id; // 0未知 1管理员 2学生 3老师
     private int sex;
     private String signature;                       // 签名
-    private int status;                         // 是否认证
+    private int status;                             // 是否认证
     private String avatar;
     private String wx_avatar;
 

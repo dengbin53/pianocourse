@@ -9,6 +9,7 @@ import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
 import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.mvp.service.H5Service;
+import com.zconly.pianocourse.widget.dialog.DialogExerciseSetting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,5 +91,17 @@ public class DataUtil {
             data.add(vb);
         }
         return data;
+    }
+
+    public static String getStaffStr(int staff) {
+        switch (staff) {
+            case DialogExerciseSetting.ExerciseSettingBean.HAND_DOUBLE:
+                return "双手";
+            case DialogExerciseSetting.ExerciseSettingBean.HAND_LEFT:
+                return "左手";
+            case DialogExerciseSetting.ExerciseSettingBean.HAND_RIGHT:
+                return "右手";
+        }
+        return null;
     }
 }

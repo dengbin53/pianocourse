@@ -250,7 +250,7 @@ public class DeviceUtils {
         return android.os.Build.VERSION.RELEASE;
     }
 
-    // 返回手机分辨率（宽*高）。注意：返回值手机屏幕是否旋转无关。
+    // 返回手机分辨率（宽*高）。注意:返回值手机屏幕是否旋转无关。
     public static String getResolution() {
         int[] info = getDispInfo();
         if (info[0] == -1 || info[1] == -1) return null;
@@ -330,7 +330,7 @@ public class DeviceUtils {
 
     /**
      * 检查ExternalStorage是否可用。
-     * 注意：ExternalStorage并不一定就是SD Card，根据不同手机的具体实现不同，ExternalStorage有可能只是手机内部存储。
+     * 注意:ExternalStorage并不一定就是SD Card，根据不同手机的具体实现不同，ExternalStorage有可能只是手机内部存储。
      *
      * @return true/false
      */

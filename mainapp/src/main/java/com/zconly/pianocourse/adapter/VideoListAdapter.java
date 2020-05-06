@@ -46,7 +46,7 @@ public class VideoListAdapter<B extends BaseBean> extends BaseMultiItemQuickAdap
         } else if (item instanceof VideoPackBean) {
             VideoPackBean vpb = (VideoPackBean) item;
             helper.setText(R.id.item_pack_title_tv, vpb.getTitle());
-            helper.setText(R.id.item_pack_teacher_tv, "主讲老师：" + vpb.getTeacher());
+            helper.setText(R.id.item_pack_teacher_tv, "主讲老师:" + vpb.getTeacher());
             helper.setText(R.id.item_pack_count_tv, "共" + vpb.getVideo_count() + "讲");
             ImgLoader.showImgRound(DataUtil.getImgUrl(vpb.getCover_small()), helper.getView(R.id.item_pack_iv));
 

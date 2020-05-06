@@ -23,6 +23,7 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.mvp.MHeaderInterceptor;
 import com.zconly.pianocourse.service.InitService;
 import com.zconly.pianocourse.util.Logger;
+import com.zlw.main.recorderlib.RecordManager;
 
 public class MainApplication extends Application {
 
@@ -99,12 +100,12 @@ public class MainApplication extends Application {
             @Override
             public void onSuccess(String deviceToken) {
                 // 注册成功会返回deviceToken deviceToken是推送消息的唯一标志
-                Logger.i("UmengPush注册成功：deviceToken：-------->  " + deviceToken);
+                Logger.i("UmengPush注册成功:deviceToken:-------->  " + deviceToken);
             }
 
             @Override
             public void onFailure(String s, String s1) {
-                Logger.e("UmengPush注册失败：-------->  " + "s:" + s + ",s1:" + s1);
+                Logger.e("UmengPush注册失败:-------->  " + "s:" + s + ",s1:" + s1);
             }
         });
 

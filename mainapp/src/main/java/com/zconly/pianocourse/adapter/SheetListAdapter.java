@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zconly.pianocourse.R;
+import com.zconly.pianocourse.activity.ExercisePlayActivity;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.SheetBean;
 import com.zconly.pianocourse.util.DataUtil;
@@ -51,7 +52,7 @@ public class SheetListAdapter extends BaseMultiItemQuickAdapter<SheetBean, BaseV
         if (bean == null)
             return;
         if (bean.getItemType() == SheetBean.ITEM) {
-            //   CourseDetailActivity.start(mContext, bean);
+            ExercisePlayActivity.start(mContext, bean);
         }
     }
 

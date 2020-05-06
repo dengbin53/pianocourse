@@ -84,9 +84,9 @@ public class WebViewActivity extends BaseMvpActivity {
         WebSettings ws = webView.getSettings();
 
         /**
-         * 用WebView显示图片，可使用这个参数 设置网页布局类型：
+         * 用WebView显示图片，可使用这个参数 设置网页布局类型:
          *
-         * 1、LayoutAlgorithm.NARROW_COLUMNS ：适应内容大小
+         * 1、LayoutAlgorithm.NARROW_COLUMNS :适应内容大小
          * 2、LayoutAlgorithm.SINGLE_COLUMN : 适应屏幕，内容将自动缩放
          */
         ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);

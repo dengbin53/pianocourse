@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:drawableStart="@mipmap/ic_star_red"
+            android:drawableStart="@mipmap/ic_star_red_small"
             android:drawablePadding="@dimen/drawable_padding"
             android:gravity="center"
             android:paddingStart="@dimen/space_normal"

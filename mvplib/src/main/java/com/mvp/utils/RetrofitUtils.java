@@ -16,7 +16,7 @@ public final class RetrofitUtils {
     private static boolean DEBUG;
     private static Interceptor INTERCEPTOR;
     private static Retrofit RETROFIT_BASE;
-    private static Retrofit RETROFIT_DOWNLOAD;
+    private static Retrofit RETROFIT_DOWNLOAD_H5;
     private static Retrofit RETROFIT_H5;
 
     public static void init(String host, String hostH5, Interceptor interceptor, boolean debug) {
@@ -24,6 +24,25 @@ public final class RetrofitUtils {
         HOST_H5 = hostH5;
         INTERCEPTOR = interceptor;
         DEBUG = debug;
+    }
+
+    public static Retrofit getDownloadRetrofitH5(DownloadInterceptor interceptor) {
+        if (RETROFIT_DOWNLOAD_H5 != null)
+            return RETROFIT_DOWNLOAD_H5;
+        return RETROFIT_DOWNLOAD_H5 = new Retrofit.Builder()
+                .baseUrl(HOST_H5)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(OkHttp3Utils.getOkHttpClient(interceptor, DEBUG))
+                .build();
+    }
+
+    public static <T> T create(Class<T> service) {
+        return getRetrofit().create(service);
+    }
+
+    public static <T> T createH5(Class<T> service) {
+        return getRetrofitH5().create(service);
     }
 
     private static Retrofit getRetrofit() {
@@ -43,25 +62,6 @@ public final class RetrofitUtils {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(OkHttp3Utils.getOkHttpClient(INTERCEPTOR, DEBUG))
                 .build();
-    }
-
-    public static Retrofit getDownloadRetrofit(ProgressResponseListener progressResponseListener) {
-        if (RETROFIT_DOWNLOAD != null)
-            return RETROFIT_DOWNLOAD;
-        return RETROFIT_DOWNLOAD = new Retrofit.Builder()
-                .baseUrl(HOST)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(OkHttp3Utils.getOkHttpClient(new DownloadInterceptor(progressResponseListener), DEBUG))
-                .build();
-    }
-
-    public static <T> T create(Class<T> service) {
-        return getRetrofit().create(service);
-    }
-
-    public static <T> T createH5(Class<T> service) {
-        return getRetrofitH5().create(service);
     }
 
 }

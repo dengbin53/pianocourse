@@ -7,7 +7,7 @@
         <!--状态栏颜色-->
         <item name="colorPrimaryDark">@color/color_bg_gray</item>
         <!--控制各个控件被选中时的颜色-->
-        <item name="colorAccent">@color/color_yellow</item>
+        <item name="colorAccent">@color/color_green</item>
         <!--页面背景色-->
         <item name="android:windowBackground">@color/color_bg_default</item>
     </style>

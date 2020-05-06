@@ -21,11 +21,13 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
@@ -75,6 +77,10 @@ public interface ApiService {
     @POST("app/sys/upload-file")
     Observable<FileBean> uploadFile(@Part MultipartBody.Part body);
 
+    // 上传练习
+    @POST("app/user/upload-exercise")
+    Observable<ExerciseBean.ExerciseResult> uploadExercise(@Body RequestBody body);
+
     // 课程列表
     @POST("app/lesson/list")
     Observable<CourseBean.CourseListResult> getCourseList(@Body Map<String, Object> params);
@@ -105,14 +111,20 @@ public interface ApiService {
     Observable<FavoriteBean.FavoriteListResult> getFavoriteList(@Body Map<String, Object> params);
 
     @POST("app/lesson-video-favorite/add")
-    Observable<BaseBean> favorite(@Body Map<String, Object> params);
+    Observable<BaseBean> favoriteVideo(@Body Map<String, Object> params);
+
+    @GET("app/favorite/add")
+    Observable<BaseBean> favoriteSheet(@Query("sheet_id") long sheetId);
 
     @POST("app/book/list")
     Observable<BookBean.BookListResult> getBookList(@Body Map<String, Object> params);
 
     // 课程下的单曲
     @POST("app/sheet/list")
-    Observable<SheetBean.SheetListResult> getSheetList(@Body Map<String, Object> params);
+    Observable<SheetBean.SheetListResult> getSheetList(@Body Map<String, Object> params);    // 课程下的单曲
+
+    @GET("app/sheet-watch/add")
+    Observable<BaseBean> addSheetWatch(@Query("sheet_id") long sheetId);
 
     // 学生练习列表
     @POST("app/user/exercise/list")

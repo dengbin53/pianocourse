@@ -20,7 +20,7 @@
         android:id="@+id/act_feedback_btn"
         style="@style/button_large"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp40"
+        android:layout_height="40dp"
         android:layout_margin="@dimen/space_large"
         android:onClick="onClick"
         android:text="@string/btn_submit" />

@@ -102,11 +102,11 @@
 # support end
 
 # 高德地图定位 begin
-# 3D 地图 V5.0.0之前：
+# 3D 地图 V5.0.0之前:
 -keep class com.amap.api.maps.**{*;}
 -keep class com.autonavi.amap.mapcore.*{*;}
 -keep class com.amap.api.trace.**{*;}
-# 3D 地图 V5.0.0之后：
+# 3D 地图 V5.0.0之后:
 -keep class com.amap.api.maps.**{*;}
 -keep class com.autonavi.**{*;}
 -keep class com.amap.api.trace.**{*;}
@@ -394,14 +394,6 @@ public static java.lang.String TABLENAME;
 # baidu video
 -keep class com.baidu.cloud.media.**{ *;}
 
-# local
--keep class com.zconly.pianocourse.event.** { *; }
--keep class com.zconly.pianocourse.widget.** { *; }
--keep class * extends com.zconly.pianocourse.bean.BaseBean
--keep class * {
-    @com.zconly.pianocourse.base.SingleClick <methods>;
-}
-
 # linkedme
 -keep class com.microquation.linkedme.android.** { *; }
 
@@ -411,3 +403,15 @@ public static java.lang.String TABLENAME;
 -keep class cn.jpush.** { *; }
 -keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
 -keep class cn.jiguang.** { *; }
+
+# SeeScore
+-dontwarn uk.co.dolphin_com.**
+-keep class uk.co.dolphin_com.** { *; }
+
+# local
+-keep class com.zconly.pianocourse.event.** { *; }
+-keep class com.zconly.pianocourse.widget.** { *; }
+-keep class * extends com.zconly.pianocourse.bean.BaseBean
+-keep class * {
+    @com.zconly.pianocourse.base.SingleClick <methods>;
+}

@@ -64,7 +64,7 @@ public class FavoritePresenter extends BasePresenter<FavoriteView> {
             params.put("lesson_id", courseId + "");
         if (videoId > 0)
             params.put("lv_id", videoId + "");
-        Observable<BaseBean> o = RetrofitUtils.create(ApiService.class).favorite(params);
+        Observable<BaseBean> o = RetrofitUtils.create(ApiService.class).favoriteVideo(params);
         HttpRxObservable.getObservable(o).subscribe(new HttpRxObserver<BaseBean>() {
 
             @Override

@@ -113,6 +113,7 @@ android {
 dependencies {
     implementation project(path: ':mvplib')
     implementation project(path: ':baiduvideo')
+    implementation project(path: ':seescore-sdk-v364')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -141,11 +142,16 @@ dependencies {
     implementation rootProject.ext.compilelibs['rxpermissions']
     implementation rootProject.ext.compilelibs['aspectj']
 
-    implementation rootProject.ext.compilelibs['umeng-common']
-    implementation rootProject.ext.compilelibs['umeng-utdid']
-    implementation rootProject.ext.compilelibs['umeng-analytics']
-    implementation rootProject.ext.compilelibs['umeng-push']
     implementation rootProject.ext.compilelibs['xiaoe']
+    implementation rootProject.ext.compilelibs['smartrefresh']
+    implementation rootProject.ext.compilelibs['brvah']
+    implementation rootProject.ext.compilelibs['convenient-banner']
+    implementation rootProject.ext.compilelibs['audiorecorder']
+
+    // implementation rootProject.ext.compilelibs['umeng-common']
+    // implementation rootProject.ext.compilelibs['umeng-utdid']
+    implementation rootProject.ext.compilelibs['umeng-analytics']
+    // implementation rootProject.ext.compilelibs['umeng-push']
 
     //基础组件库依赖(必须)
     implementation 'com.umeng.umsdk:common:2.2.5'
@@ -162,10 +168,6 @@ dependencies {
     implementation 'com.umeng.umsdk:agoo_networksdk:3.5.5'
     implementation 'com.umeng.umsdk:agoo_tlog:3.0.0.17'
     implementation 'com.umeng.umsdk:agoo_tnet4android:3.1.14.9'
-
-    implementation rootProject.ext.compilelibs['smartrefresh']
-    implementation rootProject.ext.compilelibs['brvah']
-    implementation rootProject.ext.compilelibs['convenient-banner']
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

@@ -44,7 +44,6 @@ public class DialogConfirm extends MvpDialog {
         this.btn2Str = btn2;
         setCancelable(cancelabl);
         setGravity(Gravity.CENTER);
-        setmContext(context);
     }
 
     public DialogConfirm(Context context, OnClickListener onClick, String content) {

@@ -10,7 +10,7 @@
         android:id="@+id/welcome"
         style="@style/text_large_gray_dark"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp40"
+        android:layout_height="40dp"
         android:layout_marginTop="128dp"
         android:gravity="center"
         android:text="@string/content_welcome" />
@@ -19,7 +19,7 @@
         android:id="@+id/alert"
         style="@style/text_small_black"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp40"
+        android:layout_height="40dp"
         android:gravity="center"
         android:text="@string/content_login_alert" />
 

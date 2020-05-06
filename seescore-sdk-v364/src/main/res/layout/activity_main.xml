@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/transposeLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleLabel" />
+
+    <ScrollView
+        android:id="@+id/scrollViewCursor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleLabel" />
+
+    <TextView
+        android:id="@+id/titleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="Title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/transposeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#2196F3"
+        android:maxLines="1"
+        android:text="no transposition"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/transposePlus"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/beatText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#00000000"
+        android:singleLine="true"
+        android:text="99"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#80ff0000"
+        android:textSize="150sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/versionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:singleLine="true"
+        android:text="SeeScoreLib Version X.XX"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/zoomText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:singleLine="true"
+        android:text="1.0"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/zoomSlider"
+        app:layout_constraintEnd_toStartOf="@+id/transposePlus"
+        app:layout_constraintTop_toTopOf="@+id/zoomSlider" />
+
+    <TextView
+        android:id="@+id/tempoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:inputType="none"
+        android:singleLine="true"
+        android:text="Tempo:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/tempoSlider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tempoSlider" />
+
+    <SeekBar
+        android:id="@+id/tempoSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:indeterminateOnly="false"
+        android:max="100"
+        android:progress="50"
+        app:layout_constraintBottom_toTopOf="@+id/versionLabel"
+        app:layout_constraintEnd_toStartOf="@+id/tempoText"
+        app:layout_constraintStart_toEndOf="@+id/tempoLabel" />
+
+    <TextView
+        android:id="@+id/tempoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:singleLine="true"
+        android:text="80"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/tempoSlider"
+        app:layout_constraintEnd_toStartOf="@+id/transposePlus"
+        app:layout_constraintTop_toTopOf="@+id/tempoSlider" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="play_pause"
+        android:src="@android:drawable/ic_media_play"
+        app:layout_constraintBottom_toTopOf="@+id/zoomSlider"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="stop_play"
+        android:src="@drawable/ic_media_stop"
+        app:layout_constraintBottom_toBottomOf="@+id/playButton"
+        app:layout_constraintStart_toEndOf="@+id/playButton" />
+
+    <SeekBar
+        android:id="@+id/zoomSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:max="100"
+        android:progress="50"
+        app:layout_constraintBottom_toTopOf="@+id/tempoSlider"
+        app:layout_constraintEnd_toStartOf="@+id/zoomText"
+        app:layout_constraintStart_toStartOf="@+id/tempoSlider" />
+
+    <TextView
+        android:id="@+id/zoomLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zoom:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintBottom_toBottomOf="@+id/zoomSlider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/zoomSlider" />
+
+    <CheckBox
+        android:id="@+id/countInSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="count-in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/metronomeCheck" />
+
+    <CheckBox
+        android:id="@+id/metronomeCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="metronome"
+        app:layout_constraintBottom_toTopOf="@+id/countInSwitch"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/transposeMinus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="minusTapped"
+        android:text="-"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        app:layout_constraintBottom_toTopOf="@+id/metronomeCheck"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/transposePlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="plusTapped"
+        android:text="+"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        app:layout_constraintBottom_toTopOf="@+id/metronomeCheck"
+        app:layout_constraintEnd_toStartOf="@+id/transposeMinus" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

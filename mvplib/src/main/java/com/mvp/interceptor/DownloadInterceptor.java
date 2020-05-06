@@ -6,6 +6,7 @@ import com.mvp.utils.ProgressResponseBody;
 import com.mvp.utils.ProgressResponseListener;
 
 import java.io.IOException;
+import java.util.Map;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -16,8 +17,7 @@ import okhttp3.Response;
  * 时间：2018/2/5  下午4:01
  * 描述：
  */
-
-public class DownloadInterceptor implements Interceptor {
+public abstract class DownloadInterceptor implements Interceptor {
 
     private ProgressResponseListener listener;
 
@@ -28,32 +28,21 @@ public class DownloadInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
 
-        // TODO: 2019-12-24
-
         Request request = chain.request();
         Request.Builder builder = request.newBuilder();
 
-        // String token = SharePreferencesUtil.getStringData("token");
-        String token = "";
-        if (!TextUtils.isEmpty(token)) {
-            builder.addHeader("token", token);
-        }
-
-        // int userId = SharePreferencesUtil.getIntData("userId");
-        int userId = 123;
-        if (userId != 0) {
-            builder.addHeader("userId", userId + "");
-        }
-
-        // int userCode = SharePreferencesUtil.getUserCode();
-        int userCode = 123;
-        if (userCode != 0) {
-            builder.addHeader("userCode", userCode + "");
+        Map<String, String> headers = getHeader();
+        for (String key : headers.keySet()) {
+            String value = headers.get(key);
+            if (!TextUtils.isEmpty(value))
+                builder.addHeader(key, value);
         }
 
         Response response = chain.proceed(request);
 
         return response.newBuilder().body(new ProgressResponseBody(response.body(), listener)).build();
     }
+
+    public abstract Map<String, String> getHeader();
 
 }

@@ -8,7 +8,7 @@
         android:id="@+id/dialog_confirm_title"
         style="@style/text_normal_black"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp40"
+        android:layout_height="40dp"
         android:layout_marginTop="@dimen/space_large"
         android:gravity="center"
         android:text=""

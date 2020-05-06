@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nextfile"
+        android:enabled="true"
+        android:showAsAction="always"
+        android:title="Next"></item>
+    <item
+        android:id="@+id/LButton"
+        android:enabled="true"
+        android:showAsAction="never"
+        android:title="L"></item>
+    <item
+        android:id="@+id/RButton"
+        android:enabled="true"
+        android:showAsAction="never"
+        android:title="R"></item>
+    <item
+        android:id="@+id/loopLButton"
+        android:enabled="true"
+        android:showAsAction="never"
+        android:title="loopStart"></item>
+    <item
+        android:id="@+id/loopRButton"
+        android:enabled="true"
+        android:showAsAction="never"
+        android:title="loopEnd"></item>
+</menu>

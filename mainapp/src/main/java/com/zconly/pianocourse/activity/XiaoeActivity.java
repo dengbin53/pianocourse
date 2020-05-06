@@ -60,7 +60,7 @@ public class XiaoeActivity extends BaseMvpActivity<XiaoePresenter> implements Xi
                     break;
                 case JsInteractType.NOTICE_OUT_LINK_ACTION:
                     //sdk通知需要外部打开的链接回调，通过 response.getResponseData() 获取外链
-                    //原来后台自定义链接：
+                    //原来后台自定义链接:
                     //1.本来不带参数的  http://www.baidu.com
                     //2.本来带参数的  http://www.baidu.com?xxx=xxx
                     //需要sdk通知外部打开，拼装带参数needoutlink=1

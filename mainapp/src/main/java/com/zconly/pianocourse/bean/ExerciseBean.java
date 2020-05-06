@@ -126,5 +126,17 @@ public class ExerciseBean extends BaseBean {
             this.data = data;
         }
     }
-    
+
+    public static class ExerciseResult extends BaseBean {
+        private ExerciseBean data;
+
+        public ExerciseBean getData() {
+            return data;
+        }
+
+        public void setData(ExerciseBean data) {
+            this.data = data;
+        }
+    }
+
 }
