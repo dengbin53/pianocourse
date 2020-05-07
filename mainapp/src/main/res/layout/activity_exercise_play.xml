@@ -74,9 +74,16 @@
     <ImageView
         android:id="@+id/exercise_piano_iv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
+        android:scaleType="fitXY"
         android:src="@mipmap/img_piano_keyboard" />
+
+    <RelativeLayout
+        android:id="@+id/exercise_piano_rl"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true" />
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -117,7 +124,7 @@
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/space_normal"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="64dp"
         android:drawableTop="@drawable/selector_play"
         android:drawablePadding="@dimen/drawable_padding_small"
         android:gravity="center"
@@ -129,7 +136,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="64dp"
         android:layout_toEndOf="@id/exercise_play_record_tv"
         android:drawableTop="@mipmap/ic_re_record"
         android:drawablePadding="@dimen/drawable_padding_small"
@@ -145,7 +152,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/space_normal"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="64dp"
         android:drawableTop="@mipmap/ic_accompany"
         android:drawablePadding="@dimen/drawable_padding_small"
         android:gravity="center"
@@ -158,7 +165,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="64dp"
         android:layout_toStartOf="@id/exercise_play_accompany_tv"
         android:drawableTop="@mipmap/ic_tiaosu"
         android:drawablePadding="@dimen/drawable_padding_small"

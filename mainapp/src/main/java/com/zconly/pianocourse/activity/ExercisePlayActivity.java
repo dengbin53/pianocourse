@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -23,6 +25,8 @@ import com.zconly.pianocourse.constants.ExtraConstants;
 import com.zconly.pianocourse.mvp.presenter.ExercisePresenter;
 import com.zconly.pianocourse.mvp.service.H5Service;
 import com.zconly.pianocourse.mvp.view.ExerciseView;
+import com.zconly.pianocourse.util.ArrayUtil;
+import com.zconly.pianocourse.util.DeviceUtils;
 import com.zconly.pianocourse.util.FileUtils;
 import com.zconly.pianocourse.util.Logger;
 import com.zconly.pianocourse.util.SysConfigTool;
@@ -87,6 +91,8 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
     TextView beatText;
     @BindView(R.id.exercise_play_record_tv)
     TextView playRecordTv;
+    @BindView(R.id.exercise_piano_rl)
+    RelativeLayout pianoRl; // 显示钢琴琴键按下效果
 
     private DialogExerciseSetting.ExerciseSettingBean settingBean;
     private SheetBean bean;
@@ -272,11 +278,13 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
             final Player pl = new Player(currentScore, new UserTempoImpl(), mContext, true, playControls,
                     loopStart, loopEnd, (loopStart >= 0 && loopEnd >= 0) ? kPlayLoopRepeats : 0);
             final int autoScrollAnimationTime = pl.bestScrollAnimationTime();
+
+            // 开始
             pl.setBarStartHandler(new Dispatcher.EventHandler() {
+
                 private int lastIndex = -1;
 
                 public void event(final int index, final boolean ci) {
-
                     // use bar cursor if bar time is short
                     final boolean useNoteCursor = !pl.needsFastCursor();
                     if (!useNoteCursor || ColourPlayedNotes) {
@@ -297,6 +305,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                 }
             }, -50); // anticipate so cursor arrives on time
 
+            // 节拍器
             pl.setBeatHandler((index, ci) -> mHandler.post(new Runnable() {
                 final int beatNumber = index + 1;
                 final boolean countIn = ci;
@@ -309,8 +318,11 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                 }
             }), 0);
 
+            // 音符
             if (UseNoteCursorIfPossible || ColourPlayedNotes) {
                 pl.setNoteHandler(notes -> {
+                    // 设置新按键
+                    setPianoKey(notes);
                     // disable note cursor if bar time is short
                     final boolean useNoteCursor = !pl.needsFastCursor();
                     if (useNoteCursor) {
@@ -318,7 +330,6 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                             final List<Note> localNotes = notes;
 
                             public void run() {
-
                                 ssview.moveNoteCursor(localNotes, autoScrollAnimationTime);
                             }
                         });
@@ -335,11 +346,12 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                 }, -50);
             }
 
+            // 结束
             pl.setEndHandler((index, countIn) ->
                     mHandler.post(() -> {
-                        // 练习结束
                         pauseOrStopPlayer(true);
                         playRecordTv.setSelected(player.state() == Started);
+                        cleanPianoKey();
                     }), 0);
 
             return pl;
@@ -347,7 +359,46 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
         } catch (Player.PlayerException ex) {
             Logger.w(ex);
         }
+
         return null;
+    }
+
+    float[] points = new float[]{1f, 1.7f, 2f, 3f, 3.4f, 4f, 4.6f, 5f, 6f, 6.3f, 7f, 7.5f, 8f, 8.7f, 9f, 10f, 10.4f,
+            11f, 11.6f, 12f, 13f, 13.3f, 14f, 14.5f, 15f, 15.7f, 16f, 17f, 17.4f, 18f, 18.6f, 19f, 20f, 20.3f, 21f,
+            21.5f, 22f, 22.7f, 23f, 24f, 24.4f, 25f, 25.6f, 26f, 27f, 27.3f, 28f, 28.5f, 29f, 29.7f, 30f, 31f, 31.4f,
+            32f, 32.6f, 33f, 34f, 34.3f, 35f, 35.5f, 36f, 36.7f, 37f, 38f, 38.4f, 39f, 39.6f, 40f, 41f, 41.3f, 42f,
+            42.5f, 43f, 43.7f, 44f, 45f, 45.4f, 46f, 46.6f, 47f, 48f, 48.3f, 49f, 49.5f, 50f, 50.7f, 51f, 52f};
+    float keyItemWidth = DeviceUtils.getScreenWidth() / 52f;
+    float getKeyItemHeight = DeviceUtils.dp2px(48f);
+
+    private void setPianoKey(List<Note> notes) {
+        cleanPianoKey();
+        if (ArrayUtil.isEmpty(notes))
+            return;
+        runOnUiThread(() -> {
+            for (Note note : notes) {
+                int po = note.midiPitch - 1;
+                if (po < 0 || po >= points.length)
+                    return;
+                float pos = points[po];
+                int w = (int) (pos % 1f == 0.0f ? keyItemWidth : keyItemWidth * 0.72f);
+                int h = (int) (pos % 1f == 0.0f ? getKeyItemHeight : getKeyItemHeight * 0.68f);
+                int marginStart = (int) (pos * keyItemWidth - w);
+
+                int img = note.staffindex == 0 ? R.mipmap.ic_pianokeyboard_markc1 : R.mipmap.ic_pianokeyboard_markc2;
+
+                ImageView iv = new ImageView(mContext);
+                iv.setScaleType(ImageView.ScaleType.FIT_XY);
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(w, h);
+                lp.setMarginStart(marginStart);
+                iv.setImageResource(img);
+                pianoRl.addView(iv, lp);
+            }
+        });
+    }
+
+    private void cleanPianoKey() {
+        runOnUiThread(() -> pianoRl.removeAllViews());
     }
 
     // display the current zoom value in the TextView label
@@ -573,11 +624,6 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.RECORD_AUDIO).subscribe(aBoolean -> {
-            if (aBoolean) {
-
-            } else {
-
-            }
         });
         return true;
     }
