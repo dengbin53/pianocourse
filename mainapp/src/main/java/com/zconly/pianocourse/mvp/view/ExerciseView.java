@@ -1,6 +1,7 @@
 package com.zconly.pianocourse.mvp.view;
 
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.EvaluateBean;
 import com.zconly.pianocourse.bean.ExerciseBean;
 
 /**
@@ -16,4 +17,6 @@ public interface ExerciseView extends DownloadView, UploadView {
     void uploadExerciseSuccess(ExerciseBean.ExerciseResult response);
 
     void favoriteSuccess(BaseBean response);
+
+    void getEvaluateListSuccess(EvaluateBean.EvaluateListResult response);
 }

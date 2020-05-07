@@ -3,11 +3,11 @@ package com.zconly.pianocourse.util;
 import android.text.TextUtils;
 
 import com.zconly.pianocourse.R;
-import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.base.MainApplication;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
 import com.zconly.pianocourse.bean.VideoBean;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.mvp.service.H5Service;
 import com.zconly.pianocourse.widget.dialog.DialogExerciseSetting;
 
@@ -62,17 +62,20 @@ public class DataUtil {
     }
 
     public static String getSheetLevel(int sheetLevel) {
-        if (sheetLevel == 1) return "一级曲目";
-        if (sheetLevel == 2) return "二级曲目";
-        if (sheetLevel == 3) return "三级曲目";
-        if (sheetLevel == 4) return "四级曲目";
-        if (sheetLevel == 5) return "五级曲目";
-        if (sheetLevel == 6) return "六级曲目";
-        if (sheetLevel == 7) return "七级曲目";
-        if (sheetLevel == 8) return "八级曲目";
-        if (sheetLevel == 9) return "九级曲目";
-        if (sheetLevel == 10) return "十级曲目";
-        return null;
+        if (sheetLevel == 1) return "一级";
+        if (sheetLevel == 2) return "二级";
+        if (sheetLevel == 3) return "三级";
+        if (sheetLevel == 4) return "四级";
+        if (sheetLevel == 5) return "五级";
+        if (sheetLevel == 6) return "六级";
+        if (sheetLevel == 7) return "七级";
+        if (sheetLevel == 8) return "八级";
+        if (sheetLevel == 101) return "入门级";
+        if (sheetLevel == 102) return "基础";
+        if (sheetLevel == 103) return "初级";
+        if (sheetLevel == 104) return "中级";
+        if (sheetLevel == 105) return "高级";
+        return "无";
     }
 
     public static List<VideoBean> parseFavoriteVideo(List<FavoriteBean> beans) {

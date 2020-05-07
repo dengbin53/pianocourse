@@ -71,10 +71,18 @@
         android:gravity="end|center_vertical"
         android:paddingEnd="@dimen/space_large" />
 
+    <ImageView
+        android:id="@+id/exercise_piano_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/img_piano_keyboard" />
+
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/exercise_piano_iv"
         android:layout_below="@id/exercise_play_author_tv"
         android:layout_marginTop="@dimen/space_normal"
         android:overScrollMode="never" />
@@ -83,6 +91,7 @@
         android:id="@+id/scrollViewCursor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/exercise_piano_iv"
         android:layout_below="@id/exercise_play_author_tv"
         android:layout_marginTop="@dimen/space_normal"
         android:overScrollMode="never" />

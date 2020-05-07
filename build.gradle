@@ -4,7 +4,7 @@ ext {
     MIN_SDK_VERSION = 21
     TARGET_SDK_VERSION = 28
     ANDROID_SUPPORT_VERSION = "1.1.0"
-    BUILD_VERSION_CODE = 102
+    BUILD_VERSION_CODE = 103
     BUILD_VERSION_NAME = "1.0.0"
 
     release_keystore = getRootDir().getPath() + "/docs/pianocourse.jks"

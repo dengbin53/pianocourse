@@ -53,15 +53,17 @@ public class SplashActivity extends BaseMvpActivity {
 
     @Override
     protected void initData() {
-        final String uri = "android.resource://" + getPackageName() + "/" + R.raw.guide00;
-        videoView.setVideoURI(Uri.parse(uri));
-        videoView.start();
-        videoView.setOnPreparedListener(mp -> {
-            mp.start();
-            mp.setLooping(false);
-        });
+//        final String uri = "android.resource://" + getPackageName() + "/" + R.raw.guide00;
+//        videoView.setVideoURI(Uri.parse(uri));
+//        videoView.start();
+//        videoView.setOnPreparedListener(mp -> {
+//            mp.start();
+//            mp.setLooping(false);
+//        });
+//
+//        videoView.setOnCompletionListener(mp -> gotoMain());
 
-        videoView.setOnCompletionListener(mp -> gotoMain());
+        gotoMain();
     }
 
     @Override

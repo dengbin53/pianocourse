@@ -1,5 +1,7 @@
 package com.zconly.pianocourse.mvp.view;
 
+import com.mvp.base.MvpView;
+
 import okhttp3.ResponseBody;
 
 /**
@@ -10,7 +12,7 @@ import okhttp3.ResponseBody;
  * @UpdateDate: 2020/5/5 03:17
  * @UpdateRemark: 更新说明
  */
-public interface DownloadView {
+public interface DownloadView extends MvpView {
     void downloadSuccess();
 
     ResponseBody download(ResponseBody responseBody);

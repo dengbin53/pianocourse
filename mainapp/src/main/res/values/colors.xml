@@ -19,15 +19,15 @@
     <color name="color_bg_black">#111111</color>
 
     <color name="color_divider">#E0E0E0</color>
-
+    238 190 96
     <color name="color_text_black">#333333</color>
     <!-- 灰色字体 -->
     <color name="color_text_gray">#999999</color>
     <!-- 浅灰色字体 -->
     <color name="color_text_gray_light">#CCCCCC</color>
     <color name="color_text_gray_dark">#666666</color>
-    <color name="color_yellow">#EACF8C</color>
-    <color name="color_yellow_60">#99EACF8C</color>
+    <color name="color_yellow">#EEBE60</color>
+    <color name="color_yellow_60">#99EEBE60</color>
     <color name="gray_text_light">#BBBBBB</color>
     <color name="color_blue">#1C2547</color>
 

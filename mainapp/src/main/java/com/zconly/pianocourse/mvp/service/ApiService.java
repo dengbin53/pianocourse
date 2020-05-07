@@ -5,6 +5,7 @@ import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.BookBean;
 import com.zconly.pianocourse.bean.CommentBean;
 import com.zconly.pianocourse.bean.CourseBean;
+import com.zconly.pianocourse.bean.EvaluateBean;
 import com.zconly.pianocourse.bean.ExerciseBean;
 import com.zconly.pianocourse.bean.FavoriteBean;
 import com.zconly.pianocourse.bean.FileBean;
@@ -144,5 +145,8 @@ public interface ApiService {
 
     @GET("app/system-ext/login")
     Observable<XiaoeTokenBean.XiaoeTokenResult> xiaoeLogin();
+
+    @POST("app/evaluate/list")
+    Observable<EvaluateBean.EvaluateListResult> getEvaluateList(@Body Map<String, Object> params);
 
 }

@@ -5,6 +5,16 @@
         <item name="android:textSize">@dimen/text_larger</item>
     </style>
 
+    <style name="text_larger_red">
+        <item name="android:textColor">@color/color_text_red</item>
+        <item name="android:textSize">@dimen/text_larger</item>
+    </style>
+
+    <style name="text_larger_white">
+        <item name="android:textColor">@color/color_text_white_gray</item>
+        <item name="android:textSize">@dimen/text_larger</item>
+    </style>
+
     <style name="text_large_black">
         <item name="android:textColor">@color/color_text_black_gray</item>
         <item name="android:textSize">@dimen/text_large</item>

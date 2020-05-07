@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -30,6 +31,8 @@ public class DialogRecordUpload extends MvpDialog {
     SeekBar seekBar;
     @BindView(R.id.dialog_exercise_time_tv)
     TextView timeTv;
+    @BindView(R.id.dialog_exercise_play_tv)
+    ImageView playIv;
 
     private File bean;
     private ClickListener onClick;
@@ -54,7 +57,9 @@ public class DialogRecordUpload extends MvpDialog {
     private void play() {
         if (mediaPlayer.isPlaying()) {
             pauseMediaPlayer();
+            playIv.setSelected(false);
         } else {
+            playIv.setSelected(true);
             playMediaPlayer();
             timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -172,6 +177,7 @@ public class DialogRecordUpload extends MvpDialog {
             mediaPlayer.setDataSource(file.getPath());//指定音频文件路径
             mediaPlayer.setLooping(false);//设置为循环播放
             mediaPlayer.prepare();//初始化播放器MediaPlayer
+            mediaPlayer.setOnCompletionListener(mp -> playIv.setSelected(false));
             return mediaPlayer.getDuration();
         } catch (Exception e) {
             e.printStackTrace();

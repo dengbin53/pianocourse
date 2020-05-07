@@ -15,6 +15,7 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.MainApplication;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.EvaluateBean;
 import com.zconly.pianocourse.bean.ExerciseBean;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.SheetBean;
@@ -192,13 +193,14 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                     break;
                 case Stopped:
                 case Completed:
-                    resetPlayer();
+                    resetStartPlayer();
                     break;
                 default:
                     break;
             }
         }
         playRecordTv.setSelected(player.state() == Started);
+        playRecordTv.setText(playRecordTv.isSelected() ? "停止录制" : "开始录制");
     }
 
     private void startPlayer() {
@@ -214,6 +216,8 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
             player.stop();
             currentBar = Math.max(0, loopStart);
             RecordManager.getInstance().stop();
+            if (ColourPlayedNotes)
+                ssview.clearAllColouring();
         } else {
             player.pause();
             currentBar = player.currentBar();
@@ -226,17 +230,32 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
             return;
         currentBar = player.currentBar();
         player.resume();
+        try {
+            player.updateTempo();
+        } catch (Player.PlayerException e) {
+            Logger.w(e);
+        }
         RecordManager.getInstance().resume();
     }
 
-    private void resetPlayer() {
+    private void resetSetPlayer() {
         if (player == null)
             return;
         player.reset();
         currentBar = Math.max(0, loopStart);
         ssview.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
-        player.startAt(currentBar, true);
         RecordManager.getInstance().stop();
+    }
+
+    private void resetStartPlayer() {
+        if (player == null)
+            return;
+        RecordManager.getInstance().stop();
+        player.reset();
+        currentBar = Math.max(0, loopStart);
+        ssview.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
+        player.startAt(currentBar, true);
+        RecordManager.getInstance().start();
     }
 
     public void stopAndReleasePlayer() {
@@ -276,7 +295,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                     if (!useNoteCursor || ColourPlayedNotes) {
                         mHandler.post(() -> {
                             if (!useNoteCursor) // use bar cursor
-                                ssview.setCursorAtBar(index, SeeScoreView.CursorType.box, autoScrollAnimationTime);
+                                ssview.setCursorAtBar(index, SeeScoreView.CursorType.line, autoScrollAnimationTime);
 
                             if (ColourPlayedNotes) {
                                 // if this is a repeat section we clear the colouring from the previous repeat
@@ -329,12 +348,12 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                 }, -50);
             }
 
-            pl.setEndHandler((index, countIn) -> mHandler.post(() -> {
-                currentBar = Math.max(0, loopStart); // next play will be from start
-                if (ColourPlayedNotes) {
-                    ssview.clearAllColouring();
-                }
-            }), 0);
+            pl.setEndHandler((index, countIn) ->
+                    mHandler.post(() -> {
+                        // 练习结束
+                        pauseOrStopPlayer(true);
+                        playRecordTv.setSelected(player.state() == Started);
+                    }), 0);
 
             return pl;
 
@@ -407,8 +426,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                 else if (loopEnd > 0 && loopEnd > loopStart && barIndex > loopEnd)
                     barIndex = loopEnd;
 
-                ssview.setCursorAtBar(barIndex, (player != null)
-                        ? SeeScoreView.CursorType.line : SeeScoreView.CursorType.box, 200);
+                ssview.setCursorAtBar(barIndex, SeeScoreView.CursorType.line, 200);
 
                 if (isPlaying) {
                     player.startAt(barIndex, false/*no countIn*/);
@@ -450,7 +468,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                 mPresenter.uploadExercise(recordFile, bean.getId(), settingBean.getTempo(),
                         settingBean.getHand(), 0, dialogRecordUpload.getDuration());
             } else { // 再来一次
-                resetPlayer();
+                resetSetPlayer();
                 recordFile = null;
             }
         });
@@ -486,7 +504,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                 playAndRecord(true);
                 break;
             case R.id.exercise_play_re_record_tv: // 重新录制
-                resetPlayer();
+                resetSetPlayer();
                 playAndRecord(false);
                 break;
             case R.id.exercise_play_accompany_tv: // 伴奏
@@ -614,6 +632,11 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
     public void favoriteSuccess(BaseBean response) {
         bean.setFavorited(bean.getFavorited() > 0 ? 0 : 1);
         updateFavoriteView();
+    }
+
+    @Override
+    public void getEvaluateListSuccess(EvaluateBean.EvaluateListResult response) {
+
     }
 
     private void updateFavoriteView() {

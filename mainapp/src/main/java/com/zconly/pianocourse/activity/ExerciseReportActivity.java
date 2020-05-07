@@ -3,8 +3,13 @@ package com.zconly.pianocourse.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -12,19 +17,28 @@ import android.widget.TextView;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.EvaluateBean;
 import com.zconly.pianocourse.bean.ExerciseBean;
 import com.zconly.pianocourse.bean.FileBean;
 import com.zconly.pianocourse.bean.SheetBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.constants.ExtraConstants;
+import com.zconly.pianocourse.mvp.presenter.BasePresenter;
 import com.zconly.pianocourse.mvp.presenter.ExercisePresenter;
 import com.zconly.pianocourse.mvp.service.H5Service;
+import com.zconly.pianocourse.mvp.view.AbstractDownloadView;
+import com.zconly.pianocourse.mvp.view.DownloadView;
 import com.zconly.pianocourse.mvp.view.ExerciseView;
+import com.zconly.pianocourse.util.ArrayUtil;
 import com.zconly.pianocourse.util.DataUtil;
 import com.zconly.pianocourse.util.DateUtils;
 import com.zconly.pianocourse.util.FileUtils;
 import com.zconly.pianocourse.util.ImgLoader;
+import com.zconly.pianocourse.util.Logger;
 import com.zconly.pianocourse.util.SysConfigTool;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Timer;
@@ -43,6 +57,9 @@ import okhttp3.ResponseBody;
  * @UpdateRemark: 更新说明
  */
 public class ExerciseReportActivity extends BaseMvpActivity<ExercisePresenter> implements ExerciseView {
+
+    private static final int MEDIA_TYPE_EXERCISE = 1;
+    private static final int MEDIA_TYPE_VOICE = 2;
 
     @BindView(R.id.exercise_report_sc)
     ScrollView mScrollView;
@@ -71,12 +88,52 @@ public class ExerciseReportActivity extends BaseMvpActivity<ExercisePresenter> i
     @BindView(R.id.exercise_report_percent_tv)
     TextView percentTv;
 
+    @BindView(R.id.exercise_report_sheet_iv)
+    ImageView sheetIv;
+
+    @BindView(R.id.exercise_report_comment_title_iv)
+    TextView commentTitleIv;
+    @BindView(R.id.exercise_report_comment_iv)
+    ImageView commentIv;
+    @BindView(R.id.exercise_report_teacher_title_tv)
+    TextView teacherTitleTv;
+    @BindView(R.id.exercise_report_teacher_iv)
+    ImageView teacherIv;
+
+    @BindView(R.id.exercise_report_voice_rl)
+    RelativeLayout voiceRl;
+    @BindView(R.id.voice_play_iv)
+    ImageView voicePlayIv;
+    @BindView(R.id.voice_teacher_iv)
+    TextView voiceTeacherTV;
+    @BindView(R.id.voice_playing_iv)
+    ImageView voicePlayingIv;
+    @BindView(R.id.voice_no_read_tv)
+    ImageView voiceNoReadIv;
+    @BindView(R.id.voice_time_tv)
+    TextView voiceTimeTv;
+
+    @BindView(R.id.exercise_report_header_ll)
+    LinearLayout scoreLl;
+    @BindView(R.id.score_tv_1)
+    TextView scoreTv1;
+    @BindView(R.id.score_tv_4)
+    TextView scoreTv4;
+    @BindView(R.id.score_tv_5)
+    TextView scoreTv5;
+    @BindView(R.id.score_tv_6)
+    TextView scoreTv6;
+
     private ExerciseBean bean;
     private MediaPlayer mediaPlayer;
     private Timer timer;
-    private int duration;
+    private int duration; // 练习声音时长
+    private int durationVoice; // 老师评价声音时长
     private File mp3File;
-    private boolean isSeekbarChaning;
+    private boolean isSeekBarChanging;
+    private File voiceFile;
+    private int mediaPlayerFileType;
+    private String voiceMp3Url;
 
     public static void start(Context context, ExerciseBean bean) {
         if (!SysConfigTool.isLogin(context, true))
@@ -91,37 +148,75 @@ public class ExerciseReportActivity extends BaseMvpActivity<ExercisePresenter> i
         seekBar.setProgress(time);
     }
 
-    public int initMediaPlayer(File file) {
-        if (mp3File == null || mediaPlayer != null)
+    public int initMediaPlayer(int type, File file) {
+        if (file == null)
             return 0;
+        if (mediaPlayer == null) {
+            MediaPlayer.OnCompletionListener onCompletionListener = mp -> {
+                playIv.setSelected(false);
+                voicePlayIv.setSelected(false);
+                voicePlayingIv.clearAnimation();
+            };
+            try {
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setLooping(false);//设置为循环播放
+                mediaPlayer.setOnCompletionListener(onCompletionListener);
+            } catch (Exception e) {
+                Logger.w(e);
+            }
+        }
+
+        if (mediaPlayerFileType == type)
+            return 0;
+        mediaPlayerFileType = type;
+
         try {
-            mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(file.getPath());//指定音频文件路径
-            mediaPlayer.setLooping(false);//设置为循环播放
             mediaPlayer.prepare();//初始化播放器MediaPlayer
             return mediaPlayer.getDuration();
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.w(e);
         }
         return 0;
     }
 
-    //如果没在播放中，立刻开始播放。
+    // 如果没在播放中，立刻开始播放。
     public void playMediaPlayer() {
         if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
             mediaPlayer.start();
+            if (mediaPlayerFileType == MEDIA_TYPE_VOICE) {
+                releaseTimer();
+                Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_scale);
+                animation.setRepeatCount(4096);
+                voicePlayingIv.startAnimation(animation);
+            } else {
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (seekBar == null)
+                            return;
+                        seekBar.post(() -> {
+                            if (!isSeekBarChanging)
+                                setTime(mediaPlayer.getCurrentPosition() / 1000);
+                        });
+                    }
+                }, 500, 500);
+            }
         }
     }
 
-    //如果在播放中，立刻暂停。
+    // 如果在播放中，立刻暂停。
     public void pauseMediaPlayer() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            voicePlayingIv.clearAnimation();
             mediaPlayer.pause();
         }
     }
 
     public void stopMediaPlayer() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            voicePlayingIv.clearAnimation();
             mediaPlayer.stop();
             mediaPlayer.release();
         }
@@ -138,24 +233,23 @@ public class ExerciseReportActivity extends BaseMvpActivity<ExercisePresenter> i
             pauseMediaPlayer();
         } else {
             playMediaPlayer();
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    seekBar.post(() -> {
-                        if (!isSeekbarChaning)
-                            setTime(mediaPlayer.getCurrentPosition() / 1000);
-                    });
-                }
-            }, 500, 500);
         }
     }
 
-    @OnClick({R.id.exercise_report_play_iv, R.id.exercise_cuoyin_tv, R.id.exercise_cuojiezou_tv})
+    private void releaseTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+            timer = null;
+        }
+    }
+
+    @OnClick({R.id.exercise_report_play_iv, R.id.exercise_cuoyin_tv, R.id.exercise_cuojiezou_tv,
+            R.id.voice_play_iv, R.id.voice_bg})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.exercise_report_play_iv: // 播放
-                initMediaPlayer(mp3File);
+                initMediaPlayer(MEDIA_TYPE_EXERCISE, mp3File);
                 play();
                 playIv.setSelected(!playIv.isSelected());
                 break;
@@ -165,9 +259,44 @@ public class ExerciseReportActivity extends BaseMvpActivity<ExercisePresenter> i
             case R.id.exercise_cuojiezou_tv:
 
                 break;
+            case R.id.voice_play_iv:
+            case R.id.voice_bg:
+                playVoice();
+                voiceNoReadIv.setVisibility(View.GONE);
+                break;
             default:
                 break;
         }
+    }
+
+    private void playVoice() {
+        if (TextUtils.isEmpty(voiceMp3Url))
+            return;
+        if (voiceFile == null) {
+            new BasePresenter<DownloadView>(new AbstractDownloadView() {
+
+                @Override
+                public void downloadSuccess() {
+
+                }
+
+                @Override
+                public ResponseBody download(ResponseBody responseBody) {
+                    voiceFile = new File(FileUtils.getCacheDir(mContext).getAbsolutePath()
+                            + File.separator + voiceMp3Url);
+                    FileUtils.saveFile(responseBody, voiceFile);
+                    doPlayVoice();
+                    return responseBody;
+                }
+            }).downloadFile(H5Service.FILE_HOST, voiceMp3Url);
+        } else {
+            doPlayVoice();
+        }
+    }
+
+    private void doPlayVoice() {
+        initMediaPlayer(MEDIA_TYPE_VOICE, voiceFile);
+        play();
     }
 
     @Override
@@ -209,12 +338,12 @@ public class ExerciseReportActivity extends BaseMvpActivity<ExercisePresenter> i
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                isSeekbarChaning = true;
+                isSeekBarChanging = true;
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                isSeekbarChaning = false;
+                isSeekBarChanging = false;
                 seekTo(seekBar.getProgress());
                 setTime(seekBar.getProgress());
             }
@@ -223,13 +352,14 @@ public class ExerciseReportActivity extends BaseMvpActivity<ExercisePresenter> i
     }
 
     @Override
-    protected boolean hasTitleView() {
-        return true;
+    protected void initData() {
+        mPresenter.getEvaluateList(0, 1, bean.getId());
+        mPresenter.downloadFile(H5Service.MP3_HOST, bean.getPath());
     }
 
     @Override
-    protected void initData() {
-        mPresenter.downloadFile(H5Service.MP3_HOST, bean.getPath());
+    protected boolean hasTitleView() {
+        return true;
     }
 
     @Override
@@ -249,8 +379,7 @@ public class ExerciseReportActivity extends BaseMvpActivity<ExercisePresenter> i
 
     @Override
     protected void onDestroy() {
-        if (timer != null)
-            timer.cancel();
+        releaseTimer();
         stopMediaPlayer();
         super.onDestroy();
     }
@@ -271,11 +400,52 @@ public class ExerciseReportActivity extends BaseMvpActivity<ExercisePresenter> i
     }
 
     @Override
+    public void getEvaluateListSuccess(EvaluateBean.EvaluateListResult response) {
+        if (response.getData() == null || ArrayUtil.isEmpty(response.getData().getData()))
+            return;
+        EvaluateBean evaluateBean = response.getData().getData().get(0);
+        String annotationBean = evaluateBean.getAnnotation();
+        JSONObject jo;
+        String comment = null;
+        String sheet = null;
+        try {
+            jo = new JSONObject(annotationBean);
+            comment = jo.getString("comment");
+            sheet = jo.getString("sheet");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        sheetIv.setVisibility(View.VISIBLE);
+        ImgLoader.showImg(DataUtil.getImgUrl(sheet), sheetIv);
+
+        commentTitleIv.setVisibility(View.VISIBLE);
+        commentIv.setVisibility(View.VISIBLE);
+        ImgLoader.showImg(DataUtil.getImgUrl(comment), commentIv);
+
+        teacherTitleTv.setVisibility(View.VISIBLE);
+        teacherIv.setVisibility(View.VISIBLE);
+
+        scoreLl.setVisibility(View.VISIBLE);
+        scoreTv1.setText(evaluateBean.getScore1() + "");
+        scoreTv4.setText(evaluateBean.getScore4() + "");
+        scoreTv5.setText(evaluateBean.getScore5() + "");
+        scoreTv6.setText(evaluateBean.getScore6() + "");
+
+        if (!TextUtils.isEmpty(evaluateBean.getVoice())) {
+            voiceRl.setVisibility(View.VISIBLE);
+            voiceTimeTv.setText(evaluateBean.getDuration() / 1000 + "s");
+            voiceMp3Url = evaluateBean.getVoice();
+            voiceTeacherTV.setText("");
+        }
+    }
+
+    @Override
     public ResponseBody download(ResponseBody responseBody) {
         mp3File = new File(FileUtils.getCacheDir(mContext).getAbsolutePath() + "/" + bean.getPath());
         FileUtils.saveFile(responseBody, mp3File);
 
-        duration = initMediaPlayer(mp3File);
+        duration = initMediaPlayer(MEDIA_TYPE_EXERCISE, mp3File);
         duration /= 1000;
         seekBar.setMax(duration);
         setTime(0);

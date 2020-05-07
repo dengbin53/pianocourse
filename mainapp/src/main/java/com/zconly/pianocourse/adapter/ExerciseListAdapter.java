@@ -10,7 +10,6 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.ExerciseReportActivity;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.ExerciseBean;
-import com.zconly.pianocourse.bean.SheetBean;
 import com.zconly.pianocourse.util.DataUtil;
 import com.zconly.pianocourse.util.DateUtils;
 import com.zconly.pianocourse.util.ImgLoader;
@@ -41,6 +40,8 @@ public class ExerciseListAdapter extends BaseQuickAdapter<ExerciseBean, BaseView
         helper.setText(R.id.item_list_exercise_title_tv, item.getSheet().getDesc_name());
         helper.setText(R.id.item_list_exercise_author_tv, item.getSheet().getAuthor());
         helper.setText(R.id.item_list_exercise_time_tv, DateUtils.getTime2M(item.getC_time()));
+        helper.getView(R.id.item_list_exercise_done_tv).setVisibility(item.getEvaluate_num() > 0
+                ? View.VISIBLE : View.GONE);
     }
 
     @SingleClick

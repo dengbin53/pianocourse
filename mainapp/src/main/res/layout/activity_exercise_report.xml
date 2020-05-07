@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/exercise_report_nickname_tv"
-            style="@style/text_small_white"
+            style="@style/text_normal_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_green"
@@ -31,11 +31,117 @@
 
         <TextView
             android:id="@+id/exercise_report_user_desc_tv"
-            style="@style/text_smaller_white"
+            style="@style/text_small_white"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:background="@color/color_green"
             android:gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/exercise_report_header_ll"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/color_green"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_normal_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="错音" />
+
+                <TextView
+                    android:id="@+id/score_tv_1"
+                    style="@style/text_larger_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_normal_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="节奏" />
+
+                <TextView
+                    android:id="@+id/score_tv_4"
+                    style="@style/text_larger_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_normal_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="完整性" />
+
+                <TextView
+                    android:id="@+id/score_tv_5"
+                    style="@style/text_larger_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_normal_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="表现力" />
+
+                <TextView
+                    android:id="@+id/score_tv_6"
+                    style="@style/text_larger_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -169,6 +275,11 @@
             android:gravity="end|center_vertical"
             android:paddingEnd="@dimen/space_large" />
 
+        <ImageView
+            android:id="@+id/exercise_report_sheet_iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
@@ -202,6 +313,104 @@
                 android:text="错节奏" />
 
         </LinearLayout>
+
+        <View style="@style/style_space_normal" />
+
+        <TextView
+            android:id="@+id/exercise_report_comment_title_iv"
+            style="@style/text_larger_red"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center"
+            android:text="乐曲报告"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/exercise_report_comment_iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <View style="@style/style_space_normal" />
+
+        <TextView
+            android:id="@+id/exercise_report_teacher_title_tv"
+            style="@style/text_larger_red"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center"
+            android:text="乐曲报告"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/exercise_report_voice_rl"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:paddingStart="@dimen/space_large"
+            android:paddingEnd="@dimen/space_large"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/voice_play_iv"
+                android:layout_width="@dimen/item_height_smaller"
+                android:layout_height="@dimen/item_height_smaller"
+                android:src="@drawable/selector_play" />
+
+            <TextView
+                android:id="@+id/voice_teacher_iv"
+                style="@style/text_smaller_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/voice_play_iv"
+                android:gravity="center" />
+
+            <View
+                android:id="@+id/voice_bg"
+                android:layout_width="200dp"
+                android:layout_height="@dimen/item_height_smaller"
+                android:layout_marginStart="@dimen/space_normal"
+                android:layout_toEndOf="@id/voice_play_iv"
+                android:background="@drawable/shape_corner_white_border" />
+
+            <ImageView
+                android:id="@+id/voice_playing_iv"
+                android:layout_width="@dimen/item_height_smaller"
+                android:layout_height="@dimen/item_height_smaller"
+                android:layout_alignStart="@id/voice_bg"
+                android:layout_marginStart="@dimen/space_normal"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_playing" />
+
+            <TextView
+                android:id="@+id/voice_time_tv"
+                style="@style/text_smaller_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/item_height_smaller"
+                android:layout_marginStart="@dimen/space_large"
+                android:layout_toEndOf="@id/voice_playing_iv"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/voice_no_read_tv"
+                android:layout_width="@dimen/item_height_smaller"
+                android:layout_height="@dimen/item_height_smaller"
+                android:layout_toEndOf="@id/voice_bg"
+                android:scaleType="centerInside"
+                android:src="@drawable/shape_circle_red_8dp" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/exercise_report_teacher_iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@mipmap/img_report_banner"
+            android:visibility="gone" />
+
+        <View style="@style/style_space_normal" />
 
     </LinearLayout>
 

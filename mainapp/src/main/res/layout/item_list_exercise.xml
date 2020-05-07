@@ -41,4 +41,17 @@
         android:layout_toEndOf="@id/item_list_exercise_iv"
         android:gravity="center_vertical" />
 
+    <TextView
+        android:id="@+id/item_list_exercise_done_tv"
+        style="@style/text_smaller_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_yellow"
+        android:paddingStart="@dimen/drawable_padding"
+        android:paddingEnd="@dimen/drawable_padding"
+        android:text="已批改"
+        android:visibility="gone" />
+
 </RelativeLayout>

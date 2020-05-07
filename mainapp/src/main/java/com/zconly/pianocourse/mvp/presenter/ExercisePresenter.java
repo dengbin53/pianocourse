@@ -5,15 +5,19 @@ import com.mvp.observer.HttpRxObservable;
 import com.mvp.observer.HttpRxObserver;
 import com.mvp.observer.UploadObserver;
 import com.mvp.utils.RetrofitUtils;
+import com.zconly.pianocourse.activity.ExerciseReportActivity;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.BaseMvpFragment;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.EvaluateBean;
 import com.zconly.pianocourse.bean.ExerciseBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
 import com.zconly.pianocourse.mvp.view.ExerciseView;
 import com.zconly.pianocourse.mvp.view.UploadView;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -38,12 +42,8 @@ public class ExercisePresenter extends BasePresenter<ExerciseView> {
 
     public void uploadExercise(File file, long sheetId, int bpm, int staff, int mode, int duration) {
         if (!isNetConnect()) return;
-
         RequestBody fileRQ = RequestBody.create(MediaType.parse("audio/mpeg"), file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileRQ);
-
         RequestBody body = new MultipartBody.Builder()
-                //.addPart(part)
                 .addFormDataPart("sheet_id", sheetId + "")
                 .addFormDataPart("bpm", bpm + "")
                 .addFormDataPart("staff", staff + "")
@@ -117,12 +117,44 @@ public class ExercisePresenter extends BasePresenter<ExerciseView> {
 
             @Override
             protected void onError(ApiException e) {
+
             }
 
             @Override
             protected void onSuccess(BaseBean response) {
+
             }
         });
+    }
+
+    // 获取当前练习的评价
+    public void getEvaluateList(int page, int pageSize, long exerciseId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("currentPage", page);
+        params.put("pageSize", pageSize);
+        Map<String, Object> t = new HashMap<>();
+        t.put("exercise_id", exerciseId);
+        params.put("t", t);
+        Observable<EvaluateBean.EvaluateListResult> o = RetrofitUtils.create(ApiService.class).getEvaluateList(params);
+        HttpRxObservable.getObservable(o, (ExerciseReportActivity) mView).subscribe(
+                new HttpRxObserver<EvaluateBean.EvaluateListResult>() {
+
+                    @Override
+                    protected void onStart(Disposable d) {
+                        mView.loading("");
+                    }
+
+                    @Override
+                    protected void onError(ApiException e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    protected void onSuccess(EvaluateBean.EvaluateListResult response) {
+                        mView.dismissLoading();
+                        mView.getEvaluateListSuccess(response);
+                    }
+                });
     }
 
 }
