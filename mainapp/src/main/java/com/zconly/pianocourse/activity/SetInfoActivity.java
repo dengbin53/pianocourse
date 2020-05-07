@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zconly.pianocourse.R;
@@ -61,6 +62,8 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     MKeyValueView birthView;
     @BindView(R.id.signature)
     MKeyValueEditView signatureView;
+    @BindView(R.id.hour_salary)
+    MKeyValueEditView hourSalaryView;
     @BindView(R.id.piano_time)
     MKeyValueView pianoTimeView;
     @BindView(R.id.piano_level)
@@ -68,6 +71,16 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     @BindView(R.id.avatar)
     ImageView avatarView;
 
+    @BindView(R.id.shenfen_student_tv)
+    TextView studentTv;
+    @BindView(R.id.shenfen_parents_tv)
+    TextView parentsTv;
+    @BindView(R.id.shenfen_teacher_tv)
+    TextView teacherTv;
+    @BindView(R.id.shenfen_organization_tv)
+    TextView organizationTv;
+
+    private TextView[] shenfen;
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -125,6 +138,11 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
             return;
         }
 
+        if (cropedImageUri == null) {
+            ToastUtil.toast("请选择一个头像");
+            return;
+        }
+
         params = new HashMap<>();
         params.put("mobile", mobile);
         params.put("password", pass);
@@ -133,11 +151,24 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         params.put("nickname", nickname);
         params.put("birthday", birthTime + "");
         params.put("sex", sex + "");
+        params.put("hour_salary", hourSalaryView.getValue() + "");
         params.put("signature", signatureView.getValue());
         params.put("code", code + "");
-        params.put("role_id", Constants.TYPE_ROLE_STUDENT + ""); // 0未知 1管理员 2学生 3老师
+        params.put("role_id", getRole() + ""); // 0未知 1管理员 2学生 3老师
 
         mPresenter.completion(params);
+    }
+
+    private int getRole() {
+        if (studentTv.isSelected())
+            return Constants.TYPE_ROLE_STUDENT;
+        if (parentsTv.isSelected())
+            return Constants.TYPE_ROLE_PARENTS;
+        if (teacherTv.isSelected())
+            return Constants.TYPE_ROLE_TEACHER;
+        if (organizationTv.isSelected())
+            return Constants.TYPE_ROLE_ORGANIZATION;
+        return 0;
     }
 
     private void uploadAvatar() {
@@ -207,8 +238,43 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
         ImageUtil.crop(mContext, uri, cropedImageUri, CropType.ICON);
     }
 
+    private void setSelected(int pos) {
+        for (int i = 0; i < shenfen.length; i++) {
+            shenfen[i].setSelected(i == pos);
+        }
+
+        nicknameView.setValueHint("昵称");
+        sexView.setName("性别");
+        birthView.setName("生日");
+        birthView.setVisibility(View.VISIBLE);
+        signatureView.setVisibility(View.VISIBLE);
+        pianoTimeView.setVisibility(View.VISIBLE);
+        pianoLevelView.setVisibility(View.VISIBLE);
+        avatarView.setVisibility(View.VISIBLE);
+        hourSalaryView.setVisibility(View.GONE);
+        switch (pos) {
+            case 0:
+            case 1:
+                break;
+            case 2:
+                hourSalaryView.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                nicknameView.setValueHint("机构名称");
+                sexView.setName("管理员性别");
+                birthView.setName("成立日期");
+                signatureView.setVisibility(View.GONE);
+                pianoTimeView.setVisibility(View.GONE);
+                pianoLevelView.setVisibility(View.GONE);
+                avatarView.setVisibility(View.GONE);
+                hourSalaryView.setVisibility(View.GONE);
+                break;
+        }
+    }
+
     @SingleClick
-    @OnClick({R.id.finish, R.id.help, R.id.avatar})
+    @OnClick({R.id.finish, R.id.help, R.id.avatar, R.id.shenfen_student_tv, R.id.shenfen_parents_tv,
+            R.id.shenfen_teacher_tv, R.id.shenfen_organization_tv})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.avatar:
@@ -222,6 +288,20 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
                 break;
             case R.id.help:
                 ActionUtil.startAct(mContext, ContactCSActivity.class);
+                break;
+            case R.id.shenfen_student_tv:
+                setSelected(0);
+                break;
+            case R.id.shenfen_parents_tv:
+                setSelected(1);
+                break;
+            case R.id.shenfen_teacher_tv:
+                setSelected(2);
+                break;
+            case R.id.shenfen_organization_tv:
+                setSelected(3);
+                break;
+            default:
                 break;
         }
     }
@@ -264,6 +344,20 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     }
 
     @Override
+    protected boolean initView() {
+        mTitleView.setTitle(getString(R.string.title_set_info));
+
+        sexView.setClickCallback(clickCallback);
+        birthView.setClickCallback(clickCallback);
+        pianoLevelView.setClickCallback(clickCallback);
+        pianoTimeView.setClickCallback(clickCallback);
+
+        studentTv.setSelected(true);
+        shenfen = new TextView[]{studentTv, parentsTv, teacherTv, organizationTv};
+        return true;
+    }
+
+    @Override
     protected int getContentView() {
         return R.layout.activity_set_info;
     }
@@ -275,18 +369,6 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
 
     @Override
     protected boolean isBindEventBus() {
-        return true;
-    }
-
-    @Override
-    protected boolean initView() {
-        mTitleView.setTitle(getString(R.string.title_set_info));
-
-        sexView.setClickCallback(clickCallback);
-        birthView.setClickCallback(clickCallback);
-        pianoLevelView.setClickCallback(clickCallback);
-        pianoTimeView.setClickCallback(clickCallback);
-
         return true;
     }
 

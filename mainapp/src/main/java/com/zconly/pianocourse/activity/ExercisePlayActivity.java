@@ -177,9 +177,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
 
         if (player == null) {
             player = setupPlayer();
-            ssview.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
-            player.startAt(currentBar, true);
-            RecordManager.getInstance().start();
+            startPlayer();
         } else {
             switch (player.state()) {
                 case NotStarted:

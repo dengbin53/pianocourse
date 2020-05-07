@@ -5,10 +5,13 @@ import com.mvp.observer.HttpRxObservable;
 import com.mvp.observer.HttpRxObserver;
 import com.mvp.utils.RetrofitUtils;
 import com.zconly.pianocourse.activity.FindPassActivity;
+import com.zconly.pianocourse.activity.SignUpActivity;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.InvitationBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.mvp.service.ApiService;
+import com.zconly.pianocourse.mvp.service.H5Service;
 import com.zconly.pianocourse.mvp.view.SignUpView;
 
 import java.util.HashMap;
@@ -141,6 +144,33 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
                         if (mView != null) {
                             mView.dismissLoading();
                             mView.resetSuccess(response);
+                        }
+                    }
+                });
+    }
+
+    public void getInvitationCode() {
+        if (!isNetConnect()) return;
+        Observable<InvitationBean> observer = RetrofitUtils.createH5(H5Service.class).getInvitationCode();
+        HttpRxObservable.getObservable(observer, (SignUpActivity) mView).subscribe(
+                new HttpRxObserver<InvitationBean>() {
+                    @Override
+                    protected void onStart(Disposable d) {
+                        if (mView != null)
+                            mView.loading("");
+                    }
+
+                    @Override
+                    protected void onError(ApiException e) {
+                        if (mView != null)
+                            mView.onError(e);
+                    }
+
+                    @Override
+                    protected void onSuccess(InvitationBean response) {
+                        if (mView != null) {
+                            mView.dismissLoading();
+                            mView.getInvitationSuccess(response);
                         }
                     }
                 });

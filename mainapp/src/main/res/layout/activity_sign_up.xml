@@ -34,6 +34,11 @@
             android:inputType="phone" />
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/invitation_code_et"
+        style="@style/edit_text_common"
+        android:hint="邀请码" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"

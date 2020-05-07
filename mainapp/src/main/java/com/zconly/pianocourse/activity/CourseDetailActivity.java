@@ -16,12 +16,12 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.adapter.VideoListAdapter;
 import com.zconly.pianocourse.base.BaseCourseActivity;
-import com.zconly.pianocourse.constants.Constants;
-import com.zconly.pianocourse.constants.ExtraConstants;
 import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.bean.CourseBean;
 import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.bean.VideoPackBean;
+import com.zconly.pianocourse.constants.Constants;
+import com.zconly.pianocourse.constants.ExtraConstants;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
 import com.zconly.pianocourse.mvp.presenter.FavoritePresenter;
 import com.zconly.pianocourse.mvp.view.AbstractFavoriteView;
@@ -81,12 +81,10 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
                 false));
         mRecyclerView.setAdapter(mAdapter = new VideoListAdapter<>(null));
-        View view = LayoutInflater.from(mContext).inflate(R.layout.header_course_detail, mRecyclerView,
-                false);
-        mHeader = new MHeader(view);
-        mAdapter.addHeaderView(view);
+
         mAdapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.view_space_large, mRecyclerView,
                 false));
+
         mAdapter.setOnItemChildClickListener((adapter, view1, pos) -> {
             position = pos;
             Object obj = mAdapter.getItem(position);
@@ -144,6 +142,11 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
         if (response.getData() == null || ArrayUtil.isEmpty(response.getData().getData()))
             return;
         courseBean = response.getData().getData().get(0);
+
+        View view = LayoutInflater.from(mContext).inflate(R.layout.header_course_detail, mRecyclerView,
+                false);
+        mHeader = new MHeader(view);
+        mAdapter.addHeaderView(view);
         mHeader.setData();
     }
 

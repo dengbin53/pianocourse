@@ -2,6 +2,7 @@ package com.zconly.pianocourse.mvp.service;
 
 import com.zconly.pianocourse.BuildConfig;
 import com.zconly.pianocourse.bean.HomePageBean;
+import com.zconly.pianocourse.bean.InvitationBean;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -29,6 +30,10 @@ public interface H5Service {
 
     @GET("conf/homepage/homepage.json")
     Observable<HomePageBean.HomePageResult> getHomePageJson();
+
+    // 邀请码
+    @GET("conf/invitationcode/invitationcode.json")
+    Observable<InvitationBean> getInvitationCode();
 
     // 下载文件
     @Streaming

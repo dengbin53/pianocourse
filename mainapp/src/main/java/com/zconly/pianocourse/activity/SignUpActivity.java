@@ -14,12 +14,14 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.InvitationBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.SignUpPresenter;
 import com.zconly.pianocourse.mvp.service.H5Service;
 import com.zconly.pianocourse.mvp.view.SignUpView;
 import com.zconly.pianocourse.util.ActionUtil;
+import com.zconly.pianocourse.util.ArrayUtil;
 import com.zconly.pianocourse.util.CountDownTimerTool;
 import com.zconly.pianocourse.util.StringTool;
 import com.zconly.pianocourse.util.ToastUtil;
@@ -37,9 +39,10 @@ import butterknife.OnClick;
 public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements SignUpView {
 
     private static final int GET_CODE_SUCCESS = 0;
-
     @BindView(R.id.email)
     EditText mobileEt;
+    @BindView(R.id.invitation_code_et)
+    EditText invitationCodeEt;
     @BindView(R.id.pass)
     EditText passEt;
     @BindView(R.id.pass_confirm)
@@ -111,14 +114,13 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
                 ActionUtil.startAct(mContext, ContactCSActivity.class);
                 break;
             case R.id.re_send:
-                sendCode();
+                mPresenter.getInvitationCode();
                 break;
             case R.id.cancel:
                 finish();
                 break;
             case R.id.terms_of_service:
-                WebViewActivity.start(mContext, getString(R.string.key_terms_of_service),
-                        H5Service.TERMS_OF_SERVICE);
+                WebViewActivity.start(mContext, getString(R.string.key_terms_of_service), H5Service.TERMS_OF_SERVICE);
                 break;
             default:
                 break;
@@ -201,8 +203,24 @@ public class SignUpActivity extends BaseMvpActivity<SignUpPresenter> implements 
 
     }
 
+    @Override
+    public void getInvitationSuccess(InvitationBean response) {
+        if (!response.isEnable() || ArrayUtil.isEmpty(response.getCodes())) {
+            sendCode();
+        } else {
+            String str = invitationCodeEt.getText().toString().trim();
+            for (String s : response.getCodes()) {
+                if (TextUtils.equals(str, s)) {
+                    sendCode();
+                    return;
+                }
+            }
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onThreadMainEvent(SignInEvent event) {
         finish();
     }
+    
 }

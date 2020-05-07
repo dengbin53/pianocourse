@@ -2,6 +2,7 @@ package com.zconly.pianocourse.mvp.view;
 
 import com.mvp.base.MvpView;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.InvitationBean;
 import com.zconly.pianocourse.bean.UserBean;
 
 /**
@@ -19,4 +20,6 @@ public interface SignUpView extends MvpView {
     void verifySuccess(BaseBean response);
 
     void resetSuccess(UserBean.UserResult response);
+
+    void getInvitationSuccess(InvitationBean response);
 }

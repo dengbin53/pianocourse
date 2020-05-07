@@ -14,6 +14,7 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.base.SingleClick;
 import com.zconly.pianocourse.bean.BaseBean;
+import com.zconly.pianocourse.bean.InvitationBean;
 import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.SignUpPresenter;
@@ -188,6 +189,11 @@ public class FindPassActivity extends BaseMvpActivity<SignUpPresenter> implement
         ToastUtil.toast(getString(R.string.toast_find_pass_success));
         SignInActivity.start(mContext);
         finish();
+    }
+
+    @Override
+    public void getInvitationSuccess(InvitationBean response) {
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
