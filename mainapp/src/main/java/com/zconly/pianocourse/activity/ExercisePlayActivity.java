@@ -193,20 +193,19 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
                     break;
                 case Stopped:
                 case Completed:
-                    resetStartPlayer();
+                    reStartPlayer();
                     break;
                 default:
                     break;
             }
         }
-        playRecordTv.setSelected(player.state() == Started);
-        playRecordTv.setText(playRecordTv.isSelected() ? "停止录制" : "开始录制");
     }
 
     private void startPlayer() {
         ssview.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
         player.startAt(currentBar, true);
         RecordManager.getInstance().start();
+        updatePlayBtnView(); // 播放按钮状态
     }
 
     private void pauseOrStopPlayer(boolean stop) {
@@ -223,6 +222,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
             currentBar = player.currentBar();
             RecordManager.getInstance().pause();
         }
+        updatePlayBtnView(); // 播放按钮状态
     }
 
     private void resumePlayer() {
@@ -230,12 +230,8 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
             return;
         currentBar = player.currentBar();
         player.resume();
-        try {
-            player.updateTempo();
-        } catch (Player.PlayerException e) {
-            Logger.w(e);
-        }
         RecordManager.getInstance().resume();
+        updatePlayBtnView(); // 播放按钮状态
     }
 
     private void resetSetPlayer() {
@@ -245,9 +241,10 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
         currentBar = Math.max(0, loopStart);
         ssview.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
         RecordManager.getInstance().stop();
+        updatePlayBtnView(); // 播放按钮状态
     }
 
-    private void resetStartPlayer() {
+    private void reStartPlayer() {
         if (player == null)
             return;
         RecordManager.getInstance().stop();
@@ -256,6 +253,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
         ssview.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
         player.startAt(currentBar, true);
         RecordManager.getInstance().start();
+        updatePlayBtnView(); // 播放按钮状态
     }
 
     public void stopAndReleasePlayer() {
@@ -269,15 +267,6 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
             }
         }
         player = null;
-    }
-
-    private void showBeat(int beat) {
-        beatText.setText("" + beat);
-        beatText.setVisibility(TextView.VISIBLE);
-    }
-
-    private void hideBeat() {
-        beatText.setVisibility(TextView.INVISIBLE);
     }
 
     private Player setupPlayer() {
@@ -389,17 +378,16 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
 
     // 节拍器
     private void setupTempoUI(SScore score) {
+        int bpm = kDefaultTempoBPM;
         if (score.hasDefinedTempo()) {
             try {
                 Tempo tempo = score.tempoAtStart();
-                settingBean.setTempo(tempo.bpm);
+                bpm = tempo.bpm;
             } catch (ScoreException ex) {
                 Logger.w(ex);
             }
-        } else {
-            settingBean.setTempo(kDefaultTempoBPM);
         }
-
+        settingBean.setTempo(bpm);
         // 显示设置弹框
         showSettingDialog();
     }
@@ -458,6 +446,21 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
         scoreSv.setOnTouchListener((arg0, event) -> ssview.onTouchEvent(event));
     }
 
+    private void showBeat(int beat) {
+        beatText.setText("" + beat);
+        beatText.setVisibility(TextView.VISIBLE);
+    }
+
+    private void hideBeat() {
+        beatText.setVisibility(TextView.INVISIBLE);
+    }
+
+    // 播放按钮状态
+    private void updatePlayBtnView() {
+        playRecordTv.setSelected(player != null && player.state() == Started);
+        playRecordTv.setText(player != null && player.state() == Started ? "停止录制" : "开始录制");
+    }
+
     // 上传录音提示框
     private void showUploadDialog() {
         if (recordFile == null)
@@ -480,12 +483,23 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
             settingDialog = DialogExerciseSetting.getInstance(settingBean, (DialogExerciseSetting.ClickListener) bean
                     -> {
                 settingBean = bean;
+                updateTempo();
                 resumePlayer();
             });
             settingDialog.setGravity(Gravity.CENTER);
             settingDialog.setCancelable(true);
         }
         settingDialog.show(getSupportFragmentManager(), "des");
+    }
+
+    private void updateTempo() {
+        if (player != null) {
+            try {
+                player.updateTempo();
+            } catch (Player.PlayerException ex) {
+                Logger.w(ex);
+            }
+        }
     }
 
     @OnClick({R.id.exercise_play_back_iv, R.id.exercise_play_dashike_tv, R.id.exercise_play_favorite_tv,
@@ -653,11 +667,8 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
 
         // return the user-defined tempo scaling for score embedded tempo values (ie 1.0 => use standard tempo)
         public float getUserTempoScaling() {
-            // double scaling = tempoSliderPercentToScaling(settingBean.getTempo());
-            double scaling = settingBean.getTempo() * 1d / bean.getBpm2();
-            if (Math.abs(scaling - 1.0) < 0.1)
-                scaling = 1.0;
-            return (float) scaling;
+            float scaling = settingBean.getTempo() * 1f / bean.getBpm2();
+            return Math.abs(scaling - 1.0) < 0.1 ? 1.0f : scaling;
         }
     }
 
