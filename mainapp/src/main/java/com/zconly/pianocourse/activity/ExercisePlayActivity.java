@@ -120,7 +120,17 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
     private DialogRecordUpload dialogRecordUpload;
     private File file;
     private File recordFile;
-    private boolean onDestroy;
+    private boolean destroyed;
+    // 琴键位置(rightX) 52个白键（52等分）
+    float[] points = new float[]{1f, 1.7f, 2f, 3f, 3.4f, 4f, 4.6f, 5f, 6f, 6.3f, 7f, 7.5f, 8f, 8.7f, 9f, 10f, 10.4f,
+            11f, 11.6f, 12f, 13f, 13.3f, 14f, 14.5f, 15f, 15.7f, 16f, 17f, 17.4f, 18f, 18.6f, 19f, 20f, 20.3f, 21f,
+            21.5f, 22f, 22.7f, 23f, 24f, 24.4f, 25f, 25.6f, 26f, 27f, 27.3f, 28f, 28.5f, 29f, 29.7f, 30f, 31f, 31.4f,
+            32f, 32.6f, 33f, 34f, 34.3f, 35f, 35.5f, 36f, 36.7f, 37f, 38f, 38.4f, 39f, 39.6f, 40f, 41f, 41.3f, 42f,
+            42.5f, 43f, 43.7f, 44f, 45f, 45.4f, 46f, 46.6f, 47f, 48f, 48.3f, 49f, 49.5f, 50f, 50.7f, 51f, 52f};
+    // 52个白键（52等分）
+    float keyItemWidth = DeviceUtils.getScreenWidth() / 52f;
+    // 键盘高度
+    float getKeyItemHeight = DeviceUtils.dp2px(48f);
 
     private PlayData.PlayControls playControls = new PlayData.PlayControls() {
         @Override
@@ -363,14 +373,6 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
         return null;
     }
 
-    float[] points = new float[]{1f, 1.7f, 2f, 3f, 3.4f, 4f, 4.6f, 5f, 6f, 6.3f, 7f, 7.5f, 8f, 8.7f, 9f, 10f, 10.4f,
-            11f, 11.6f, 12f, 13f, 13.3f, 14f, 14.5f, 15f, 15.7f, 16f, 17f, 17.4f, 18f, 18.6f, 19f, 20f, 20.3f, 21f,
-            21.5f, 22f, 22.7f, 23f, 24f, 24.4f, 25f, 25.6f, 26f, 27f, 27.3f, 28f, 28.5f, 29f, 29.7f, 30f, 31f, 31.4f,
-            32f, 32.6f, 33f, 34f, 34.3f, 35f, 35.5f, 36f, 36.7f, 37f, 38f, 38.4f, 39f, 39.6f, 40f, 41f, 41.3f, 42f,
-            42.5f, 43f, 43.7f, 44f, 45f, 45.4f, 46f, 46.6f, 47f, 48f, 48.3f, 49f, 49.5f, 50f, 50.7f, 51f, 52f};
-    float keyItemWidth = DeviceUtils.getScreenWidth() / 52f;
-    float getKeyItemHeight = DeviceUtils.dp2px(48f);
-
     private void setPianoKey(List<Note> notes) {
         cleanPianoKey();
         if (ArrayUtil.isEmpty(notes))
@@ -590,7 +592,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
         RecordManager.getInstance().changeFormat(RecordConfig.RecordFormat.MP3);
         RecordManager.getInstance().changeRecordDir(FileUtils.getCacheDir(mContext) + "/record");
         RecordManager.getInstance().setRecordResultListener(result -> {
-            if (onDestroy)
+            if (destroyed)
                 return;
             recordFile = result;
             showUploadDialog();
@@ -651,7 +653,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
     @Override
     protected void onDestroy() {
         stopAndReleasePlayer();
-        onDestroy = true;
+        destroyed = true;
         RecordManager.getInstance().stop();
         super.onDestroy();
     }
