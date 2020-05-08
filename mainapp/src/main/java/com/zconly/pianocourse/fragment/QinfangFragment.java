@@ -11,6 +11,8 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.BookDetailActivity;
 import com.zconly.pianocourse.activity.BookListActivity;
@@ -95,8 +97,19 @@ public class QinfangFragment extends BaseMvpFragment<QinfangPresenter> implement
 
     @Override
     protected void initView(View view) {
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.getSheetList(page, 0, bookId);
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 0;
+                requestData();
+            }
+        });
         mRefreshLayout.setEnableLoadMore(false);
-        mRefreshLayout.setOnRefreshListener(refreshLayout -> requestData());
         mRecyclerView.setLayoutManager(
                 new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter = new SheetListAdapter(null));
@@ -149,9 +162,17 @@ public class QinfangFragment extends BaseMvpFragment<QinfangPresenter> implement
 
     @Override
     public void getSheetListSuccess(SheetBean.SheetListResult response) {
-        if (response.getData() == null)
+        if (response.getData() == null || response.getData().getData() == null)
             return;
-        mAdapter.setNewData(response.getData().getData());
+        isLoadDataCompleted = true;
+        if (page == 0) {
+            mAdapter.setNewData(response.getData().getData());
+        } else {
+            mAdapter.addData(response.getData().getData());
+        }
+
+        page++;
+        mRefreshLayout.setEnableLoadMore(response.getData().getData().size() >= Constants.PAGE_COUNT);
     }
 
     @Override

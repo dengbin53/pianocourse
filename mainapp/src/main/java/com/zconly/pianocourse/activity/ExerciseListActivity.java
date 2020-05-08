@@ -17,15 +17,17 @@ import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BookBean;
 import com.zconly.pianocourse.bean.ExerciseBean;
 import com.zconly.pianocourse.bean.SheetBean;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.mvp.presenter.QinfangPresenter;
 import com.zconly.pianocourse.mvp.view.QinfangView;
+import com.zconly.pianocourse.util.ArrayUtil;
 import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.util.ViewUtil;
 
 import butterknife.BindView;
 
 /**
- * @Description: 学生练习列表
+ * @Description: 学生练习记录列表
  * @Author: dengbin
  * @CreateDate: 2020/5/3 13:59
  * @UpdateUser: dengbin
@@ -69,6 +71,7 @@ public class ExerciseListActivity extends BaseMvpActivity<QinfangPresenter> impl
                 requestData();
             }
         });
+        mSmartRefreshLayout.setEnableLoadMore(false);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
                 false));
@@ -107,6 +110,7 @@ public class ExerciseListActivity extends BaseMvpActivity<QinfangPresenter> impl
     public void dismissLoading() {
         super.dismissLoading();
         mSmartRefreshLayout.finishRefresh();
+        mSmartRefreshLayout.finishLoadMore();
     }
 
     @Override
@@ -121,9 +125,16 @@ public class ExerciseListActivity extends BaseMvpActivity<QinfangPresenter> impl
 
     @Override
     public void getExerciseListSuccess(ExerciseBean.ExerciseListResult response) {
-        if (response.getData() == null)
+        if (response.getData() == null || ArrayUtil.isEmpty(response.getData().getData()))
             return;
-        mAdapter.setNewData(response.getData().getData());
+        if (page == 0) {
+            mAdapter.setNewData(response.getData().getData());
+        } else {
+            mAdapter.addData(response.getData().getData());
+        }
+
+        page++;
+        mSmartRefreshLayout.setEnableLoadMore(response.getData().getData().size() >= Constants.PAGE_COUNT);
     }
 
     @Override

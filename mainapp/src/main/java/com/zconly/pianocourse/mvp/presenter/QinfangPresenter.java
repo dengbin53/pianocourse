@@ -39,7 +39,7 @@ public class QinfangPresenter extends BasePresenter<QinfangView> {
     public void getBookList(int page, int id, String name, String author, String publish, int sort) {
         Map<String, Object> params = new HashMap<>();
         params.put("currentPage", page);
-        params.put("pageSize", Constants.PAGE_COUNT);
+        params.put("pageSize", Constants.PAGE_COUNT * 100);
         Map<String, Object> t = new HashMap<>();
         if (id > 0) t.put("id", id);
         if (!TextUtils.isEmpty(name)) t.put("name", name);

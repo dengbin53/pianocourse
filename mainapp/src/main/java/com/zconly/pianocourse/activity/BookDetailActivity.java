@@ -8,11 +8,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.adapter.SheetListAdapter;
 import com.zconly.pianocourse.base.BaseMvpActivity;
@@ -20,6 +23,7 @@ import com.zconly.pianocourse.bean.BannerBean;
 import com.zconly.pianocourse.bean.BookBean;
 import com.zconly.pianocourse.bean.ExerciseBean;
 import com.zconly.pianocourse.bean.SheetBean;
+import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.constants.ExtraConstants;
 import com.zconly.pianocourse.mvp.presenter.QinfangPresenter;
 import com.zconly.pianocourse.mvp.view.AbstractFavoriteView;
@@ -50,6 +54,7 @@ public class BookDetailActivity extends BaseMvpActivity<QinfangPresenter> implem
     private BookBean bookBean;
     private SheetListAdapter mAdapter;
     private MHeader mHeader;
+    private int page;
 
     public static void start(Context context, BookBean bean) {
         Intent intent = new Intent(context, BookDetailActivity.class);
@@ -58,7 +63,7 @@ public class BookDetailActivity extends BaseMvpActivity<QinfangPresenter> implem
     }
 
     private void requestData() {
-        mPresenter.getSheetList(0, 0, bookBean.getId());
+        mPresenter.getSheetList(page, 0, bookBean.getId());
     }
 
     @Override
@@ -69,7 +74,18 @@ public class BookDetailActivity extends BaseMvpActivity<QinfangPresenter> implem
             return false;
         }
         mTitleView.setTitle(bookBean.getName());
-        mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> requestData());
+        mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                requestData();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 0;
+                requestData();
+            }
+        });
         mSmartRefreshLayout.setEnableLoadMore(false);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
@@ -116,6 +132,7 @@ public class BookDetailActivity extends BaseMvpActivity<QinfangPresenter> implem
     public void dismissLoading() {
         super.dismissLoading();
         mSmartRefreshLayout.finishRefresh();
+        mSmartRefreshLayout.finishLoadMore();
     }
 
     @Override
@@ -125,9 +142,15 @@ public class BookDetailActivity extends BaseMvpActivity<QinfangPresenter> implem
 
     @Override
     public void getSheetListSuccess(SheetBean.SheetListResult response) {
-        if (response.getData() == null)
+        if (response.getData() == null || response.getData().getData() == null)
             return;
-        mAdapter.setNewData(response.getData().getData());
+        if (page == 0) {
+            mAdapter.setNewData(response.getData().getData());
+        } else {
+            mAdapter.addData(response.getData().getData());
+        }
+        page++;
+        mSmartRefreshLayout.setEnableLoadMore(response.getData().getData().size() >= Constants.PAGE_COUNT);
     }
 
     @Override
