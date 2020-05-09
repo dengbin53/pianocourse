@@ -294,7 +294,7 @@
     <string name="hint_order_remark">请输入备注内容</string>
     <string name="hint_comment">输入评论内容</string>
     <string name="hint_phone">手机</string>
-    <string name="hint_pass">密码</string>
+    <string name="hint_pass">密码(8-16位)</string>
     <string name="hint_verification_code">填写您收到的验证码</string>
     <string name="hint_pass_confirm">确认密码</string>
     <string name="hint_reserve_number">此体验项目最多可预订%1$d人</string>

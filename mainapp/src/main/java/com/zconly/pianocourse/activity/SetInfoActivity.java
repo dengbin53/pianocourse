@@ -183,6 +183,7 @@ public class SetInfoActivity extends BaseMvpActivity<SetInfoPresenter> implement
     private void finishWork() {
         Logger.i("finishWork");
         EventBus.getDefault().post(new SignInEvent());
+        SignUpVipActivity.start((BaseMvpActivity) mContext);
         finish();
     }
 

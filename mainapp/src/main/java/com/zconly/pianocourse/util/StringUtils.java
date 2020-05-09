@@ -319,4 +319,14 @@ public class StringUtils {
         return (s == null) ? "" : s;
     }
 
+
+    public static int string2int(String s) {
+        int i = 0;
+        try {
+            i = Integer.parseInt(s);
+        } catch (Exception e) {
+            Logger.w(e);
+        }
+        return i;
+    }
 }

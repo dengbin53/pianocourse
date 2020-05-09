@@ -53,10 +53,13 @@ public class ActionUtil {
         context.startActivity(intent);
     }
 
-    public static void startChat(Context context, String contactId) {
-        // Intent intent = new Intent(context, ActChat.class);
-        // intent.putExtra("user", contactId);
-        // ActionTool.startAct(context, intent);
+    public static void startWebBrowser(Context context, String url) {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri content_url = Uri.parse(url);
+        intent.setData(content_url);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
 }

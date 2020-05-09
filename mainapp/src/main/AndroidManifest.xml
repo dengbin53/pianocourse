@@ -225,7 +225,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service android:name="com.zlw.main.recorderlib.recorder.RecordService" />
-        
+
         <provider
             android:name="com.umeng.message.provider.MessageProvider"
             android:authorities="${applicationId}.umeng.message"
@@ -319,6 +319,10 @@
             android:name=".activity.ExercisePlayActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SignUpVipActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme" />
 
     </application>
 

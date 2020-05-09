@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_black">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/img_yb_newvip_bg"
+        android:paddingStart="24dp"
+        android:paddingTop="128dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="128dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/img_yb_newvip_alert" />
+
+    <ImageView
+        android:id="@+id/sign_up_vip_iv"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/space_large"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_cancel_white" />
+
+</RelativeLayout>

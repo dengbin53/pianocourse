@@ -10,10 +10,12 @@ import com.google.android.material.tabs.TabLayout;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.adapter.base.BaseFragmentPagerAdapter;
 import com.zconly.pianocourse.base.BaseMvpActivity;
+import com.zconly.pianocourse.bean.UserBean;
 import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.constants.ExtraConstants;
 import com.zconly.pianocourse.fragment.CourseListFragment;
 import com.zconly.pianocourse.mvp.presenter.CoursePresenter;
+import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.widget.TitleView;
 
 import java.util.ArrayList;
@@ -64,7 +66,13 @@ public class CourseListActivity extends BaseMvpActivity {
 
     @Override
     protected void initData() {
-
+        UserBean user = SysConfigTool.getUser();
+        if (user != null) {
+            int roleId = user.getRole_id();
+            if (roleId == Constants.TYPE_ROLE_TEACHER || roleId == Constants.TYPE_ROLE_ORGANIZATION) {
+                mViewPager.setCurrentItem(1, true);
+            }
+        }
     }
 
     @Override
