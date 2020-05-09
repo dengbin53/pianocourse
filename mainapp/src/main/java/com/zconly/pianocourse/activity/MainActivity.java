@@ -208,7 +208,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         // 版本号用的大版本3.3.4这样。比如1.1.4就是  （1 001 0004）
         int v = StringUtils.string2int(ver[0]) * 10000000 + StringUtils.string2int(ver[1]) * 10000
                 + StringUtils.string2int(ver[2]);
-        if (v < result.getAndroid().getVer()) return;
+        if (v >= result.getAndroid().getVer()) return;
 
         // 有更新
         showUpdateDialog(result.getAndroid());
