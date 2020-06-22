@@ -12,7 +12,7 @@ import com.zconly.pianocourse.bean.BaseBean;
 import com.zconly.pianocourse.mvp.presenter.FeedbackPresenter;
 import com.zconly.pianocourse.mvp.view.FeedbackView;
 import com.zconly.pianocourse.util.ToastUtil;
-import com.zconly.pianocourse.util.ViewTool;
+import com.zconly.pianocourse.util.ViewUtil;
 
 import butterknife.BindView;
 
@@ -48,7 +48,7 @@ public class FeedbackActivity extends BaseMvpActivity<FeedbackPresenter> impleme
     @Override
     public boolean initView() {
         mTitleView.setTitle(getString(R.string.key_feedback));
-        mTitleView.postDelayed(() -> ViewTool.edtFocusable(contentEt), 128);
+        mTitleView.postDelayed(() -> ViewUtil.edtFocusable(contentEt), 128);
         return true;
     }
 

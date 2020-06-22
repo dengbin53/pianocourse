@@ -10,6 +10,7 @@ import com.zconly.pianocourse.bean.VideoBean;
 import com.zconly.pianocourse.constants.Constants;
 import com.zconly.pianocourse.mvp.service.H5Service;
 import com.zconly.pianocourse.widget.dialog.DialogExerciseSetting;
+import com.zconly.pianocourse.widget.dialog.DialogRecharge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,5 +107,16 @@ public class DataUtil {
                 return "右手";
         }
         return null;
+    }
+
+    public static List<DialogRecharge.RechargeBean> getRechargeList() {
+        List<DialogRecharge.RechargeBean> list = new ArrayList<>(6);
+        list.add(new DialogRecharge.RechargeBean(12, "12元"));
+        list.add(new DialogRecharge.RechargeBean(30, "30元"));
+        list.add(new DialogRecharge.RechargeBean(50, "50元"));
+        list.add(new DialogRecharge.RechargeBean(98, "98元"));
+        list.add(new DialogRecharge.RechargeBean(168, "168元"));
+        list.add(new DialogRecharge.RechargeBean(268, "268元"));
+        return list;
     }
 }

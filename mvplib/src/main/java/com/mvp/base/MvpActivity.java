@@ -35,6 +35,8 @@ public abstract class MvpActivity<P extends MvpPresenter, T extends View> extend
     protected FragmentActivity mContext;
     protected Handler mHandler;
     protected T mTitleView;
+    protected ViewGroup mRootView;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public abstract class MvpActivity<P extends MvpPresenter, T extends View> extend
 
     protected void doSetContentView(int id) {
 
-        ViewGroup mRootView = getWindow().getDecorView().findViewById(android.R.id.content);
+        mRootView = getWindow().getDecorView().findViewById(android.R.id.content);
 
         if (id > 0)
             getLayoutInflater().inflate(id, mRootView, true);

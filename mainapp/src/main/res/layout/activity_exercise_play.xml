@@ -143,6 +143,32 @@
         android:gravity="center"
         android:text="重新录制" />
 
+    <TextView
+        android:id="@+id/exercise_play_zoom_left_tv"
+        style="@style/text_smaller_black"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="64dp"
+        android:layout_toEndOf="@id/exercise_play_re_record_tv"
+        android:drawableTop="@mipmap/ic_subtract_circle"
+        android:gravity="center"
+        android:paddingTop="@dimen/space_half"
+        android:text="缩小" />
+
+    <TextView
+        android:id="@+id/exercise_play_zoom_right_tv"
+        style="@style/text_smaller_black"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="64dp"
+        android:layout_toEndOf="@id/exercise_play_zoom_left_tv"
+        android:drawableTop="@mipmap/ic_add_circle"
+        android:gravity="center"
+        android:paddingTop="@dimen/space_half"
+        android:text="放大" />
+
     <!-- 伴奏 -->
     <com.zconly.pianocourse.widget.centerdrawable.CenterDrawableTextView
         android:id="@+id/exercise_play_accompany_tv"

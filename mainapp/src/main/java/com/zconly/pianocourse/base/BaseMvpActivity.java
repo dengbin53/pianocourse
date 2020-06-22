@@ -1,6 +1,8 @@
 package com.zconly.pianocourse.base;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.util.ToastUtil;
 import com.zconly.pianocourse.util.UmengUtil;
+import com.zconly.pianocourse.util.ViewUtil;
 import com.zconly.pianocourse.widget.TitleView;
 import com.zconly.pianocourse.widget.dialog.LoadingDialog;
 
@@ -58,6 +61,22 @@ public abstract class BaseMvpActivity<P extends MvpPresenter> extends MvpActivit
     protected void onResume() {
         super.onResume();
         UmengUtil.onResume(this);
+
+        // 粘贴板
+        mRootView.post(() -> clipboardString());
+    }
+
+    private void clipboardString() {
+        ClipboardManager mClipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        if (mClipboardManager == null)
+            return;
+        if (!mClipboardManager.hasPrimaryClip())
+            return;
+        ClipData data = mClipboardManager.getPrimaryClip();
+        if (data == null)
+            return;
+        String str = data.getItemAt(0).getText().toString();
+        ViewUtil.couponDialog(mContext, str);
     }
 
     @Override

@@ -38,7 +38,6 @@ import com.zlw.main.recorderlib.RecordManager;
 import com.zlw.main.recorderlib.recorder.RecordConfig;
 
 import java.io.File;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,12 +98,14 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
     private SeeScoreView ssview;
     private Player player;
     private SScore currentScore;
-    private float magnification = 0.56f; // 放大
+    private float magnification = 0.6f; // 放大
     private int currentBar;
     // setup looping
     private int loopStart;
     private int loopEnd;
 
+    private static final float kMinZoom = 0.2F;
+    private static final float kMaxZoom = 2.0F;
     private static final int kMinTempoBPM = 16;
     private static final int kMaxTempoBPM = 320;
     private static final double kMinTempoScaling = 0.5;
@@ -403,11 +404,21 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
         runOnUiThread(() -> pianoRl.removeAllViews());
     }
 
-    // display the current zoom value in the TextView label
-    private void showZoom(float scale) {
-        NumberFormat nf = NumberFormat.getNumberInstance();
-        nf.setMinimumFractionDigits(2);
-        nf.setMaximumFractionDigits(2);
+    private float roomStep = 0.1f;
+
+    private void zoom(float scale) {
+        ssview.zoom(scale);
+    }
+
+    private void zoom(boolean zoom) {
+        if (zoom) {
+            magnification = magnification + roomStep;
+            magnification = Math.min(kMaxZoom, magnification);
+        } else {
+            magnification = magnification - roomStep;
+            magnification = Math.max(kMinZoom, magnification);
+        }
+        zoom(magnification);
     }
 
     // 显示乐谱
@@ -447,10 +458,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
     private void setSeeView() {
         loopStart = loopEnd = -1;
         final CursorView cursorView = new CursorView(mContext, () -> scoreSv.getScrollY());
-        ssview = new SeeScoreView(mContext, cursorView, getAssets(), scale -> {
-            showZoom(scale);
-            magnification = scale;
-        }, new SeeScoreView.TapNotification() {
+        SeeScoreView.TapNotification tapNotification = new SeeScoreView.TapNotification() {
             public void tap(int systemIndex, int partIndex, int barIndex, Component[] components) {
 
                 boolean isPlaying = (player != null && player.state() == Started);
@@ -481,7 +489,12 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
             public void longTap(int systemIndex, int partIndex, int barIndex, Component[] components) {
 
             }
-        });
+        };
+        SeeScoreView.ZoomNotification zoomNotification = scale -> {
+            // zoom(magnification = scale);
+        };
+
+        ssview = new SeeScoreView(mContext, cursorView, getAssets(), zoomNotification, tapNotification);
 
         scoreSv.addView(ssview);
         cursorScrollView.addView(cursorView);
@@ -516,8 +529,7 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
     private void showUploadDialog() {
         if (recordFile == null)
             return;
-        dialogRecordUpload = DialogRecordUpload.getInstance(recordFile, (DialogRecordUpload.ClickListener) upload
-                -> {
+        dialogRecordUpload = DialogRecordUpload.getInstance(recordFile, (DialogRecordUpload.ClickListener) upload -> {
             if (upload) { // 上传
                 mPresenter.uploadExercise(recordFile, bean.getId(), settingBean.getTempo(),
                         settingBean.getHand(), 0, dialogRecordUpload.getDuration());
@@ -555,7 +567,8 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
 
     @OnClick({R.id.exercise_play_back_iv, R.id.exercise_play_dashike_tv, R.id.exercise_play_favorite_tv,
             R.id.exercise_play_setting_tv, R.id.exercise_play_record_tv, R.id.exercise_play_re_record_tv,
-            R.id.exercise_play_accompany_tv, R.id.exercise_play_tiaosu_tv})
+            R.id.exercise_play_accompany_tv, R.id.exercise_play_tiaosu_tv, R.id.exercise_play_zoom_left_tv,
+            R.id.exercise_play_zoom_right_tv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.exercise_play_back_iv:
@@ -579,6 +592,12 @@ public class ExercisePlayActivity extends BaseMvpActivity<ExercisePresenter> imp
             case R.id.exercise_play_setting_tv:
                 pauseOrStopPlayer(false);
                 showSettingDialog();
+                break;
+            case R.id.exercise_play_zoom_left_tv: // 缩放-缩小
+                zoom(false);
+                break;
+            case R.id.exercise_play_zoom_right_tv: // 缩放-放大
+                zoom(true);
                 break;
             default:
                 break;

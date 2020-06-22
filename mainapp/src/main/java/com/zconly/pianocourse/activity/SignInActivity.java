@@ -19,7 +19,7 @@ import com.zconly.pianocourse.util.ActionUtil;
 import com.zconly.pianocourse.util.StringTool;
 import com.zconly.pianocourse.util.SysConfigTool;
 import com.zconly.pianocourse.util.ToastUtil;
-import com.zconly.pianocourse.util.ViewTool;
+import com.zconly.pianocourse.util.ViewUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -99,7 +99,7 @@ public class SignInActivity extends BaseMvpActivity<LoginPresenter> implements L
         String llc = SysConfigTool.getLastLoginContact();
         if (!TextUtils.isEmpty(llc)) {
             emailEt.setText(llc);
-            ViewTool.setSelection(new EditText[]{emailEt});
+            ViewUtil.setSelection(new EditText[]{emailEt});
         }
 
         emailEt.setHint(getString(R.string.hint_phone));

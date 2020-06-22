@@ -37,7 +37,6 @@ import butterknife.BindView;
  * @UpdateUser: dengbin
  * @UpdateDate: 2020/3/18 20:35
  * @UpdateRemark: 更新说明
- * <p>
  * Course  课程(课)
  * SectionPack 章节包（视频包）
  * Section 章节(视频)

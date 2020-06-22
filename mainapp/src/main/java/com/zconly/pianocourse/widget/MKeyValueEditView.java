@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.callback.MTextWatcher;
-import com.zconly.pianocourse.util.ViewTool;
+import com.zconly.pianocourse.util.ViewUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,6 +123,6 @@ public class MKeyValueEditView extends LinearLayout {
     }
 
     public void focus() {
-        ViewTool.edtFocusable(valueTv);
+        ViewUtil.edtFocusable(valueTv);
     }
 }

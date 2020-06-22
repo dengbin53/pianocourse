@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_marginTop="@dimen/space_normal"
+    android:background="@drawable/selector_white_gray_light"
+    android:padding="@dimen/space_normal">
+
+    <TextView
+        android:id="@+id/coupon_name_tv"
+        style="@style/text_normal_black"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/coupon_time_tv"
+        style="@style/text_smaller_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_below="@id/coupon_name_tv"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/coupon_amount_tv"
+        style="@style/text_larger_red"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
+        android:textStyle="bold" />
+
+</RelativeLayout>

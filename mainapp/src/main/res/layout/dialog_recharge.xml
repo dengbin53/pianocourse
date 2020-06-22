@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner_white"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/space_large"
+    android:paddingEnd="@dimen/space_large">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recharge_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="@style/text_smaller_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_small"
+        android:gravity="center"
+        android:text="选择充值金额" />
+    
+</LinearLayout>

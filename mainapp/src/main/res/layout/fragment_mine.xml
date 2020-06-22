@@ -58,6 +58,27 @@
     </RelativeLayout>
 
     <com.zconly.pianocourse.widget.MKeyValueView
+        android:id="@+id/account"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginTop="@dimen/space_normal"
+        android:background="@drawable/selector_white_gray_border_bottom"
+        android:visibility="visible"
+        name_value:arrow="true"
+        name_value:hint=""
+        name_value:name="账户"
+        name_value:value="" />
+
+    <com.zconly.pianocourse.widget.MKeyValueView
+        android:id="@+id/account_bought_kvv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_white_gray_border_bottom"
+        android:minHeight="@dimen/item_height"
+        name_value:arrow="true"
+        name_value:name="已购内容" />
+
+    <com.zconly.pianocourse.widget.MKeyValueView
         android:id="@+id/favorite"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"

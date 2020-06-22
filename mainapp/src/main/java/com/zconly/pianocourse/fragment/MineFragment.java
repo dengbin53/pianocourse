@@ -9,6 +9,8 @@ import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.activity.FavoriteActivity;
 import com.zconly.pianocourse.activity.NoticeActivity;
 import com.zconly.pianocourse.activity.SignInActivity;
+import com.zconly.pianocourse.activity.mine.AccountActivity;
+import com.zconly.pianocourse.activity.mine.BoughtActivity;
 import com.zconly.pianocourse.activity.mine.FeedbackActivity;
 import com.zconly.pianocourse.activity.mine.SettingActivity;
 import com.zconly.pianocourse.activity.mine.UserInfoEditActivity;
@@ -49,7 +51,8 @@ public class MineFragment extends BaseMvpFragment {
 
     private UserBean user;
 
-    @OnClick({R.id.mine_user_rv, R.id.favorite, R.id.feedback, R.id.setting, R.id.notice_kv, R.id.empty_login_tv})
+    @OnClick({R.id.mine_user_rv, R.id.favorite, R.id.feedback, R.id.setting, R.id.notice_kv, R.id.empty_login_tv,
+            R.id.account, R.id.account_bought_kvv})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mine_user_rv:
@@ -69,6 +72,12 @@ public class MineFragment extends BaseMvpFragment {
                 break;
             case R.id.empty_login_tv:
                 SignInActivity.start(mContext);
+                break;
+            case R.id.account: // 账户
+                AccountActivity.start(mContext);
+                break;
+            case R.id.account_bought_kvv: // 已购
+                BoughtActivity.start(mContext);
                 break;
             default:
                 break;

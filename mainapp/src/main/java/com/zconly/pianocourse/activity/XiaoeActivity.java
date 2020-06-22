@@ -15,10 +15,14 @@ import com.xiaoe.shop.webcore.core.bridge.JsInteractType;
 import com.zconly.pianocourse.R;
 import com.zconly.pianocourse.base.BaseMvpActivity;
 import com.zconly.pianocourse.bean.XiaoeTokenBean;
+import com.zconly.pianocourse.event.SignInEvent;
 import com.zconly.pianocourse.mvp.presenter.XiaoePresenter;
 import com.zconly.pianocourse.mvp.view.XiaoeView;
 import com.zconly.pianocourse.util.Logger;
 import com.zconly.pianocourse.util.SysConfigTool;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
@@ -109,7 +113,7 @@ public class XiaoeActivity extends BaseMvpActivity<XiaoePresenter> implements Xi
 
     @Override
     protected boolean isBindEventBus() {
-        return false;
+        return true;
     }
 
     @Override
@@ -164,4 +168,10 @@ public class XiaoeActivity extends BaseMvpActivity<XiaoePresenter> implements Xi
             xiaoEWeb.reload();
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onThreadMainEvent(SignInEvent event) {
+        initData();
+    }
+    
 }

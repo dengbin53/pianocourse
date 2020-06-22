@@ -143,10 +143,13 @@ public class CourseDetailActivity extends BaseCourseActivity implements CourseDe
             return;
         courseBean = response.getData().getData().get(0);
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.header_course_detail, mRecyclerView,
-                false);
-        mHeader = new MHeader(view);
-        mAdapter.addHeaderView(view);
+        if (mHeader == null) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.header_course_detail, mRecyclerView,
+                    false);
+            mHeader = new MHeader(view);
+            mAdapter.addHeaderView(view);
+        }
+        
         mHeader.setData();
     }
 

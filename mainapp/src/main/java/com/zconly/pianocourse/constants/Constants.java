@@ -15,6 +15,7 @@ public class Constants {
     // 分页大小
     public static final int PAGE_COUNT = 12;
     public static final String CS_CALL = "+86 130000000";
+
     public static UserBean USER_BEAN;
     public static String CLIENT_VERSION;
     public static String IMEI;
@@ -22,6 +23,8 @@ public class Constants {
 
     public static final int TYPE_FAVORITE_COURSE = 0;
     public static final int TYPE_FAVORITE_VIDEO = 1;
+
+    public static final int TYPE_CHANGE_RECORD_BUY = 0;
 
     public static final int TYPE_BANNER_COURSE = 0;
 
@@ -42,6 +45,10 @@ public class Constants {
     public static final int TYPE_ROLE_TEACHER = 3; // 老师
     public static final int TYPE_ROLE_ORGANIZATION = 4; // 机构
     public static final int TYPE_ROLE_PARENTS = 5; // 家长
+
+    public static final int STATUS_COUPON_ACTIVE = 0; // 有效
+    public static final int STATUS_COUPON_USED = 1; // 已经使用
+    public static final int STATUS_COUPON_EXPIRE = 2;  // 已过期
 
     public static final int VIEW_TYPE_PACK = 0; // 视频包
     public static final int VIEW_TYPE_VIDEO = 1; // 视频
